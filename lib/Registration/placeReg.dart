@@ -167,22 +167,23 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                   TextWidget(
                       heading: "Address",
                       hint: "Enter Address",
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.text,
                       controller: _addressController),
                   TextWidget(
                       heading: "Contact Number",
                       hint: "Enter contact No",
+                      maxLength: 10,
                       keyboardType: TextInputType.number,
                       controller: _mobileController),
                   TextWidget(
                       heading: "Property Description",
                       hint: "Enter Property Description",
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.text,
                       controller: _propertyDescriptionController),
                   TextWidget(
                       heading: "Size of the Property (in square meters/feet)",
                       hint: "Enter Property Address",
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.text,
                       controller: _sizeOfPropertyController),
                   const SizedBox(
                     height: 15,
@@ -593,7 +594,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                   TextWidget(
                       heading: "Preferred Sports or Activities Allowed",
                       hint: "Enter Preferred Sports",
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       controller: _activityController),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -637,6 +638,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                   TextWidget(
                       heading: "Charges per Hours",
                       hint: "Enter Charges",
+                      maxLength: 6,
                       keyboardType: TextInputType.number,
                       controller: _chargesController),
                   const SizedBox(height: 15),

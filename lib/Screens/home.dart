@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:sports2/Controller/authCotroller.dart';
 import 'package:sports2/Screens/Profile/coachProfile.dart';
 import 'package:sports2/Screens/Profile/stuProfile.dart';
+import 'package:sports2/Screens/bookmark.dart';
 import 'package:sports2/Screens/homeScreen.dart';
+import 'package:sports2/Screens/searchScreen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,8 +17,8 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    SearchTab(),
-    ProfileFourPage(),
+    SearchSportsScreen(),
+    BookmarkScreen(),
     ProfileEightPage(),
   ];
 

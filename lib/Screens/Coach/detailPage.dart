@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sports2/Screens/Coach/bookingScreen.dart';
+
 import 'package:sports2/Widgets/customIconText.dart';
 
 class CoachDetailScreen extends StatefulWidget {
@@ -312,7 +314,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-
+                    // Text(data.toString()),
                     /**First Column End */
                   ],
                 )
@@ -331,7 +333,12 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
             ),
           ),
           onPressed: () {
-            // Get.to(() => PropertyBookScreen());
+            Map<String, String> scheduleData = {
+              'time_schedule': data["time_schedule"],
+              'endtime_schedule': data["endtime_schedule"],
+            };
+            print(scheduleData);
+            Get.to(() => BookingScreen(), arguments: scheduleData);
           },
           child: const Text(
             'Book Now',

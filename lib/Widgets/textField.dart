@@ -5,6 +5,7 @@ class TextWidget extends StatelessWidget {
   final String hint;
   final TextInputType keyboardType;
   final TextEditingController controller;
+  final int? maxLength;
 
   const TextWidget({
     Key? key,
@@ -12,6 +13,7 @@ class TextWidget extends StatelessWidget {
     required this.hint,
     required this.keyboardType,
     required this.controller,
+    this.maxLength,
   }) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class TextWidget extends StatelessWidget {
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
+          maxLength: maxLength,
           decoration: InputDecoration(
             hintText: hint,
             border: OutlineInputBorder(),

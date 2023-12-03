@@ -20,11 +20,11 @@ class ProfileEightPage extends StatelessWidget {
             children: <Widget>[
               ProfileHeader(
                 avatar: NetworkImage(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa5FWKCX_yxfhr14GIkzLm9bMb7BIoKK4v98tOuYJe-g&s"),
+                    "https://khsahilart.files.wordpress.com/2020/07/img_20191206_221743_8161914875592284986672.jpg?w=1638"),
                 coverImage: NetworkImage(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa5FWKCX_yxfhr14GIkzLm9bMb7BIoKK4v98tOuYJe-g&s"),
-                title: "Ramesh Mana",
-                subtitle: "Manager",
+                    "https://khsahilart.files.wordpress.com/2020/07/img_20191206_221743_8161914875592284986672.jpg?w=1638"),
+                title: "Sahil Khan",
+                subtitle: "Developer",
                 actions: <Widget>[
                   MaterialButton(
                     color: Colors.white,
@@ -37,7 +37,7 @@ class ProfileEightPage extends StatelessWidget {
               ),
               const SizedBox(height: 10.0),
               const UserInfo(),
-              const UserInfo(),
+              //const UserInfo(),
             ],
           ),
         ));
@@ -82,17 +82,17 @@ class UserInfo extends StatelessWidget {
                                 horizontal: 12, vertical: 4),
                             leading: Icon(Icons.my_location),
                             title: Text("Location"),
-                            subtitle: Text("Kathmandu"),
+                            subtitle: Text("Lucknow"),
                           ),
                           const ListTile(
                             leading: Icon(Icons.email),
                             title: Text("Email"),
-                            subtitle: Text("sudeptech@gmail.com"),
+                            subtitle: Text("sahilkh@gmail.com"),
                           ),
                           const ListTile(
                             leading: Icon(Icons.phone),
                             title: Text("Phone"),
-                            subtitle: Text("99--99876-56"),
+                            subtitle: Text("99-3909-XXXX"),
                           ),
                           const ListTile(
                             leading: Icon(Icons.person),

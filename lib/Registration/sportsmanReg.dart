@@ -141,17 +141,18 @@ class _SportsmanRegistrationScreenState
                   TextWidget(
                       heading: "Email",
                       hint: "Enter email",
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.emailAddress,
                       controller: _emailController),
                   TextWidget(
                       heading: "Contact Number",
                       hint: "Enter contact No",
-                      keyboardType: TextInputType.name,
+                      maxLength: 10,
+                      keyboardType: TextInputType.number,
                       controller: _mobileController),
                   TextWidget(
                       heading: "Address",
                       hint: "Enter Address",
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.text,
                       controller: _addressController),
                   DatePickerField(
                     controller: _dobController,

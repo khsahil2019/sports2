@@ -677,27 +677,27 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
   }
 
   void sendPlaceHolderRegDataToServer(BuildContext context) {
-    ApiService().RegisterPlaceHolder(
-        _fullNameController.text,
-        _emailController.text,
-        _addressController.text,
-        _mobileController.text,
-        _propertyDescriptionController.text,
-        _sizeOfPropertyController.text,
-        selectedTypeOfProperty,
-        selectedDays,
-        _selectedStartTime.toString(),
-        _selectedEndTime.toString(),
-        selectedAmenities,
-        selectedSafety,
-        providePickAndDropList,
-        _chargesController.text);
-    // For demonstration purposes, print the data
-    // print('Name: $name, Number: $number, Email: $email ');
+    // ApiService().RegisterPlaceHolder(
+    //     _fullNameController.text,
+    //     _emailController.text,
+    //     _addressController.text,
+    //     _mobileController.text,
+    //     _propertyDescriptionController.text,
+    //     _sizeOfPropertyController.text,
+    //     selectedTypeOfProperty,
+    //     selectedDays,
+    //     _selectedStartTime.toString(),
+    //     _selectedEndTime.toString(),
+    //     selectedAmenities,
+    //     selectedSafety,
+    //     providePickAndDropList,
+    //     _chargesController.text);
+    // // For demonstration purposes, print the data
+    // // print('Name: $name, Number: $number, Email: $email ');
 
-    // Show a message or navigate after sending data to the server
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(content: Text('Data sent successfully')),
-    // );
+    // // Show a message or navigate after sending data to the server
+    // // ScaffoldMessenger.of(context).showSnackBar(
+    // //   SnackBar(content: Text('Data sent successfully')),
+    // // );
   }
 }

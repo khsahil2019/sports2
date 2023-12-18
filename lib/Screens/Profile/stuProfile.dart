@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ProfileEightPage extends StatelessWidget {
+class StudentProfile extends StatelessWidget {
   static const String path = "lib/src/pages/profile/profile8.dart";
 
-  const ProfileEightPage({super.key});
+  const StudentProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userData = Get.arguments;
     return Scaffold(
         backgroundColor: Colors.grey.shade100,
         extendBodyBehindAppBar: true,
@@ -20,10 +22,12 @@ class ProfileEightPage extends StatelessWidget {
             children: <Widget>[
               ProfileHeader(
                 avatar: NetworkImage(
-                    "https://khsahilart.files.wordpress.com/2020/07/img_20191206_221743_8161914875592284986672.jpg?w=1638"),
+                    "https://easyresearch.in/sports/api/uploads/" +
+                        userData["image"]),
                 coverImage: NetworkImage(
-                    "https://khsahilart.files.wordpress.com/2020/07/img_20191206_221743_8161914875592284986672.jpg?w=1638"),
-                title: "Sahil Khan",
+                    "https://easyresearch.in/sports/api/uploads/" +
+                        userData["image"]),
+                title: userData["name"],
                 subtitle: "Developer",
                 actions: <Widget>[
                   MaterialButton(
@@ -36,7 +40,7 @@ class ProfileEightPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10.0),
-              const UserInfo(),
+              UserInfo(userData: userData),
               //const UserInfo(),
             ],
           ),
@@ -45,10 +49,14 @@ class ProfileEightPage extends StatelessWidget {
 }
 
 class UserInfo extends StatelessWidget {
-  const UserInfo({super.key});
+  final Map<String, dynamic> userData; // Add this line
+
+  const UserInfo({Key? key, required this.userData})
+      : super(key: key); // Update the constructor
 
   @override
   Widget build(BuildContext context) {
+    // final userData = Get.arguments;
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -77,28 +85,47 @@ class UserInfo extends StatelessWidget {
                       ...ListTile.divideTiles(
                         color: Colors.grey,
                         tiles: [
-                          const ListTile(
+                          ListTile(
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 4),
                             leading: Icon(Icons.my_location),
                             title: Text("Location"),
-                            subtitle: Text("Lucknow"),
+                            subtitle: Text(userData["address"]),
                           ),
-                          const ListTile(
+                          ListTile(
                             leading: Icon(Icons.email),
                             title: Text("Email"),
-                            subtitle: Text("sahilkh@gmail.com"),
+                            subtitle: Text(userData["email"]),
                           ),
-                          const ListTile(
+                          ListTile(
                             leading: Icon(Icons.phone),
                             title: Text("Phone"),
-                            subtitle: Text("99-3909-XXXX"),
+                            subtitle: Text(userData["number"]),
                           ),
-                          const ListTile(
+                          ListTile(
+                            leading: Icon(Icons.calendar_month),
+                            title: Text("Date of Birth"),
+                            subtitle: Text(userData["dob"]),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.people),
+                            title: Text("Gender"),
+                            subtitle: Text(userData["gender"]),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.sports_baseball),
+                            title: Text("Preferred Sports"),
+                            subtitle: Text(userData["pref_sport"]),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.leak_remove_outlined),
+                            title: Text("Skill Level"),
+                            subtitle: Text(userData["skill_level"]),
+                          ),
+                          ListTile(
                             leading: Icon(Icons.person),
                             title: Text("About Me"),
-                            subtitle: Text(
-                                "This is a about me link and you can khow about me in this section."),
+                            subtitle: Text(userData["aim"]),
                           ),
                         ],
                       ),

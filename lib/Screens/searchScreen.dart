@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sports2/Screens/home.dart';
+import 'package:sports2/Screens/homeScreen.dart';
 
 class SearchSportsScreen extends StatefulWidget {
   @override
@@ -53,6 +56,7 @@ class _SearchSportsScreenState extends State<SearchSportsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search Sports'),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [

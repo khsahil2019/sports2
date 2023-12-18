@@ -1,33 +1,33 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sports2/Screens/homeScreen.dart';
 import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/dobPicker.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/textField.dart';
 
 class SportsmanRegistrationScreen extends StatefulWidget {
-  // SportsmanRegistrationScreen({
-  //   Key? key,
-  // }) : super(key: key);
-
   @override
   _SportsmanRegistrationScreenState createState() =>
       _SportsmanRegistrationScreenState();
 }
 
-//var data = Get.arguments;
-
 class _SportsmanRegistrationScreenState
     extends State<SportsmanRegistrationScreen> {
+  void initState() {
+    super.initState();
+  }
+
   final TextEditingController _nameController = TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final List<String> _gendersList = ['Male', 'Female', 'Other'];
   String? _selectedGender;
   bool _isPreferredSports = false;
@@ -64,7 +64,7 @@ class _SportsmanRegistrationScreenState
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white, // Set back button color to white
+            color: Colors.white,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -76,38 +76,79 @@ class _SportsmanRegistrationScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // SizedBox(
+            //   height: 200,
+            //   child: Stack(
+            //     children: [
+            //       Center(
+            //         child: Stack(
+            //           alignment: Alignment.bottomRight,
+            //           children: [
+            //             const CircleAvatar(
+            //               backgroundColor: Colors.white,
+            //               radius: 60,
+            //               // backgroundImage: AssetImage(
+            //               //     'assets/google.png'), // Replace with your image
+            //             ),
+            //             GestureDetector(
+            //               onTap: () {
+            //                 _getImage();
+            //                 // Handle edit profile photo functionality
+            //               },
+            //               child: Container(
+            //                 padding: const EdgeInsets.all(8),
+            //                 decoration: const BoxDecoration(
+            //                   color: Colors.white,
+            //                   shape: BoxShape.circle,
+            //                 ),
+            //                 child: const Icon(
+            //                   Icons.edit,
+            //                   color: Colors.black,
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 200,
               child: Stack(
                 children: [
                   Center(
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 60,
-                          // backgroundImage: AssetImage(
-                          //     'assets/google.png'), // Replace with your image
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _getImage();
-                            // Handle edit profile photo functionality
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                            ),
+                    child: _imageFile != null
+                        ? CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 60,
+                            backgroundImage: FileImage(_imageFile!),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 60,
+                            // You can add a placeholder image or text here when no image is selected
                           ),
+                  ),
+                  Positioned(
+                    bottom: 50,
+                    right: 150,
+                    child: GestureDetector(
+                      onTap: () {
+                        _getImage();
+                        // Handle edit profile photo functionality
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
                         ),
-                      ],
+                        child: const Icon(
+                          Icons.edit,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -143,6 +184,11 @@ class _SportsmanRegistrationScreenState
                       hint: "Enter email",
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController),
+                  TextWidget(
+                      heading: "Password",
+                      hint: "Enter Password",
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _passwordController),
                   TextWidget(
                       heading: "Contact Number",
                       hint: "Enter contact No",
@@ -330,14 +376,18 @@ class _SportsmanRegistrationScreenState
   // }
   void sendSportsmanRegDataToServer(BuildContext context) {
     ApiService().RegisterSportsman(
-        _nameController.text,
-        _emailController.text,
-        _mobileController.text,
-        _addressController.text,
-        _dobController.text,
-        _selectedGender.toString(),
-        selectedPreferredSport,
-        _selectedLevel.toString(),
-        _aimController.text);
+      _nameController.text,
+      _emailController.text,
+      _mobileController.text,
+      _passwordController.text,
+      _addressController.text,
+      _dobController.text,
+      "std",
+      _selectedGender.toString(),
+      selectedPreferredSport,
+      _selectedLevel.toString(),
+      _aimController.text,
+      _imageFile!,
+    );
   }
 }

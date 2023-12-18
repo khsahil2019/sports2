@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sports2/Controller/authCotroller.dart';
 
 class BookingScreen extends StatefulWidget {
   @override
@@ -161,11 +162,6 @@ class _BookingScreenState extends State<BookingScreen> {
                           .toList(),
                     ),
                     SizedBox(height: 20),
-                    // Text(
-                    //   'Total Amount: \Rs ${calculateTotalAmount().toStringAsFixed(2)}',
-                    //   style:
-                    //       TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    // ),
                   ],
                 ),
             ],
@@ -182,7 +178,9 @@ class _BookingScreenState extends State<BookingScreen> {
             ),
           ),
           onPressed: () {
-            // Get.to(() => BookingScreen());
+            // Get.to(() => UPIScreen());
+            //Get.to(() => CodeScreen());
+            // Get.to(() => StripePayment());
           },
           child: Text(
             'Pay Total Amount: \Rs ${calculateTotalAmount().toStringAsFixed(2)}',

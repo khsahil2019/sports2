@@ -2,20 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports2/Controller/authCotroller.dart';
 import 'package:sports2/Screens/Coach/detailPage.dart';
-import 'package:sports2/Screens/notification.dart';
 import 'package:sports2/Screens/searchScreen.dart';
-
-class Hotel {
-  String? imageUrl;
-  String? title;
-  String? description;
-  int? price;
-  double? rating;
-
-  Hotel({this.description, this.imageUrl, this.price, this.rating, this.title});
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,8 +15,51 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? username;
+  String? email;
+  String? password;
+  String? number;
+  String? address;
+  String? usertype;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('name');
+      email = prefs.getString('email');
+      password = prefs.getString('password');
+      number = prefs.getString('number');
+      address = prefs.getString('address');
+      usertype = prefs.getString('usertype');
+    });
+  }
+
+  Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Clear the stored token or any other user-related data
+    prefs.remove('jwt_token');
+    prefs.remove('name');
+    prefs.remove('email');
+    prefs.remove('address');
+    prefs.remove('password');
+    // Clear other stored user data if needed
+    // prefs.remove('other_data_key');
+
+    // Optionally, navigate back to the login screen or perform any additional actions
+    // For example:
+    // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userData = Get.arguments;
+
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -38,13 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "sahil khan",
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    userData != null
+                        ? Text(
+                            'Welcome, ${userData['name']}',
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold),
+                          )
+                        : SizedBox(),
                     SizedBox(height: 5.0),
                     Text(
                       'Lets have fun and be Healthy!',
@@ -55,7 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => NotificationScreen());
+                    logout();
+                    // Get.to(() => NotificationScreen());
                   },
                   child: Container(
                     height: 50,
@@ -256,11 +292,14 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[
-                Text(
-                  'Recommended Lands',
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
-                ),
+              children: <Widget>[
+                userData["usertype"] == "std"
+                    ? Text(
+                        'Recommended Lands',
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.w600),
+                      )
+                    : SizedBox(),
                 Text(
                   'view all',
                   style: TextStyle(fontSize: 18.0, color: Colors.blue),

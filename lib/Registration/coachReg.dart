@@ -28,6 +28,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
@@ -126,33 +127,37 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
               child: Stack(
                 children: [
                   Center(
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 60,
-                          // backgroundImage: AssetImage(
-                          //     'assets/google.png'), // Replace with your image
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _getImage();
-                            // Handle edit profile photo functionality
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                            ),
+                    child: _imageFile != null
+                        ? CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 60,
+                            backgroundImage: FileImage(_imageFile!),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 60,
+                            // You can add a placeholder image or text here when no image is selected
                           ),
+                  ),
+                  Positioned(
+                    bottom: 50,
+                    right: 150,
+                    child: GestureDetector(
+                      onTap: () {
+                        _getImage();
+                        // Handle edit profile photo functionality
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
                         ),
-                      ],
+                        child: const Icon(
+                          Icons.edit,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -194,6 +199,11 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       maxLength: 10,
                       keyboardType: TextInputType.number,
                       controller: _mobileController),
+                  TextWidget(
+                      heading: "Password",
+                      hint: "Enter Password",
+                      keyboardType: TextInputType.text,
+                      controller: _passwordController),
                   TextWidget(
                       heading: "Address",
                       hint: "Enter Address",
@@ -724,8 +734,9 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   void sendCoachRegDataToServer(BuildContext context) {
     ApiService().RegisterCoach(
       _nameController.text,
-      _emailController.text,
-      _mobileController.text,
+      "sahil@gmail.og",
+      "888888",
+      _passwordController.text,
       _addressController.text,
       _currentSliderValue.toString(),
       _dobController.text,
@@ -746,6 +757,8 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
       _chargesController.text,
       // DateTime.now(),
       _pincodeController.text,
+      "coach",
+      //  _imageFile!
     );
     // For demonstration purposes, print the data
     // print('Name: $name, Number: $number, Email: $email ');

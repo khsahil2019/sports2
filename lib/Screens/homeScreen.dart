@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports2/Controller/authCotroller.dart';
 import 'package:sports2/Screens/Coach/detailPage.dart';
+import 'package:sports2/Screens/notification.dart';
 import 'package:sports2/Screens/searchScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -90,8 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    logout();
-                    // Get.to(() => NotificationScreen());
+                    // logout();
+                    Get.to(() => NotificationScreen());
                   },
                   child: Container(
                     height: 50,

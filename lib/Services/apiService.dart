@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sports2/AuthScreen/signIn.dart';
 import 'package:sports2/Screens/home.dart';
 import 'package:sports2/Screens/homeScreen.dart';
 import 'package:path/path.dart' as path;
@@ -282,7 +283,7 @@ class ApiService {
     try {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-
+      Get.offAll(() => signinScreen());
       log("Response Status Code: ${response.statusCode}");
       log("Response Body: ${response.body}");
 

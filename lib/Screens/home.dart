@@ -47,6 +47,10 @@ class _HomeState extends State<Home> {
                 Get.to(() => StudentProfile(), arguments: userData);
               }
 
+              if (userData["usertype"] == "coach") {
+                Get.to(() => CoachProfileScreen(), arguments: userData);
+              }
+
               // Navigate to the profile screen and pass userData
             }
             _currentIndex = index;

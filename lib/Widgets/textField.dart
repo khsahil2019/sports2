@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sports2/helper/theme.dart';
 
 class TextWidget extends StatelessWidget {
   final String heading;
@@ -23,7 +24,10 @@ class TextWidget extends StatelessWidget {
       children: [
         Text(
           heading,
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(
+              color: AppColors.orange,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         TextFormField(
@@ -31,6 +35,11 @@ class TextWidget extends StatelessWidget {
           keyboardType: keyboardType,
           maxLength: maxLength,
           decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: Colors.orange), // Color when activated
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             hintText: hint,
             border: OutlineInputBorder(),
           ),

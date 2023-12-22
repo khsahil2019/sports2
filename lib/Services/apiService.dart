@@ -283,7 +283,7 @@ class ApiService {
     try {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
-      Get.offAll(() => signinScreen());
+      Get.offAll(() => SignInScreen());
       log("Response Status Code: ${response.statusCode}");
       log("Response Body: ${response.body}");
 

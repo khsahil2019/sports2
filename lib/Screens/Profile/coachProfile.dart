@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ProfileFourPage extends StatelessWidget {
+class CoachProfileScreen extends StatelessWidget {
   static const String path = "lib/src/pages/profile/profile4.dart";
 
-  const ProfileFourPage({super.key});
+  const CoachProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,30 +44,30 @@ class ProfileFourPage extends StatelessWidget {
             ),
             _buildTitle("Skills"),
             const SizedBox(height: 10.0),
-            _buildSkillRow("Wordpress", 0.75),
+            _buildSkillRow("Cricket", 0.75),
             const SizedBox(height: 5.0),
-            _buildSkillRow("Laravel", 0.6),
+            _buildSkillRow("Hockey", 0.6),
             const SizedBox(height: 5.0),
-            _buildSkillRow("React JS", 0.65),
+            _buildSkillRow("FootBall", 0.65),
             const SizedBox(height: 5.0),
-            _buildSkillRow("Flutter", 0.5),
+            _buildSkillRow("VolleyBall", 0.5),
             const SizedBox(height: 30.0),
             _buildTitle("Experience"),
             _buildExperienceRow(
                 company: "GID Nepal",
-                position: "Wordpress Developer",
+                position: "FootBall",
                 duration: "2010 - 2012"),
             _buildExperienceRow(
                 company: "Lohani Tech",
-                position: "Laravel Developer",
+                position: "Hockey",
                 duration: "2012 - 2015"),
             _buildExperienceRow(
                 company: "Popup Bits Pvt. Ltd.",
-                position: "Web Developer",
+                position: "VolleyBall",
                 duration: "2015 - 2018"),
             _buildExperienceRow(
                 company: "Popup Bits Pvt. Ltd.",
-                position: "Flutter Developer",
+                position: "Pool",
                 duration: "2018 - Current"),
             const SizedBox(height: 20.0),
             _buildTitle("Education"),
@@ -245,7 +245,7 @@ class ProfileFourPage extends StatelessWidget {
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10.0),
-            const Text("Full Stack Developer"),
+            const Text("Sports Teacher"),
             const SizedBox(height: 5.0),
             Row(
               children: const <Widget>[

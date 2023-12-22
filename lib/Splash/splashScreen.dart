@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sports2/AuthScreen/signIn.dart';
-import 'package:sports2/Controller/authCotroller.dart';
-import 'package:sports2/Registration/coachReg.dart';
-import 'package:sports2/Registration/sportsmanReg.dart';
 
-import 'package:sports2/Registration/userChoice.dart';
 import 'package:sports2/Screens/home.dart';
-import 'package:sports2/Screens/homeScreen.dart';
+
+import '../OnBoarding/Onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -64,32 +60,17 @@ class _SplashScreenState extends State<SplashScreen> {
         // );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => signinScreen(),
+            builder: (_) => OnboardingScreen(),
           ),
         );
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (_) => signinScreen(),
+        //   ),
+        // );
       }
     });
   }
-
-  // void initState() {
-  //   super.initState();
-
-  //   Future.delayed(const Duration(seconds: 3), () {
-  //     // if (authController.user == null) {
-  //     Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(
-  //         builder: (_) => signinScreen(),
-  //       ),
-  //     );
-  //     //  } else {
-  //     // Navigator.of(context).pushReplacement(
-  //     //   MaterialPageRoute(
-  //     //     builder: (_) => UserChoiceScreen(),
-  //     //   ),
-  //     // );
-  //     //  }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

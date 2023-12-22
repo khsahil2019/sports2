@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sports2/helper/theme.dart';
 
 class DatePickerField extends StatefulWidget {
   final TextEditingController controller;
@@ -34,7 +35,10 @@ class _DatePickerFieldState extends State<DatePickerField> {
           children: [
             Text(
               'Date of Birth',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(
+                  color: AppColors.orange,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(width: 8),
           ],
@@ -46,6 +50,11 @@ class _DatePickerFieldState extends State<DatePickerField> {
           decoration: InputDecoration(
             hintText: 'Select your date of birth',
             border: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: Colors.orange), // Color when activated
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             suffixIcon: GestureDetector(
                 onTap: () {
                   _selectDate(context);

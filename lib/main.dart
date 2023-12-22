@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       initialBinding: AuthBinding(),
       title: 'My Flutter App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'Outfit',
+        primarySwatch: Colors.orange,
       ),
       home: SplashScreen(),
     );

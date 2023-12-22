@@ -1,281 +1,459 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sports2/Registration/userChoice.dart';
-import 'package:sports2/Services/apiService.dart';
+import 'package:get/get.dart';
+import 'package:sports2/AuthScreen/forgetScreen.dart';
+import 'package:sports2/NewScreen/forgetPassScreen.dart';
+import 'package:sports2/NewScreen/homeCenter.dart';
+import 'package:sports2/helper/theme.dart';
 
-class signinScreen extends StatefulWidget {
-  const signinScreen({super.key});
-
+class SignInScreen extends StatefulWidget {
   @override
-  State<signinScreen> createState() => _signinScreenState();
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _signinScreenState extends State<signinScreen> {
-  bool rememberMe = false;
-  bool _isPasswordHidden = true;
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passController = TextEditingController();
-  String? username;
-  String? email;
-  String? password;
-  String? number;
-  String? address;
-  String? usertype;
+final lightGrey = Colors.grey[300]!;
+final socialIconList = [
+  'assets/img/google_logo.png',
+  'assets/img/facebook_logo.png',
+  'assets/img/twitter_logo.png',
+];
 
-  @override
-  void initState() {
-    super.initState();
-    _retrieveSavedCredentials(); // Retrieve saved credentials when the screen initializes
+class _SignInScreenState extends State<SignInScreen> {
+  // final SocialIconsController controller = Get.put(SocialIconsController());
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = false;
+  bool _isChecked = false;
+
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    // Email format validation using a regular expression
+    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
   }
 
-  void _retrieveSavedCredentials() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _emailController.text = prefs.getString('savedEmail') ?? '';
-      _passController.text = prefs.getString('savedPassword') ?? '';
-      rememberMe = prefs.getBool('rememberMe') ?? false;
-    });
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+
+    // Password policy with regex pattern
+    final passwordRegExp = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+={}\[\]|;:",.<>?`~]).{8,}$');
+
+    if (!passwordRegExp.hasMatch(value)) {
+      return 'Password should be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character';
+    }
+    return null;
   }
 
-  void _saveCredentials(String email, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('savedEmail', email);
-    prefs.setString('savedPassword', password);
-    prefs.setBool('rememberMe', true);
-  }
+  void _signIn() {
+    String? emailError = validateEmail(_emailController.text);
+    String? passwordError = validatePassword(_passwordController.text);
 
-  bool _isLoading = false;
-
-  Future<void> _login() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    final String email = _emailController.text;
-    final String password = _passController.text;
-
-    final Map<String, dynamic>? response =
-        await ApiService.loginUser(email, password);
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (response != null) {
-      // Successful login
-      if (rememberMe) {
-        _saveCredentials(email, password);
-      }
-      // Map<String, dynamic> responseBody = json.decode(response.toString());
-
-      // // Access specific fields and print them
-      // if (responseBody.containsKey('id')) {
-      // print('User ID: ${responseBody['id'].toString()}');
-      // }
-      // if (responseBody.containsKey('username')) {
-      //   print('Username: ${responseBody['username'].toString()}');
-      // }
-      // if (responseBody.containsKey('email')) {
-      //   print('Email: ${responseBody['email'].toString()}');
-      // }
-      print('Login successful! User ID: ${response['id']}');
-      // Navigate to the home screen or perform necessary actions
+    if (emailError == null && passwordError == null) {
+      // Validation successful, proceed with your logic
+      Get.to(() => Homescreen());
+      // For instance, call a function or navigate to another screen
     } else {
-      // Handle login failure
-      print('Login failed!');
-      // Show error message or perform appropriate action
+      // Validation failed
+      // Handle validation errors or show error messages
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(emailError ??
+              passwordError ??
+              'Please fill in all required fields correctly.'),
+          duration: Duration(seconds: 2),
+          backgroundColor: AppColors.orange,
+        ),
+      );
     }
   }
 
-  // Future<void> loadUserData() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     username = prefs.getString('name');
-  //     email = prefs.getString('email');
-  //     password = prefs.getString('password');
-  //     number = prefs.getString('number');
-  //     address = prefs.getString('address');
-  //     usertype = prefs.getString('usertype');
-  //   });
-  // }
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white, // Dark white background
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white, // Set back button color to white
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        automaticallyImplyLeading: false,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Sign In to ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                // fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'SPORT BUDDY',
+              style: TextStyle(
+                color: AppColors.orange, //
+                fontSize: 20.0,
+                // fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
-        iconTheme: const IconThemeData(
-            color: Colors.white), // Set general icon color to white
+        backgroundColor: Colors.white, // Orange app bar
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                'assets/img/sportfootball.jpeg', // replace with your logo asset
-                height: 100,
-              ),
-              const SizedBox(height: 20),
-              if (username != null) Text('Username: $username'),
-              if (email != null) Text('Email: $email'),
-              if (password != null) Text('Password: $password'),
-              if (password != null) Text('UserType: $usertype'),
-              if (password != null) Text('number: $number'),
-              if (password != null) Text('address: $address'),
-              const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily:
-                      'MyFlutterApp', // Replace 'YourCustomFont' with your desired font family
-                ),
-              ),
-              const SizedBox(height: 30),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                ),
-                child: TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.email),
-                    border: InputBorder.none,
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                ),
-                child: TextFormField(
-                  controller: _passController,
-                  obscureText: _isPasswordHidden,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordHidden
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordHidden = !_isPasswordHidden;
-                        });
-                      },
-                    ),
-                    icon: const Icon(Icons.security),
-                    border: InputBorder.none,
-                    labelText: 'Password',
-                    hintText: 'Enter your Password',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Switch(
-                        value: rememberMe,
-                        onChanged: (value) {
-                          setState(() {
-                            rememberMe = value;
-                          });
-                        },
-                      ),
-                      const Text('Remember Me'),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // navigate to forgot password screen
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
               SizedBox(
-                width: MediaQuery.of(context).size.width - 180,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40.0),
+                height: 50,
+              ),
+              Text(
+                'Email', // Heading for Email field
+                style: TextStyle(
+                  fontSize: 16.0,
+                  //fontWeight: FontWeight.bold,
+                  color: Colors.black, // Set the color for the heading text
+                ),
+              ),
+              SizedBox(
+                  height:
+                      8), // Add space between the heading and the TextFormField
+              Material(
+                elevation: 3, // Elevation for the 3D effect
+                borderRadius: BorderRadius.circular(15.0),
+                child: TextFormField(
+                  validator: validateEmail,
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your email',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   ),
-                  onPressed: _isLoading ? null : _login,
-                  child: _isLoading
-                      ? const CircularProgressIndicator() // Show loading indicator when loading
-                      : Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text('Login',
-                              style: TextStyle(color: Colors.white)),
-                        ),
                 ),
               ),
 
-              /****************************/
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                  height:
+                      20), // Add space between the email and password fields
+              Text(
+                'Password', // Heading for Password field
+                style: TextStyle(
+                  fontSize: 16.0,
+                  // fontWeight: FontWeight.bold,
+                  color: Colors.black, // Set the color for the heading text
+                ),
               ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text("OR")],
+              SizedBox(
+                  height:
+                      8), // Add space between the heading and the TextFormField
+              Material(
+                elevation: 3, // Elevation for the 3D effect
+                borderRadius: BorderRadius.circular(15.0),
+                child: TextFormField(
+                  validator: validatePassword,
+                  controller: _passwordController,
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    hintText: 'Enter your password',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.orange, //
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        // Toggle password visibility
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(
+                height: 10,
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text("Don't have an account? "),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => UserChoiceScreen());
+                      Get.to(() => ForgetPasswordScreen());
                     },
-                    child: const Text(
-                      "Register Now",
-                      style: TextStyle(color: Colors.blue),
+                    child: Text(
+                      'Forget Password?', // Heading for Password field
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        // fontWeight: FontWeight.bold,
+                        color: AppColors
+                            .orange, //  // Set the color for the heading text
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+              ),
+
+              //////////////////////////////////////////////////////////////////////
+              GestureDetector(
+                onTap: () {
+                  if (_isChecked) {
+                    _signIn();
+                  } else {
+                    // Show an alert or message prompting the user to accept terms and conditions
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Accept T&C',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          content: Text(
+                            'Please accept the terms and conditions.',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          backgroundColor:
+                              Colors.white, // Set the background color
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0, 4),
+                        blurRadius: 10.0,
+                      ),
+                    ],
+                    color: _isChecked ? AppColors.orange : Colors.grey,
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: Text(
+                        'Sign in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Checkbox(
+                    value: _isChecked,
+                    activeColor: AppColors.orange,
+                    onChanged: (value) {
+                      setState(() {
+                        _isChecked = value!;
+                      });
+                    },
+                  ),
+                  Text('I accept the terms and conditions'),
+                ],
+              ),
+              //////////////////////////////////////////////////////////////////////
+              // GestureDetector(
+              //   // onTap: () {
+              //   //   // Your logic here
+              //   // },
+              //   onTap: _signIn,
+              //   child: Container(
+              //     height: 50,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(8.0),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: Colors.black54,
+              //           offset: Offset(0, 4),
+              //           blurRadius: 10.0,
+              //         ),
+              //       ],
+              //     ),
+              //     child: Material(
+              //       color: AppColors.orange,
+              //       borderRadius: BorderRadius.circular(8.0),
+              //       elevation: 10.0,
+              //       child: Center(
+              //         child: Text(
+              //           'Sign in',
+              //           style: TextStyle(
+              //             color: Colors.white,
+              //             fontSize: 18.0,
+              //             // fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Row(
+              //   children: [
+              //     Checkbox(
+              //       value: false, // Provide logic to manage this checkbox state
+              //       onChanged: (value) {
+              //         // Handle checkbox changes
+              //       },
+              //     ),
+              //     Text(
+              //         'I accept the terms and conditions'), // Text for the checkbox
+              //   ],
+              // ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: Material(
+                      elevation:
+                          2, // Adjust the elevation for the highlight effect
+                      child: Container(
+                        height: 1,
+                        color: Colors.grey, // Color of the line
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'or continue with',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Material(
+                      elevation:
+                          2, // Adjust the elevation for the highlight effect
+                      child: Container(
+                        height: 1,
+                        color: Colors.grey, // Color of the line
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  3,
+                  (index) => Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Transform(
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.01) // Depth
+                        ..rotateX(0.1) // X-Axis rotation
+                        ..rotateY(0.1),
+                      child: CircleAvatar(
+                        backgroundColor: lightGrey,
+                        radius: 25,
+                        child: Image.asset(
+                          socialIconList[index],
+                          width: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     // Add your social media login buttons here
+              //     // Example:
+              //     IconButton(
+              //       icon: Icon(Icons.facebook), // Facebook icon
+              //       onPressed: () {
+              //         // Logic for Facebook login
+              //       },
+              //     ),
+              //     IconButton(
+              //       icon: Icon(Icons.facebook), // Twitter icon
+              //       onPressed: () {
+              //         // Logic for Twitter login
+              //       },
+              //     ),
+              //     IconButton(
+              //       icon: Icon(Icons.facebook), // Google icon
+              //       onPressed: () {
+              //         // Logic for Google login
+              //       },
+              //     ),
+              //   ],
+              // ), // Add space
             ],
           ),
         ),

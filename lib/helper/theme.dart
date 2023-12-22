@@ -67,6 +67,8 @@ class ThemeClass {
 
 class AppColors {
   // static final MaterialColor primary = Colors.amber;
+  // static const primary = Color.fromARGB(255, 238, 151, 51);
+  static const Color orange = Color.fromARGB(255, 246, 140, 26);
   static final MaterialColor primary = createSwatch(0, 102, 255, 1);
   // static final MaterialColor pro = createSwatch(162, 0, 255, 1);
   static final MaterialColor grey = createSwatch(134, 134, 134, 1);

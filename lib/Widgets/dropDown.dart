@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sports2/helper/theme.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String heading;
@@ -22,7 +23,10 @@ class CustomDropdown extends StatelessWidget {
       children: [
         Text(
           heading,
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(
+              color: AppColors.orange,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         DropdownButtonFormField<String>(
@@ -35,6 +39,11 @@ class CustomDropdown extends StatelessWidget {
           }).toList(),
           onChanged: onChanged,
           decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: Colors.orange), // Color when activated
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             hintText: 'Select $subHeading',
             border: OutlineInputBorder(),
           ),

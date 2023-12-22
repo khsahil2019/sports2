@@ -8,6 +8,7 @@ import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/dobPicker.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/textField.dart';
+import 'package:sports2/helper/theme.dart';
 
 class SportsmanRegistrationScreen extends StatefulWidget {
   @override
@@ -64,7 +65,7 @@ class _SportsmanRegistrationScreenState
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white,
+            color: Colors.black,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -125,14 +126,19 @@ class _SportsmanRegistrationScreenState
                             backgroundImage: FileImage(_imageFile!),
                           )
                         : CircleAvatar(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.orange,
                             radius: 60,
+                            child: Icon(
+                              Icons.person,
+                              size: 60,
+                              color: Colors.white,
+                            ),
                             // You can add a placeholder image or text here when no image is selected
                           ),
                   ),
                   Positioned(
-                    bottom: 50,
-                    right: 150,
+                    bottom: 30,
+                    right: 130,
                     child: GestureDetector(
                       onTap: () {
                         _getImage();
@@ -141,7 +147,7 @@ class _SportsmanRegistrationScreenState
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 200, 243, 239),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
@@ -225,7 +231,10 @@ class _SportsmanRegistrationScreenState
                     children: [
                       const Text(
                         "Preferred Sport(s) for Learning",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -336,6 +345,7 @@ class _SportsmanRegistrationScreenState
                       keyboardType: TextInputType.name,
                       controller: _aimController),
                   const SizedBox(height: 20),
+
                   Center(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width - 180,
@@ -344,22 +354,46 @@ class _SportsmanRegistrationScreenState
                           print("Press");
                           sendSportsmanRegDataToServer(context);
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40.0),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Colors
+                                    .orangeAccent; // Adjust color when pressed
+                              }
+                              return AppColors.orange; // Default color
+                            },
+                          ),
+                          elevation: MaterialStateProperty.all<double>(
+                              5), // Elevation for 3D effect
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40.0),
+                              side: BorderSide(
+                                width: 1,
+                                color: Colors.grey
+                                    .shade400, // Border color for 3D effect
+                              ),
+                            ),
                           ),
                         ),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
                             'Register',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
+
                   const SizedBox(height: 20),
                 ],
               ),

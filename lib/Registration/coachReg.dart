@@ -11,6 +11,7 @@ import 'package:sports2/Widgets/dobPicker.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/slider.dart';
 import 'package:sports2/Widgets/textField.dart';
+import 'package:sports2/helper/theme.dart';
 
 class CoachRegistrationScreen extends StatefulWidget {
   // CoachRegistrationScreen({
@@ -134,14 +135,19 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                             backgroundImage: FileImage(_imageFile!),
                           )
                         : CircleAvatar(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.orange,
                             radius: 60,
+                            child: Icon(
+                              Icons.person,
+                              size: 60,
+                              color: Colors.white,
+                            ),
                             // You can add a placeholder image or text here when no image is selected
                           ),
                   ),
                   Positioned(
-                    bottom: 50,
-                    right: 150,
+                    bottom: 30,
+                    right: 130,
                     child: GestureDetector(
                       onTap: () {
                         _getImage();
@@ -150,7 +156,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: Color.fromARGB(255, 200, 243, 239),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
@@ -269,7 +275,10 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     children: [
                       const Text(
                         "Sports Specialization",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -365,7 +374,10 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     children: [
                       const Text(
                         "Preferred Gender for leraning (Male/Female)",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -475,12 +487,16 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     children: [
                       const Text(
                         'Set your Availability Schedule',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Switch(
+                            activeColor: Colors.orange,
                             value: availibilty,
                             onChanged: (newValue) {
                               setState(() {
@@ -581,12 +597,16 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     children: [
                       const Text(
                         'Preferred Age Group to teach',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Switch(
+                            activeColor: Colors.orange,
                             value: ageGroup,
                             onChanged: (newValue) {
                               setState(() {
@@ -650,12 +670,16 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     children: [
                       const Text(
                         'Do you provide pick and drop facility?',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Switch(
+                            activeColor: Colors.orange,
                             value: providePickAndDrop,
                             onChanged: (newValue) {
                               setState(() {
@@ -703,19 +727,43 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       width: MediaQuery.of(context).size.width - 180,
                       child: ElevatedButton(
                         onPressed: () {
+                          print("Press");
                           sendCoachRegDataToServer(context);
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40.0),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Colors
+                                    .orangeAccent; // Adjust color when pressed
+                              }
+                              return AppColors.orange; // Default color
+                            },
+                          ),
+                          elevation: MaterialStateProperty.all<double>(
+                              5), // Elevation for 3D effect
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40.0),
+                              side: BorderSide(
+                                width: 1,
+                                color: Colors.grey
+                                    .shade400, // Border color for 3D effect
+                              ),
+                            ),
                           ),
                         ),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
                             'Register',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

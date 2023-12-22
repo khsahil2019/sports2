@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sports2/helper/theme.dart';
 
 class CustomSlider extends StatefulWidget {
   final double minValue;
@@ -30,7 +31,10 @@ class _CustomSliderState extends State<CustomSlider> {
       children: [
         Text(
           widget.label,
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(
+              color: AppColors.orange,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         Slider(

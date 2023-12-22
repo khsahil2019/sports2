@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:country_list_pick/country_list_pick.dart';
+import 'package:sports2/helper/theme.dart';
 
 class CountryPickerWidget extends StatelessWidget {
   final ValueChanged<CountryCode?> onChanged;
@@ -14,7 +15,11 @@ class CountryPickerWidget extends StatelessWidget {
       children: [
         Text(
           'Select Country',
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(
+            color: AppColors.orange,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
         ),
         SizedBox(
           height: 10,
@@ -34,7 +39,12 @@ class CountryPickerWidget extends StatelessWidget {
                     SizedBox(height: 8),
                     CountryListPick(
                       appBar: AppBar(
-                        title: Text('Choose Country'),
+                        title: Text(
+                          'Choose Country',
+                          style: TextStyle(
+                              color: AppColors.orange,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       theme: CountryTheme(
                         isShowFlag: true,
@@ -43,7 +53,7 @@ class CountryPickerWidget extends StatelessWidget {
                         isDownIcon: false,
                         showEnglishName: true,
                       ),
-                      //  initialSelection: '+1',
+                      initialSelection: '+91',
                       onChanged: onChanged,
                     ),
                   ],

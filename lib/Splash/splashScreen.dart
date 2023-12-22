@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sports2/Registration/sportsmanReg.dart';
 
 import 'package:sports2/Screens/home.dart';
 
@@ -60,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
         // );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => OnboardingScreen(),
+            builder: (_) => SportsmanRegistrationScreen(),
           ),
         );
         // Navigator.of(context).pushReplacement(

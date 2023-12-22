@@ -77,43 +77,6 @@ class _SportsmanRegistrationScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(
-            //   height: 200,
-            //   child: Stack(
-            //     children: [
-            //       Center(
-            //         child: Stack(
-            //           alignment: Alignment.bottomRight,
-            //           children: [
-            //             const CircleAvatar(
-            //               backgroundColor: Colors.white,
-            //               radius: 60,
-            //               // backgroundImage: AssetImage(
-            //               //     'assets/google.png'), // Replace with your image
-            //             ),
-            //             GestureDetector(
-            //               onTap: () {
-            //                 _getImage();
-            //                 // Handle edit profile photo functionality
-            //               },
-            //               child: Container(
-            //                 padding: const EdgeInsets.all(8),
-            //                 decoration: const BoxDecoration(
-            //                   color: Colors.white,
-            //                   shape: BoxShape.circle,
-            //                 ),
-            //                 child: const Icon(
-            //                   Icons.edit,
-            //                   color: Colors.black,
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             SizedBox(
               height: 200,
               child: Stack(
@@ -165,18 +128,6 @@ class _SportsmanRegistrationScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // CustomDropdown(
-                  //   heading: 'Registering youself As?',
-                  //   subHeading: "Select User Type",
-                  //   options: _userList,
-                  //   selectedValue:
-                  //       _selectedUser, // Set your initial selected value
-                  //   onChanged: (String? value) {
-                  //     setState(() {
-                  //       _selectedUser = value;
-                  //     });
-                  //   },
-                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -345,7 +296,6 @@ class _SportsmanRegistrationScreenState
                       keyboardType: TextInputType.name,
                       controller: _aimController),
                   const SizedBox(height: 20),
-
                   Center(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width - 180,
@@ -393,7 +343,6 @@ class _SportsmanRegistrationScreenState
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
                 ],
               ),

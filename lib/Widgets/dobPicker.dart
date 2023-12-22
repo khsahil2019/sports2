@@ -44,22 +44,22 @@ class _DatePickerFieldState extends State<DatePickerField> {
           ],
         ),
         SizedBox(height: 8),
-        TextFormField(
-          controller: widget.controller,
-          readOnly: true,
-          decoration: InputDecoration(
-            hintText: 'Select your date of birth',
-            border: OutlineInputBorder(),
-            focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Colors.orange), // Color when activated
-              borderRadius: BorderRadius.circular(8.0),
+        Container(
+          child: TextFormField(
+            controller: widget.controller,
+            readOnly: true,
+            onTap: () {
+              _selectDate(context);
+            },
+            decoration: InputDecoration(
+              hintText: 'Select your date of birth',
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              suffixIcon: Icon(Icons.calendar_month),
             ),
-            suffixIcon: GestureDetector(
-                onTap: () {
-                  _selectDate(context);
-                },
-                child: Icon(Icons.calendar_month)),
           ),
         ),
       ],

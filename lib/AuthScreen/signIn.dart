@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/AuthScreen/forgetScreen.dart';
-import 'package:sports2/NewScreen/forgetPassScreen.dart';
+
 import 'package:sports2/NewScreen/homeCenter.dart';
 import 'package:sports2/helper/theme.dart';
 

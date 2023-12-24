@@ -2,6 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:country_list_pick/support/code_country.dart';
+import 'package:country_state_city/models/country.dart';
+import 'package:country_state_city/utils/city_utils.dart';
+import 'package:country_state_city/utils/country_utils.dart';
+import 'package:country_state_city/utils/state_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -103,6 +107,19 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
       });
     }
   }
+
+  String? countryValue;
+  String? stateValue;
+  String? cityValue;
+
+  Future<List<Country>> countries = getAllCountries();
+  // Get all states
+  final states = getAllStates();
+  // Get all cities
+  final cities = getAllCities();
+
+  // Get a country
+  // final country =  getCountryFromCode('AF');
 
   @override
   Widget build(BuildContext context) {
@@ -267,6 +284,17 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       });
                     },
                   ),
+                  // CustomDropdown(
+                  //   heading: 'Country', subHeading: "Select Country",
+                  //   options: countries,
+                  //   selectedValue:
+                  //       countryValue, // Set your initial selected value
+                  //   onChanged: (String? value) {
+                  //     setState(() {
+                  //       countryValue = value;
+                  //     });
+                  //   },
+                  // ),
                   const SizedBox(
                     height: 15,
                   ),

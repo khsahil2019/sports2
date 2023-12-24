@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sports2/AuthScreen/signUp.dart';
+import 'package:sports2/NewScreen/homeCenter.dart';
+import 'package:sports2/Screens/homeScreen.dart';
 
 import 'package:sports2/helper/theme.dart';
 
@@ -123,7 +125,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignUpScreen(),
+                        builder: (context) => Homescreen(),
                       ),
                     );
                   }

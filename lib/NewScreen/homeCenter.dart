@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/NewScreen/playGroundScreen.dart';
+import 'package:sports2/NewScreen/playLearn/coachesPlay.dart';
 import 'package:sports2/NewScreen/profileScreen.dart';
 import 'package:sports2/NewScreen/typeGames.dart';
 import 'package:sports2/Registration/image.dart';
@@ -18,7 +19,7 @@ class _HomescreenState extends State<Homescreen> {
     HomeContent(),
     GamesScreen(),
     PlayGroundScreen(),
-    ProfilePage(),
+    CoachProfileScreen(),
   ];
 
   @override
@@ -122,12 +123,12 @@ class HomeContent extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                // Get.to(() => GamesScreen());
+                Get.to(() => CoachPlayScreen());
               },
               child: ContainerWithArrow(
                 imageUrl: 'assets/img/play.png', // Replace with your image path
                 text: 'Container 1',
-                index: 1, type: "play",
+                index: 1, type: "play & Learn",
               ),
             ),
             SizedBox(
@@ -136,13 +137,13 @@ class HomeContent extends StatelessWidget {
             // Container 2
             GestureDetector(
               onTap: () {
-                //  Get.to(() => GamesScreen());
+                Get.to(() => GamesScreen());
               },
               child: ContainerWithArrow(
                 imageUrl: 'assets/img/create.png',
                 text: 'Container 2',
                 index: 2,
-                type: "Create",
+                type: "PlayGround / Game Facilities",
               ),
             ),
             SizedBox(
@@ -157,7 +158,7 @@ class HomeContent extends StatelessWidget {
                 imageUrl: 'assets/img/create.png',
                 text: 'Container 2',
                 index: 3,
-                type: "Book",
+                type: "Create Event",
               ),
             ),
             SizedBox(
@@ -237,23 +238,23 @@ class ContainerWithArrow extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24,
+                          fontSize: 20,
                           color: AppColors.orange,
                         ),
                       ),
                       SizedBox(
                         width: 30,
                       ),
-                      Expanded(
-                        child: Text(
-                          'Discover amazing playground nearby your location and join memeber',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Text(
+                      //     'Discover amazing playground nearby your location and join memeber',
+                      //     textAlign: TextAlign.start,
+                      //     style: TextStyle(
+                      //       fontSize: 12,
+                      //       color: Colors.grey,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

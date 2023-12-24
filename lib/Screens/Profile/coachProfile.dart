@@ -1,269 +1,223 @@
 import 'package:flutter/material.dart';
+import 'package:sports2/helper/theme.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+class CoachProfileScreen extends StatefulWidget {
+  @override
+  _CoachProfileScreenState createState() => _CoachProfileScreenState();
+}
 
-class CoachProfileScreen extends StatelessWidget {
-  static const String path = "lib/src/pages/profile/profile4.dart";
+class _CoachProfileScreenState extends State<CoachProfileScreen> {
+  // Define variables for coach details
+  String coachName = 'Mohammad Salim';
+  String designation = 'Fitness Coach';
+  int age = 30;
+  String quotes = 'Success is a journey, not a destination.';
+  final double experienceLevel = 6;
+  // Define variables for professional details
+  String bio =
+      'A coach bio is a brief introduction that provides potential clients with insights into a coach\'s expertise, experience, and coaching philosophy.';
+  String goalsAndNeeds =
+      'As a coach, I aim to inspire people to achieve their fitness goals while addressing their unique needs.';
+  String motivations =
+      'I am motivated by the progress and achievements of my clients.';
+  String technologies =
+      'I leverage modern technologies to enhance training sessions.';
 
-  const CoachProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              FontAwesomeIcons.commentDots,
-              color: Colors.black54,
-            ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.black54,
-            ),
-            onPressed: () {},
-          )
-        ],
+        title: Text('Coach Profile'),
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildHeader(),
-            Container(
-              margin: const EdgeInsets.all(16.0),
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(color: Colors.grey.shade200),
-              child: const Text(
-                  "Over 8+ years of experience and web development and 5+ years of experience in mobile applications development "),
-            ),
-            _buildTitle("Skills"),
-            const SizedBox(height: 10.0),
-            _buildSkillRow("Cricket", 0.75),
-            const SizedBox(height: 5.0),
-            _buildSkillRow("Hockey", 0.6),
-            const SizedBox(height: 5.0),
-            _buildSkillRow("FootBall", 0.65),
-            const SizedBox(height: 5.0),
-            _buildSkillRow("VolleyBall", 0.5),
-            const SizedBox(height: 30.0),
-            _buildTitle("Experience"),
-            _buildExperienceRow(
-                company: "GID Nepal",
-                position: "FootBall",
-                duration: "2010 - 2012"),
-            _buildExperienceRow(
-                company: "Lohani Tech",
-                position: "Hockey",
-                duration: "2012 - 2015"),
-            _buildExperienceRow(
-                company: "Popup Bits Pvt. Ltd.",
-                position: "VolleyBall",
-                duration: "2015 - 2018"),
-            _buildExperienceRow(
-                company: "Popup Bits Pvt. Ltd.",
-                position: "Pool",
-                duration: "2018 - Current"),
-            const SizedBox(height: 20.0),
-            _buildTitle("Education"),
-            const SizedBox(height: 5.0),
-            _buildExperienceRow(
-                company: "Tribhuvan University, Nepal",
-                position: "B.Sc. Computer Science and Information Technology",
-                duration: "2011 - 2015"),
-            _buildExperienceRow(
-                company: "Cambridge University, UK",
-                position: "A Level",
-                duration: "2008 - 2010"),
-            _buildExperienceRow(
-                company: "Nepal Board", position: "SLC", duration: "2008"),
-            const SizedBox(height: 20.0),
-            _buildTitle("Contact"),
-            const SizedBox(height: 5.0),
+          children: [
+            // Personal details section
             Row(
-              children: const <Widget>[
-                SizedBox(width: 30.0),
-                Icon(
-                  Icons.mail,
-                  color: Colors.black54,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Coach image
+                CircleAvatar(
+                  backgroundColor: Colors.orange,
+                  radius: 50,
+                  child: Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Colors.white,
+                  ),
                 ),
-                SizedBox(width: 10.0),
-                Text(
-                  "dlohani48@gmail.com",
-                  style: TextStyle(fontSize: 16.0),
+                SizedBox(width: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      coachName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      designation,
+                      style: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Age: $age',
+                    ),
+                    SizedBox(height: 5),
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        '"$quotes"',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const SizedBox(height: 10.0),
+            SizedBox(height: 20),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+              indent: 20,
+              endIndent: 20,
+            ), // Divider between sections
+            SizedBox(height: 20),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'About - ',
+                    style: TextStyle(
+                        color: Colors.orange,
+                        fontFamily: "Outfit",
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: bio,
+                    style: TextStyle(color: Colors.black, fontFamily: "Outfit"),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            // Professional details section (on the right side)
             Row(
-              children: const <Widget>[
-                SizedBox(width: 30.0),
-                Icon(
-                  Icons.phone,
-                  color: Colors.black54,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Speciality',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        bio,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Goals and Needs',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        goalsAndNeeds,
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(width: 10.0),
-                Text(
-                  "+977-9818523107",
-                  style: TextStyle(fontSize: 16.0),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Motivations',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        motivations,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'Technologies',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        technologies,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            _buildSocialsRow(),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+              indent: 20,
+              endIndent: 20,
+            ), // Divider between sections
+            SizedBox(height: 20),
+            Text(
+              'Experience Level: $experienceLevel',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ), // Show value as text
+            Slider(
+              activeColor: Colors.orange,
+              value: experienceLevel,
+              min: 0,
+              max: 10,
+              divisions: 10,
+              onChanged: (value) {
+                // Implement your logic to update the experience level
+                // This function gets called when the slider changes
+              },
+            ),
           ],
         ),
       ),
     );
   }
+}
 
-  Row _buildSocialsRow() {
-    return Row(
-      children: <Widget>[
-        const SizedBox(width: 20.0),
-        IconButton(
-          color: Colors.indigo,
-          icon: const Icon(FontAwesomeIcons.facebookF),
-          onPressed: () {
-            //  _launchURL("https://facebook.com/lohanidamodar");
-          },
-        ),
-        const SizedBox(width: 5.0),
-        IconButton(
-          color: Colors.indigo,
-          icon: const Icon(FontAwesomeIcons.github),
-          onPressed: () {
-            //  _launchURL("https://github.com/lohanidamodar");
-          },
-        ),
-        const SizedBox(width: 5.0),
-        IconButton(
-          color: Colors.red,
-          icon: const Icon(FontAwesomeIcons.youtube),
-          onPressed: () {
-            //  _launchURL("https://youtube.com/c/reactbits");
-          },
-        ),
-        const SizedBox(width: 10.0),
-      ],
-    );
-  }
-
-  // _launchURL(String url) async {
-  //   if (await canLaunchUrl(Uri.parse(url))) {
-  //     await launchUrl(Uri.parse(url));
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
-
-  ListTile _buildExperienceRow(
-      {required String company, String? position, String? duration}) {
-    return ListTile(
-      leading: const Padding(
-        padding: EdgeInsets.only(top: 8.0, left: 20.0),
-        child: Icon(
-          FontAwesomeIcons.solidCircle,
-          size: 12.0,
-          color: Colors.black54,
-        ),
-      ),
-      title: Text(
-        company,
-        style:
-            const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text("$position ($duration)"),
-    );
-  }
-
-  Row _buildSkillRow(String skill, double level) {
-    return Row(
-      children: <Widget>[
-        const SizedBox(width: 16.0),
-        Expanded(
-            flex: 2,
-            child: Text(
-              skill.toUpperCase(),
-              textAlign: TextAlign.right,
-            )),
-        const SizedBox(width: 10.0),
-        Expanded(
-          flex: 5,
-          child: LinearProgressIndicator(
-            value: level,
-          ),
-        ),
-        const SizedBox(width: 16.0),
-      ],
-    );
-  }
-
-  Widget _buildTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title.toUpperCase(),
-            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          const Divider(
-            color: Colors.black54,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Row _buildHeader() {
-    return Row(
-      children: <Widget>[
-        const SizedBox(width: 20.0),
-        SizedBox(
-            width: 80.0,
-            height: 80.0,
-            child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.grey,
-                child: CircleAvatar(
-                    radius: 35.0,
-                    backgroundImage: NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa5FWKCX_yxfhr14GIkzLm9bMb7BIoKK4v98tOuYJe-g&s")))),
-        const SizedBox(width: 20.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Text(
-              "Damodar Lohani",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10.0),
-            const Text("Sports Teacher"),
-            const SizedBox(height: 5.0),
-            Row(
-              children: const <Widget>[
-                Icon(
-                  FontAwesomeIcons.map,
-                  size: 12.0,
-                  color: Colors.black54,
-                ),
-                SizedBox(width: 10.0),
-                Text(
-                  "Kathmandu, Nepal",
-                  style: TextStyle(color: Colors.black54),
-                ),
-              ],
-            ),
-          ],
-        )
-      ],
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    home: CoachProfileScreen(),
+  ));
 }

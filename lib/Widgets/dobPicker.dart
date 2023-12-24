@@ -36,15 +36,21 @@ class _DatePickerFieldState extends State<DatePickerField> {
             Text(
               'Date of Birth',
               style: TextStyle(
-                  color: AppColors.orange,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+                color: AppColors.orange,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(width: 8),
           ],
         ),
         SizedBox(height: 8),
         Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           child: TextFormField(
             controller: widget.controller,
             readOnly: true,
@@ -52,12 +58,10 @@ class _DatePickerFieldState extends State<DatePickerField> {
               _selectDate(context);
             },
             decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 12, vertical: 16),
               hintText: 'Select your date of birth',
-              border: OutlineInputBorder(),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.orange),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
+              border: InputBorder.none,
               suffixIcon: Icon(Icons.calendar_month),
             ),
           ),

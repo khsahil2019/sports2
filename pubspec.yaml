@@ -49,6 +49,8 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   shared_preferences: ^2.2.2
   flutter_rating_bar: ^4.0.1
+  country_state_city: ^0.1.6
+  country_state_city_picker: ^1.2.8
 
   
 

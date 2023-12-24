@@ -24,28 +24,38 @@ class CustomDropdown extends StatelessWidget {
         Text(
           heading,
           style: TextStyle(
-              color: AppColors.orange,
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
+            color: AppColors.orange,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         SizedBox(height: 8),
-        DropdownButtonFormField<String>(
-          value: selectedValue,
-          items: options.map((String option) {
-            return DropdownMenuItem<String>(
-              value: option,
-              child: Text(option),
-            );
-          }).toList(),
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Colors.orange), // Color when activated
-              borderRadius: BorderRadius.circular(8.0),
+        Container(
+          height: 60,
+          width: double.infinity,
+          constraints: BoxConstraints(
+              // maxWidth: , // Set the maximum width
+              // minHeight: 60, // Set the minimum height
+              ),
+          child: DropdownButtonFormField<String>(
+            value: selectedValue,
+            items: options.map((String option) {
+              return DropdownMenuItem<String>(
+                value: option,
+                child: Text(option),
+              );
+            }).toList(),
+            onChanged: onChanged,
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.orange, // Color when activated
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              hintText: 'Select $subHeading',
+              border: OutlineInputBorder(),
             ),
-            hintText: 'Select $subHeading',
-            border: OutlineInputBorder(),
           ),
         ),
       ],

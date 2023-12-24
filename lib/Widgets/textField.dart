@@ -25,23 +25,30 @@ class TextWidget extends StatelessWidget {
         Text(
           heading,
           style: TextStyle(
-              color: AppColors.orange,
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
+            color: AppColors.orange,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          maxLength: maxLength,
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: Colors.orange), // Color when activated
-              borderRadius: BorderRadius.circular(8.0),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.grey), // Outer border color
+          ),
+          child: TextFormField(
+            controller: controller,
+            keyboardType: keyboardType,
+            maxLength: maxLength,
+
+            decoration: InputDecoration(
+              counterText: '',
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              hintText: hint,
+              border: InputBorder.none, // Remove the default border
             ),
-            hintText: hint,
-            border: OutlineInputBorder(),
+            style: TextStyle(fontSize: 16), // Adjust text style if needed
           ),
         ),
         SizedBox(height: 15),

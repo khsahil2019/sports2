@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports2/NewScreen/homeCenter.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/coachDetail.dart';
+import 'package:sports2/NewScreen/playLearn/Event/createEvent.dart';
+import 'package:sports2/NewScreen/playLearn/Event/showEvent.dart';
 import 'package:sports2/NewScreen/playLearn/coachesPlay.dart';
 import 'package:sports2/Registration/coachReg.dart';
+import 'package:sports2/Registration/placeReg.dart';
 import 'package:sports2/Registration/sportsmanReg.dart';
+import 'package:sports2/Screens/Event/createEvent.dart';
 import 'package:sports2/Screens/Profile/coachProfile.dart';
 
 import 'package:sports2/Screens/home.dart';
@@ -65,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
         // );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => OnboardingScreen(),
+            builder: (_) => CoachDetailScreen(),
           ),
         );
         // Navigator.of(context).pushReplacement(

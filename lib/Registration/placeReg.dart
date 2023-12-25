@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/textField.dart';
+import 'package:sports2/helper/theme.dart';
 
 class PlaceHolderRegistration extends StatefulWidget {
   @override
@@ -114,33 +115,42 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
               child: Stack(
                 children: [
                   Center(
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 60,
-                          // backgroundImage: AssetImage(
-                          //     'assets/google.png'), // Replace with your image
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _getImage();
-                            // Handle edit profile photo functionality
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: const BoxDecoration(
+                    child: _imageFile != null
+                        ? CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 60,
+                            backgroundImage: FileImage(_imageFile!),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: Colors.orange,
+                            radius: 60,
+                            child: Icon(
+                              Icons.person,
+                              size: 60,
                               color: Colors.white,
-                              shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.black,
-                            ),
+                            // You can add a placeholder image or text here when no image is selected
                           ),
+                  ),
+                  Positioned(
+                    bottom: 30,
+                    right: 130,
+                    child: GestureDetector(
+                      onTap: () {
+                        _getImage();
+                        // Handle edit profile photo functionality
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 200, 243, 239),
+                          shape: BoxShape.circle,
                         ),
-                      ],
+                        child: const Icon(
+                          Icons.edit,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -193,7 +203,10 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     children: [
                       const Text(
                         "Type of Property",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -292,12 +305,16 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     children: [
                       const Text(
                         'Set your Availability Schedule',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Switch(
+                            activeColor: AppColors.orange,
                             value: availibilty,
                             onChanged: (newValue) {
                               setState(() {
@@ -401,7 +418,10 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     children: [
                       const Text(
                         "Amenities or Facilities Available",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -449,7 +469,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                       if (_isAmenities)
                         AnimatedContainer(
                           //width: 300,
-                          height: 200,
+                          height: 150,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey)),
                           duration: Duration(milliseconds: 300),
@@ -499,7 +519,10 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     children: [
                       const Text(
                         "Safety and security features",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -601,12 +624,16 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     children: [
                       const Text(
                         'Do you provide pick and drop facility?',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Switch(
+                            activeColor: AppColors.orange,
                             value: providePickAndDrop,
                             onChanged: (newValue) {
                               setState(() {
@@ -650,17 +677,40 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                           print("Press");
                           sendPlaceHolderRegDataToServer(context);
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40.0),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Colors
+                                    .orangeAccent; // Adjust color when pressed
+                              }
+                              return AppColors.orange; // Default color
+                            },
+                          ),
+                          elevation: MaterialStateProperty.all<double>(
+                              5), // Elevation for 3D effect
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40.0),
+                              side: BorderSide(
+                                width: 1,
+                                color: Colors.grey
+                                    .shade400, // Border color for 3D effect
+                              ),
+                            ),
                           ),
                         ),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
                             'Register',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

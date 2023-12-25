@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/Controller/authCotroller.dart';
+import 'package:sports2/NewScreen/playLearn/Event/createEvent.dart';
 import 'package:sports2/Screens/Event/createEvent.dart';
 import 'package:sports2/Screens/Profile/coachProfile.dart';
 import 'package:sports2/Screens/Profile/stuProfile.dart';

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:country_list_pick/support/code_country.dart';
 import 'package:country_state_city/models/country.dart';
@@ -17,19 +18,18 @@ import 'package:sports2/Widgets/slider.dart';
 import 'package:sports2/Widgets/textField.dart';
 import 'package:sports2/helper/theme.dart';
 
-class CoachRegistrationScreen extends StatefulWidget {
-  // CoachRegistrationScreen({
+class CreateEventScreen extends StatefulWidget {
+  // CreateEventScreen({
   //   Key? key,
   // }) : super(key: key);
 
   @override
-  _CoachRegistrationScreenState createState() =>
-      _CoachRegistrationScreenState();
+  _CreateEventScreenState createState() => _CreateEventScreenState();
 }
 
 //var data = Get.arguments;
 
-class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
+class _CreateEventScreenState extends State<CreateEventScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -45,6 +45,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   final TextEditingController _extraController = TextEditingController();
 
   String? _selectedGender;
+  String? _selectedSport;
 
   String? _countryName;
 
@@ -56,6 +57,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   bool ageGroup = false;
 
   final List<String> _gendersList = ['Male', 'Female', 'Other'];
+  final List<String> _sportsList = ['Hockey', 'Cricket', 'BasketBall'];
 
   final Map<String, bool> _ageGroups = {
     'Kids (6-12)': false,
@@ -82,15 +84,20 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
     'Swimming',
     'Others'
   ];
+  List FacilitiesList = ['Camera', 'Security', 'Gaurds', 'Lights', 'Police'];
   List GenderList = ['Male', 'Female', 'Other'];
   bool _isExpanded = false;
   bool _isExpanded1 = false;
+  bool _isExpandedFac = false;
+  bool _isExpandedFac1 = false;
   // bool _isExpanded = false;
 
   List<bool> isSpecializationList = List.filled(29, false);
+  List<bool> isFacilitiesList = List.filled(29, false);
   List<bool> isGenderList = List.filled(29, false);
 
   List selectedSpecialization = [];
+  List selectedFacilities = [];
   List selectedGender = [];
   TimeOfDay _selectedStartTime = TimeOfDay(hour: 8, minute: 0);
   TimeOfDay _selectedEndTime = TimeOfDay(hour: 18, minute: 0);
@@ -111,6 +118,10 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   String? countryValue;
   String? stateValue;
   String? cityValue;
+  DateTime _selectedStartDate = DateTime.now();
+  // TimeOfDay _selectedStartTime = TimeOfDay.now();
+  DateTime _selectedEndDate = DateTime.now();
+  // TimeOfDay _selectedEndTime = TimeOfDay.now();
 
   Future<List<Country>> countries = getAllCountries();
   // Get all states
@@ -128,13 +139,17 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white, // Set back button color to white
+            color: Colors.orange, // Set back button color to white
           ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        title: Text("data"),
+        title: Text(
+          "Create Event",
+          style:
+              TextStyle(color: AppColors.orange, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -142,48 +157,60 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
           children: [
             SizedBox(
               height: 200,
-              child: Stack(
-                children: [
-                  Center(
-                    child: _imageFile != null
-                        ? CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 60,
-                            backgroundImage: FileImage(_imageFile!),
-                          )
-                        : CircleAvatar(
-                            backgroundColor: Colors.orange,
-                            radius: 60,
-                            child: Icon(
-                              Icons.person,
-                              size: 60,
-                              color: Colors.white,
+              width: double.infinity,
+              child: GestureDetector(
+                onTap: () {
+                  _getImage();
+                  // Handle edit profile photo functionality
+                },
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(
+                            255, 233, 205, 163), // Background color
+                        borderRadius:
+                            BorderRadius.circular(16), // Rounded corners
+                      ),
+                      child: _imageFile != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.file(
+                                _imageFile!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 200,
+                              ),
+                            )
+                          : Center(
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 60,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 60,
+                                  color: Colors.orange,
+                                ),
+                              ),
                             ),
-                            // You can add a placeholder image or text here when no image is selected
-                          ),
-                  ),
-                  Positioned(
-                    bottom: 30,
-                    right: 130,
-                    child: GestureDetector(
-                      onTap: () {
-                        _getImage();
-                        // Handle edit profile photo functionality
-                      },
+                    ),
+                    Positioned(
+                      bottom: 16,
+                      right: 16,
                       child: Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Color.fromARGB(255, 200, 243, 239),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.edit,
                           color: Colors.black,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -203,41 +230,156 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                   //     });
                   //   },
                   // ),
-                  const SizedBox(
-                    height: 15,
-                  ),
                   TextWidget(
-                      heading: "Full Name",
-                      hint: "Enter the Name",
+                      heading: "Event Name",
+                      hint: "Enter Event Name",
                       keyboardType: TextInputType.name,
                       controller: _nameController),
+
                   TextWidget(
-                      heading: "Email",
-                      hint: "Enter email",
+                      heading: "Time From",
+                      hint: "Enter Time",
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController),
                   TextWidget(
-                      heading: "Contact Number",
-                      hint: "Enter contact No",
+                      heading: "Time To",
+                      hint: "Enter Time",
                       maxLength: 10,
                       keyboardType: TextInputType.number,
                       controller: _mobileController),
                   TextWidget(
-                      heading: "Password",
+                      heading: "Duration",
                       hint: "Enter Password",
                       keyboardType: TextInputType.text,
                       controller: _passwordController),
                   TextWidget(
-                      heading: "Address",
-                      hint: "Enter Address",
+                      heading: "Venue",
+                      hint: "Enter Venue",
                       keyboardType: TextInputType.text,
                       controller: _addressController),
-                  DatePickerField(
-                    controller: _dobController,
+                  CustomDropdown(
+                    heading: 'Sports Type', subHeading: "Select Sport",
+                    options: _sportsList,
+                    selectedValue:
+                        _selectedSport, // Set your initial selected value
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedSport = value;
+                      });
+                    },
                   ),
                   const SizedBox(
                     height: 15,
                   ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Event Facilities",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isExpandedFac = !_isExpandedFac;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedFacilities.isEmpty
+                                              ? "Event Facilities"
+                                              : "You are Selected ${selectedFacilities.length} Sports Facilities",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (_isExpandedFac)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: FacilitiesList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(FacilitiesList[index]),
+                                value: isFacilitiesList[index],
+                                selected: isFacilitiesList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedFacilities
+                                          .contains(FacilitiesList[index])) {
+                                        selectedFacilities
+                                            .add(FacilitiesList[index]);
+                                      }
+                                    } else {
+                                      if (selectedFacilities
+                                          .contains(FacilitiesList[index])) {
+                                        selectedFacilities
+                                            .remove(FacilitiesList[index]);
+                                      }
+                                    }
+                                    isFacilitiesList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  /******************************************************/
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // DatePickerField(
+                  //   controller: _dobController,
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
                   CountryPickerWidget(
                     onChanged: (CountryCode? code) {
                       _countryName = code?.name;
@@ -273,126 +415,8 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       maxLength: 6,
                       keyboardType: TextInputType.number,
                       controller: _pincodeController),
-                  CustomDropdown(
-                    heading: 'Gender', subHeading: "Select Gender",
-                    options: _gendersList,
-                    selectedValue:
-                        _selectedGender, // Set your initial selected value
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedGender = value;
-                      });
-                    },
-                  ),
-                  // CustomDropdown(
-                  //   heading: 'Country', subHeading: "Select Country",
-                  //   options: countries,
-                  //   selectedValue:
-                  //       countryValue, // Set your initial selected value
-                  //   onChanged: (String? value) {
-                  //     setState(() {
-                  //       countryValue = value;
-                  //     });
-                  //   },
-                  // ),
                   const SizedBox(
                     height: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Sports Specialization",
-                        style: TextStyle(
-                            color: AppColors.orange,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isExpanded = !_isExpanded;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                child: DropdownButtonHideUnderline(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          selectedSpecialization.isEmpty
-                                              ? "Sports Specialization"
-                                              : "You are Selected ${selectedSpecialization.length} Sports Specialization",
-                                        ),
-                                      ),
-                                      Container(
-                                          margin: EdgeInsets.only(top: 20),
-                                          child: const Icon(
-                                              Icons.arrow_drop_down)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (_isExpanded)
-                        AnimatedContainer(
-                          //width: 300,
-                          height: 200,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
-                          duration: Duration(milliseconds: 300),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: SpecializationList.length,
-                            itemBuilder: (context, index) {
-                              return CheckboxListTile(
-                                autofocus: true,
-                                checkColor: Colors.white,
-                                title: Text(SpecializationList[index]),
-                                value: isSpecializationList[index],
-                                selected: isSpecializationList[index],
-                                dense: true,
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (value!) {
-                                      if (!selectedSpecialization.contains(
-                                          SpecializationList[index])) {
-                                        selectedSpecialization
-                                            .add(SpecializationList[index]);
-                                      }
-                                    } else {
-                                      if (selectedSpecialization.contains(
-                                          SpecializationList[index])) {
-                                        selectedSpecialization
-                                            .remove(SpecializationList[index]);
-                                      }
-                                    }
-                                    isSpecializationList[index] = value;
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                    ],
                   ),
                   const SizedBox(
                     height: 15,
@@ -401,7 +425,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Preferred Gender for leraning (Male/Female)",
+                        "Preferred Gender",
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
@@ -509,122 +533,11 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Set your Availability Schedule',
-                        style: TextStyle(
-                            color: AppColors.orange,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Switch(
-                            activeColor: Colors.orange,
-                            value: availibilty,
-                            onChanged: (newValue) {
-                              setState(() {
-                                availibilty = newValue;
-                              });
-                            },
-                          ),
-                          Text(availibilty
-                              ? 'Now Set your Availability Schedule'
-                              : 'Slide to Set your Availability Schedule'),
-                        ],
-                      ),
-                      availibilty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 8),
-                                // Display checkboxes for days
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:
-                                      _daysAvailability.keys.map((String day) {
-                                    return CheckboxListTile(
-                                      title: Text(day),
-                                      value: _daysAvailability[day],
-                                      onChanged: (bool? value) {
-                                        bool isChecked = value ?? false;
-                                        setState(() {
-                                          _daysAvailability[day] = isChecked;
-                                        });
-
-                                        if (isChecked) {
-                                          setState(() {
-                                            selectedDays.add(day);
-                                            log(selectedDays.toString());
-                                          });
-                                        } else {
-                                          setState(() {
-                                            selectedDays.remove(day);
-                                            log(selectedDays.toString());
-                                          });
-                                        }
-                                      },
-                                    );
-                                  }).toList(),
-                                ),
-                                SizedBox(height: 12),
-                                // Select start and end timings
-                                Row(
-                                  children: [
-                                    Text('Start Time: '),
-                                    TextButton(
-                                      onPressed: () async {
-                                        TimeOfDay? selectedTime =
-                                            await showTimePicker(
-                                          context: context,
-                                          initialTime: _selectedStartTime,
-                                        );
-                                        if (selectedTime != null) {
-                                          setState(() {
-                                            _selectedStartTime = selectedTime;
-                                          });
-                                        }
-                                      },
-                                      child: Text(
-                                          _selectedStartTime.format(context)),
-                                    ),
-                                    SizedBox(width: 20),
-                                    Text('End Time: '),
-                                    TextButton(
-                                      onPressed: () async {
-                                        TimeOfDay? selectedTime =
-                                            await showTimePicker(
-                                          context: context,
-                                          initialTime: _selectedEndTime,
-                                        );
-                                        if (selectedTime != null) {
-                                          setState(() {
-                                            _selectedEndTime = selectedTime;
-                                          });
-                                        }
-                                      },
-                                      child: Text(
-                                          _selectedEndTime.format(context)),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Preferred Age Group to teach',
+                        'Preferred Age Group to participant',
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
@@ -643,8 +556,8 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                             },
                           ),
                           Text(ageGroup
-                              ? 'Select Preferred Age Group to teach'
-                              : 'Slide to Set Preferred Age Group to teach'),
+                              ? 'Select Preferred Age Group to participant'
+                              : 'Slide to Set Preferred Age Group to participant'),
                         ],
                       ),
                       ageGroup
@@ -684,20 +597,30 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     ],
                   ),
                   TextWidget(
-                      heading: "Something extra ordinary",
-                      hint: "Enter Something extra ordinary",
+                      heading: "Rules and Regulations",
+                      hint: "Enter Rules and Regulations",
                       keyboardType: TextInputType.name,
                       controller: _extraController),
                   TextWidget(
-                      heading: "Specific Skills or Techniques Taught",
-                      hint: "Enter Specific Skills",
-                      keyboardType: TextInputType.name,
+                      heading: "Participant Limits",
+                      hint: "Enter Participant Limits",
+                      keyboardType: TextInputType.number,
+                      controller: _skillController),
+                  TextWidget(
+                      heading: "Trophies/Awards",
+                      hint: "Enter Trophies/Awards",
+                      keyboardType: TextInputType.number,
+                      controller: _skillController),
+                  TextWidget(
+                      heading: "Sponsors",
+                      hint: "Enter Sponsorsed By",
+                      keyboardType: TextInputType.number,
                       controller: _skillController),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Do you provide pick and drop facility?',
+                        'Do you Have Medical Facilities?',
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
@@ -731,8 +654,8 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                           ),
                           Text(
                             providePickAndDrop
-                                ? 'Providing Pick and Drop'
-                                : 'Not Providing Pick and Drop',
+                                ? 'Providing Medical Facilities'
+                                : 'Not Providing Medical Facilities',
                           ),
                         ],
                       ),
@@ -745,8 +668,8 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
 
                   TextWidget(
                       maxLength: 6,
-                      heading: "Charges per Hours",
-                      hint: "Enter Charges",
+                      heading: "Entry Fees",
+                      hint: "Enter Enter Fees",
                       keyboardType: TextInputType.number,
                       controller: _chargesController),
                   const SizedBox(height: 20),
@@ -786,7 +709,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
-                            'Register',
+                            'Create Event',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

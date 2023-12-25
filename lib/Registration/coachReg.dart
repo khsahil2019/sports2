@@ -16,6 +16,7 @@ import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/slider.dart';
 import 'package:sports2/Widgets/textField.dart';
 import 'package:sports2/helper/theme.dart';
+import 'package:csc_picker/csc_picker.dart';
 
 class CoachRegistrationScreen extends StatefulWidget {
   // CoachRegistrationScreen({
@@ -36,9 +37,9 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
+  // final TextEditingController _cityController = TextEditingController();
   final TextEditingController _areaController = TextEditingController();
-  final TextEditingController _stateController = TextEditingController();
+  // final TextEditingController _stateController = TextEditingController();
   final TextEditingController _pincodeController = TextEditingController();
   final TextEditingController _chargesController = TextEditingController();
   final TextEditingController _skillController = TextEditingController();
@@ -46,7 +47,9 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
 
   String? _selectedGender;
 
-  String? _countryName;
+  String? currentCountry;
+  String? currentState;
+  String? currentCity;
 
   // String? _selectedTargetGender;
 
@@ -238,30 +241,50 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  CountryPickerWidget(
-                    onChanged: (CountryCode? code) {
-                      _countryName = code?.name;
-                      print(_countryName);
-                      // Handle the selected country code or name
-                      if (code != null) {
-                        print('Selected country: ${code.name}');
-                        print('Country code: ${code.dialCode}');
-                      }
+                  CSCPicker(
+                    title: Text('Select Country, State and city'),
+                    currentCountry: countryValue,
+                    currentCity: cityValue,
+                    currentState: stateValue,
+                    onCountryChanged: (value) {
+                      setState(() {
+                        countryValue = value;
+                      });
                     },
+                    onCityChanged: (value) => setState(() {
+                      cityValue = value;
+                    }),
+                    onStateChanged: (value) => setState(() {
+                      stateValue = value;
+                    }),
+                    layout: Layout.vertical,
+                    defaultCountry: CscCountry.India,
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextWidget(
-                      heading: "State",
-                      hint: "Enter State",
-                      keyboardType: TextInputType.text,
-                      controller: _stateController),
-                  TextWidget(
-                      heading: "City",
-                      hint: "Enter City",
-                      keyboardType: TextInputType.text,
-                      controller: _cityController),
+
+                  // CountryPickerWidget(
+                  //   onChanged: (CountryCode? code) {
+                  //     _countryName = code?.name;
+                  //     print(_countryName);
+                  //     // Handle the selected country code or name
+                  //     if (code != null) {
+                  //       print('Selected country: ${code.name}');
+                  //       print('Country code: ${code.dialCode}');
+                  //     }
+                  //   },
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // TextWidget(
+                  //     heading: "State",
+                  //     hint: "Enter State",
+                  //     keyboardType: TextInputType.text,
+                  //     controller: _stateController),
+                  // TextWidget(
+                  //     heading: "City",
+                  //     hint: "Enter City",
+                  //     keyboardType: TextInputType.text,
+                  //     controller: _cityController),
                   TextWidget(
                       heading: "Landmark of your Area",
                       hint: "Enter Area",
@@ -817,7 +840,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
       _currentSliderValue.toString(),
       _dobController.text,
       selectedSpecialization,
-      _countryName.toString(),
+      countryValue!,
       _selectedGender.toString(),
       selectedGender,
       selectedDays,
@@ -826,8 +849,10 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
       selectedAgeGroup,
       _extraController.text,
       _skillController.text,
-      _stateController.text,
-      _cityController.text,
+      // _stateController.text,
+      stateValue!,
+      cityValue!,
+      // _cityController.text,
       _areaController.text,
       providePickAndDropList,
       _chargesController.text,

@@ -40,7 +40,6 @@ class TextWidget extends StatelessWidget {
             controller: controller,
             keyboardType: keyboardType,
             maxLength: maxLength,
-
             decoration: InputDecoration(
               counterText: '',
               contentPadding:

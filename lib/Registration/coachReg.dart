@@ -19,16 +19,10 @@ import 'package:sports2/helper/theme.dart';
 import 'package:csc_picker/csc_picker.dart';
 
 class CoachRegistrationScreen extends StatefulWidget {
-  // CoachRegistrationScreen({
-  //   Key? key,
-  // }) : super(key: key);
-
   @override
   _CoachRegistrationScreenState createState() =>
       _CoachRegistrationScreenState();
 }
-
-//var data = Get.arguments;
 
 class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   final TextEditingController _nameController = TextEditingController();
@@ -116,13 +110,10 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
   String? cityValue;
 
   Future<List<Country>> countries = getAllCountries();
-  // Get all states
-  final states = getAllStates();
-  // Get all cities
-  final cities = getAllCities();
 
-  // Get a country
-  // final country =  getCountryFromCode('AF');
+  final states = getAllStates();
+
+  final cities = getAllCities();
 
   @override
   Widget build(BuildContext context) {
@@ -194,18 +185,6 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // CustomDropdown(
-                  //   heading: 'Registering youself As?',
-                  //   subHeading: "Select User Type",
-                  //   options: _userList,
-                  //   selectedValue:
-                  //       _selectedUser, // Set your initial selected value
-                  //   onChanged: (String? value) {
-                  //     setState(() {
-                  //       _selectedUser = value;
-                  //     });
-                  //   },
-                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -242,7 +221,14 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     height: 15,
                   ),
                   CSCPicker(
-                    title: Text('Select Country, State and city'),
+                    title: Text(
+                      'Select Country, State and city',
+                      style: TextStyle(
+                        color: AppColors.orange,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     currentCountry: countryValue,
                     currentCity: cityValue,
                     currentState: stateValue,
@@ -260,31 +246,9 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                     layout: Layout.vertical,
                     defaultCountry: CscCountry.India,
                   ),
-
-                  // CountryPickerWidget(
-                  //   onChanged: (CountryCode? code) {
-                  //     _countryName = code?.name;
-                  //     print(_countryName);
-                  //     // Handle the selected country code or name
-                  //     if (code != null) {
-                  //       print('Selected country: ${code.name}');
-                  //       print('Country code: ${code.dialCode}');
-                  //     }
-                  //   },
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // TextWidget(
-                  //     heading: "State",
-                  //     hint: "Enter State",
-                  //     keyboardType: TextInputType.text,
-                  //     controller: _stateController),
-                  // TextWidget(
-                  //     heading: "City",
-                  //     hint: "Enter City",
-                  //     keyboardType: TextInputType.text,
-                  //     controller: _cityController),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   TextWidget(
                       heading: "Landmark of your Area",
                       hint: "Enter Area",
@@ -307,17 +271,6 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       });
                     },
                   ),
-                  // CustomDropdown(
-                  //   heading: 'Country', subHeading: "Select Country",
-                  //   options: countries,
-                  //   selectedValue:
-                  //       countryValue, // Set your initial selected value
-                  //   onChanged: (String? value) {
-                  //     setState(() {
-                  //       countryValue = value;
-                  //     });
-                  //   },
-                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -532,7 +485,6 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -761,11 +713,9 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       ),
                     ],
                   ),
-
                   const SizedBox(
                     height: 20,
                   ),
-
                   TextWidget(
                       maxLength: 6,
                       heading: "Charges per Hours",
@@ -861,12 +811,5 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
       "coach",
       //  _imageFile!
     );
-    // For demonstration purposes, print the data
-    // print('Name: $name, Number: $number, Email: $email ');
-
-    // Show a message or navigate after sending data to the server
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(content: Text('Data sent successfully')),
-    // );
   }
 }

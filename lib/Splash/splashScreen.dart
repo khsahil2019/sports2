@@ -63,16 +63,16 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         );
       } else {
-        // Navigator.of(context).pushReplacement(
-        //   MaterialPageRoute(
-        //     builder: (_) => CoachRegistrationScreen(),
-        //   ),
-        // );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => CoachDetailScreen(),
+            builder: (_) => CoachRegistrationScreen(),
           ),
         );
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (_) => CoachDetailScreen(),
+        //   ),
+        // );
         // Navigator.of(context).pushReplacement(
         //   MaterialPageRoute(
         //     builder: (_) => signinScreen(),

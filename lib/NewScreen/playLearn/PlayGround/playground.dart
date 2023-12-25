@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playgroundDetail.dart';
+import 'package:sports2/Widgets/CustomDropDown.dart';
+import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/helper/theme.dart';
 
 class AllPlayGroundScreen extends StatefulWidget {
@@ -12,6 +14,27 @@ class AllPlayGroundScreen extends StatefulWidget {
 class _AllPlayGroundScreenState extends State<AllPlayGroundScreen> {
   double _rating = 2.0; // State for the rating
   bool isFavorite = false; // State for the favorite icon
+  final List<String> _sportsList = [
+    'Cricket ground',
+    'FootBall ground',
+    'Hockey ground',
+    'polo ground',
+    'Stadium',
+    'Indoor Court',
+    'Swimming pool',
+    'scatting rink, Boxing ring',
+    'Batmintton Court',
+    'Indoor tennis Court',
+    'OutDoor tennis Court'
+  ];
+  String? _selectedSport;
+  final List<String> _locationList = [
+    'Lucknow',
+    'Delhi',
+    'Noida',
+    'Greater Noida'
+  ];
+  String? _selectedlocation;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +72,61 @@ class _AllPlayGroundScreenState extends State<AllPlayGroundScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  right: 12, left: 12, top: 12, bottom: 12),
+              child: CustomDropPlayGround(
+                heading: 'I want to play', subHeading: "Select Sport",
+                options: _sportsList,
+                selectedValue:
+                    _selectedSport, // Set your initial selected value
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedSport = value;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 12, left: 12),
+              child: CustomDropPlayGround(
+                heading: 'Where', subHeading: "Nearest to my current location",
+                options: _locationList,
+                selectedValue:
+                    _selectedlocation, // Set your initial selected value
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedlocation = value;
+                  });
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    'Available Stadium',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: AppColors.orange,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Icon(
+                    Icons.send_and_archive_outlined,
+                    color: AppColors.orange,
+                  ),
+                )
+              ],
+            ),
             Container(
               padding: EdgeInsets.all(16.0),
               child: Text(

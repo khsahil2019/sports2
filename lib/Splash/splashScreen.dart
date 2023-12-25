@@ -5,6 +5,7 @@ import 'package:sports2/NewScreen/homeCenter.dart';
 import 'package:sports2/NewScreen/playLearn/Coaches/coachDetail.dart';
 import 'package:sports2/NewScreen/playLearn/Event/createEvent.dart';
 import 'package:sports2/NewScreen/playLearn/Event/showEvent.dart';
+import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
 import 'package:sports2/NewScreen/playLearn/coachesPlay.dart';
 import 'package:sports2/Registration/coachReg.dart';
 import 'package:sports2/Registration/placeReg.dart';
@@ -68,16 +69,12 @@ class _SplashScreenState extends State<SplashScreen> {
         //     builder: (_) => CoachRegistrationScreen(),
         //   ),
         // );
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => CoachDetailScreen(),
+            builder: (_) => SportsmanRegistrationScreen(),
           ),
         );
-        // Navigator.of(context).pushReplacement(
-        //   MaterialPageRoute(
-        //     builder: (_) => signinScreen(),
-        //   ),
-        // );
       }
     });
   }

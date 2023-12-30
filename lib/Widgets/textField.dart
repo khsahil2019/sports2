@@ -34,7 +34,23 @@ class TextWidget extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: Colors.grey), // Outer border color
+            border: Border.all(color: Colors.grey),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white, // Top color
+                Colors.grey.shade200, // Bottom color
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 3), // Shadow position
+              ),
+            ], // Outer border color
           ),
           child: TextFormField(
             controller: controller,

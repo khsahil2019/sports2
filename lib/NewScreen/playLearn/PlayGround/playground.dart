@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playgroundDetail.dart';
 import 'package:sports2/Widgets/CustomDropDown.dart';
+import 'package:sports2/Widgets/datePicker.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/helper/theme.dart';
 
@@ -35,6 +36,7 @@ class _AllPlayGroundScreenState extends State<AllPlayGroundScreen> {
     'Greater Noida'
   ];
   String? _selectedlocation;
+  final TextEditingController _dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,14 @@ class _AllPlayGroundScreenState extends State<AllPlayGroundScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Padding(
+            //   padding: EdgeInsets.all(16.0),
+            //   child: buildDatePickerField(
+            //     controller: _dateController,
+            //     context: context,
+            //     heading: 'Select Date', // Pass your heading here
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(
                   right: 12, left: 12, top: 12, bottom: 12),

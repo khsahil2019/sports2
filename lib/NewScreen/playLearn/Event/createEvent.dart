@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:intl/intl.dart';
 
 import 'package:country_list_pick/support/code_country.dart';
 import 'package:country_state_city/models/country.dart';
@@ -10,26 +9,38 @@ import 'package:country_state_city/utils/state_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sports2/NewScreen/playLearn/Event/showEvent.dart';
+import 'package:sports2/NewScreen/playLearn/Event/test.dart';
 import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/countryList.dart';
-import 'package:sports2/Widgets/dobPicker.dart';
+import 'package:sports2/Widgets/datePicker.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/slider.dart';
 import 'package:sports2/Widgets/textField.dart';
 import 'package:sports2/helper/theme.dart';
 
 class CreateEventScreen extends StatefulWidget {
-  // CreateEventScreen({
-  //   Key? key,
-  // }) : super(key: key);
-
   @override
   _CreateEventScreenState createState() => _CreateEventScreenState();
 }
 
-//var data = Get.arguments;
-
 class _CreateEventScreenState extends State<CreateEventScreen> {
+  List<TextEditingController> controllers = [TextEditingController()];
+
+  void addTextField() {
+    setState(() {
+      controllers.add(TextEditingController());
+    });
+  }
+
+  void removeTextField() {
+    setState(() {
+      if (controllers.length > 1) {
+        controllers.removeLast();
+      }
+    });
+  }
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -57,7 +68,31 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   bool ageGroup = false;
 
   final List<String> _gendersList = ['Male', 'Female', 'Other'];
-  final List<String> _sportsList = ['Hockey', 'Cricket', 'BasketBall'];
+  final List<String> _participantLevelList = [
+    'Beginner',
+    'Intermediate',
+    'Advance'
+  ];
+  String? _selectedpurposeEvent;
+  final List<String> _purposeEventList = [
+    'This is a charitable event',
+    'This is a Entertainment event',
+    'This is a Sponsored event',
+    'This is a "In memory of" event',
+    'This is a Community based event',
+    'This is a Friendly event',
+    'This is a Institutional event',
+    'This is a Competitive event',
+    'This is a Casual event',
+  ];
+  String? _selectedAttend;
+  final List<String> _attendList = [
+    'Anyone until venue is full (free)',
+    'Tickets are sold at venue',
+    'only by invitation',
+    'Paid tickets holders',
+    'Pass holders',
+  ];
 
   final Map<String, bool> _ageGroups = {
     'Kids (6-12)': false,
@@ -84,20 +119,117 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     'Swimming',
     'Others'
   ];
-  List FacilitiesList = ['Camera', 'Security', 'Gaurds', 'Lights', 'Police'];
+  List AwardList = [
+    'Winners will get Trophy',
+    'Winners will get Trophy with cash prize',
+    'Winners will get Certificate',
+    'Winners will get Certificate with cash prize',
+    'Winners will get cash Prize',
+    'Winners will get Citation on website',
+    'Winners will get Socail media circulation',
+    'Participants will get Certificates'
+  ];
   List GenderList = ['Male', 'Female', 'Other'];
-  bool _isExpanded = false;
   bool _isExpanded1 = false;
-  bool _isExpandedFac = false;
-  bool _isExpandedFac1 = false;
+  bool isAward = false;
+  bool isParticipantGender = false;
+  List<bool> isParticipantGenderList = List.filled(29, false);
+  List selectedParticipantGender = [];
+  List participantGenderList = [
+    'Male',
+    'Female',
+    'Other',
+  ];
+  bool isParticipantRefresh = false;
+  List<bool> isParticipantRefreshList = List.filled(29, false);
+  List selectedParticipantRefresh = [];
+  List participantRefreshList = [
+    'Free snack',
+    'Free lunch',
+    'Free Dinner',
+    'Free Water',
+    'Free Energy Drink',
+    'Paid snack',
+    'Paid lunch',
+    'Paid Dinner',
+    'Paid Water',
+    'Paid Energy Drink',
+  ];
+  bool isAttendeeRefresh = false;
+  List<bool> isAttendeeRefreshList = List.filled(29, false);
+  List selectedAttendeeRefresh = [];
+  List AttendeeRefreshList = [
+    'Free snack',
+    'Free lunch',
+    'Free Dinner',
+    'Free Water',
+    'Free Energy Drink',
+    'Paid snack',
+    'Paid lunch',
+    'Paid Dinner',
+    'Paid Water',
+    'Paid Energy Drink',
+  ];
+  bool isAttendeeFacilities = false;
+  List<bool> isAttendeeFacilitiesList = List.filled(29, false);
+  List selectedAttendeeFacilities = [];
+  List AttendeeFacilitiesList = [
+    'Clean washroom',
+    'Soap in the washrooms',
+    'Parking',
+    'Locker',
+    'Charging Points',
+    'RO water',
+  ];
+  bool isParticipantFacilities = false;
+  List<bool> isParticipantFacilitiesList = List.filled(29, false);
+  List selectedParticipantFacilities = [];
+  List ParticipantFacilitiesList = [
+    'Change room',
+    'Locker',
+    'Clean washrooms',
+    'Towel',
+    'Kit',
+    'Soap',
+    'Shampoo',
+    'ShampooBed with mattress',
+    'AC',
+    'Cooler',
+    'Fan',
+    'Charging point',
+    'Proper lighting',
+    'Parking',
+    'Gym',
+    'Ro water',
+  ];
+  bool isSecurity = false;
+  List<bool> isSecurityList = List.filled(29, false);
+  List selectedSecurity = [];
+  List SecurityList = [
+    'Security guards',
+    'CCTV Surveillance',
+    'Metal Detector',
+    'Assisted Entry',
+    'Assisted Exit',
+    'Fire Extinguishers',
+    'Smoke Alrams',
+    'Emergency response system',
+    'Crowd Management',
+    'Ambulance',
+    'Nurse',
+    'Doctor',
+    'First Aid',
+    'CPR',
+    'Sick room',
+  ];
   // bool _isExpanded = false;
 
   List<bool> isSpecializationList = List.filled(29, false);
-  List<bool> isFacilitiesList = List.filled(29, false);
+  List<bool> isAwardList = List.filled(29, false);
   List<bool> isGenderList = List.filled(29, false);
 
   List selectedSpecialization = [];
-  List selectedFacilities = [];
+  List selectedAward = [];
   List selectedGender = [];
   TimeOfDay _selectedStartTime = TimeOfDay(hour: 8, minute: 0);
   TimeOfDay _selectedEndTime = TimeOfDay(hour: 18, minute: 0);
@@ -115,12 +247,11 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     }
   }
 
+  TextEditingController _dateController = TextEditingController();
   String? countryValue;
   String? stateValue;
   String? cityValue;
-  DateTime _selectedStartDate = DateTime.now();
   // TimeOfDay _selectedStartTime = TimeOfDay.now();
-  DateTime _selectedEndDate = DateTime.now();
   // TimeOfDay _selectedEndTime = TimeOfDay.now();
 
   Future<List<Country>> countries = getAllCountries();
@@ -134,18 +265,72 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> textFields = controllers.map((controller) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Text(
+          //   "heading",
+          //   style: TextStyle(
+          //     color: AppColors.orange,
+          //     fontSize: 16,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.white, // Top color
+                  Colors.grey.shade200, // Bottom color
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: Offset(0, 3), // Shadow position
+                ),
+              ], // Outer border color
+            ),
+            child: TextFormField(
+              controller: controller,
+              // keyboardType: keyboardType,
+              // maxLength: maxLength,
+              decoration: InputDecoration(
+                counterText: '',
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                hintText: "Add all social link by adding +",
+                border: InputBorder.none, // Remove the default border
+              ),
+              style: TextStyle(fontSize: 16), // Adjust text style if needed
+            ),
+          ),
+          SizedBox(height: 15),
+        ],
+      );
+      ;
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.orange, // Set back button color to white
+            color: Colors.orange,
           ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        title: Text(
+        title: const Text(
           "Create Event",
           style:
               TextStyle(color: AppColors.orange, fontWeight: FontWeight.bold),
@@ -161,16 +346,13 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               child: GestureDetector(
                 onTap: () {
                   _getImage();
-                  // Handle edit profile photo functionality
                 },
                 child: Stack(
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(
-                            255, 233, 205, 163), // Background color
-                        borderRadius:
-                            BorderRadius.circular(16), // Rounded corners
+                        color: const Color.fromARGB(255, 233, 205, 163),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       child: _imageFile != null
                           ? ClipRRect(
@@ -182,7 +364,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                                 height: 200,
                               ),
                             )
-                          : Center(
+                          : const Center(
                               child: CircleAvatar(
                                 backgroundColor: Colors.white,
                                 radius: 60,
@@ -199,11 +381,11 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       right: 16,
                       child: Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 200, 243, 239),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.edit,
                           color: Colors.black,
                         ),
@@ -218,38 +400,28 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // CustomDropdown(
-                  //   heading: 'Registering youself As?',
-                  //   subHeading: "Select User Type",
-                  //   options: _userList,
-                  //   selectedValue:
-                  //       _selectedUser, // Set your initial selected value
-                  //   onChanged: (String? value) {
-                  //     setState(() {
-                  //       _selectedUser = value;
-                  //     });
-                  //   },
-                  // ),
                   TextWidget(
-                      heading: "Event Name",
-                      hint: "Enter Event Name",
+                      heading: "Event type",
+                      hint:
+                          "Exp: Indoor games, sports, dance competition, singing competition etc.",
                       keyboardType: TextInputType.name,
                       controller: _nameController),
 
                   TextWidget(
-                      heading: "Time From",
-                      hint: "Enter Time",
+                      heading: "Name of activity",
+                      hint:
+                          "Exp: Football match, Annual Function, Lawn tennis match etc.",
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController),
                   TextWidget(
-                      heading: "Time To",
-                      hint: "Enter Time",
+                      heading: "Venue/Place",
+                      hint: "Enter Venue/Place",
                       maxLength: 10,
                       keyboardType: TextInputType.number,
                       controller: _mobileController),
                   TextWidget(
-                      heading: "Duration",
-                      hint: "Enter Password",
+                      heading: "Name of the Event",
+                      hint: "Enter Name of Event",
                       keyboardType: TextInputType.text,
                       controller: _passwordController),
                   TextWidget(
@@ -257,11 +429,51 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       hint: "Enter Venue",
                       keyboardType: TextInputType.text,
                       controller: _addressController),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  buildDatePickerField(
+                    controller: _dateController,
+                    context: context,
+                    heading: 'Select Start Date',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  buildDatePickerField(
+                    controller: _dateController,
+                    context: context,
+                    heading: 'Select End Date',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextWidget(
+                      heading: "Total Days",
+                      hint: "Enter Total Days",
+                      keyboardType: TextInputType.number,
+                      controller: _addressController),
+                  TextWidget(
+                      heading: "Participant Age Group",
+                      hint: "Ex: 20 -25 year",
+                      keyboardType: TextInputType.number,
+                      controller: _addressController),
+                  TextWidget(
+                      heading: "Participant Height Group",
+                      hint: "Ex: 130 - 150 Cm",
+                      keyboardType: TextInputType.number,
+                      controller: _addressController),
+                  TextWidget(
+                      heading: "Participant Weight Group",
+                      hint: "Ex: 40 - 50 kg",
+                      keyboardType: TextInputType.number,
+                      controller: _addressController),
+
                   CustomDropdown(
-                    heading: 'Sports Type', subHeading: "Select Sport",
-                    options: _sportsList,
-                    selectedValue:
-                        _selectedSport, // Set your initial selected value
+                    heading: 'Participants level',
+                    subHeading: "Select Participant level",
+                    options: _participantLevelList,
+                    selectedValue: _selectedSport,
                     onChanged: (String? value) {
                       setState(() {
                         _selectedSport = value;
@@ -275,7 +487,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Event Facilities",
+                        "Participants Gender",
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
@@ -287,7 +499,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            _isExpandedFac = !_isExpandedFac;
+                            isParticipantGender = !isParticipantGender;
                           });
                         },
                         child: Row(
@@ -307,159 +519,9 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
-                                          selectedFacilities.isEmpty
-                                              ? "Event Facilities"
-                                              : "You are Selected ${selectedFacilities.length} Sports Facilities",
-                                        ),
-                                      ),
-                                      Container(
-                                          margin: EdgeInsets.only(top: 20),
-                                          child: const Icon(
-                                              Icons.arrow_drop_down)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (_isExpandedFac)
-                        AnimatedContainer(
-                          //width: 300,
-                          height: 200,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
-                          duration: Duration(milliseconds: 300),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: FacilitiesList.length,
-                            itemBuilder: (context, index) {
-                              return CheckboxListTile(
-                                autofocus: true,
-                                checkColor: Colors.white,
-                                title: Text(FacilitiesList[index]),
-                                value: isFacilitiesList[index],
-                                selected: isFacilitiesList[index],
-                                dense: true,
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (value!) {
-                                      if (!selectedFacilities
-                                          .contains(FacilitiesList[index])) {
-                                        selectedFacilities
-                                            .add(FacilitiesList[index]);
-                                      }
-                                    } else {
-                                      if (selectedFacilities
-                                          .contains(FacilitiesList[index])) {
-                                        selectedFacilities
-                                            .remove(FacilitiesList[index]);
-                                      }
-                                    }
-                                    isFacilitiesList[index] = value;
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  /******************************************************/
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // DatePickerField(
-                  //   controller: _dobController,
-                  // ),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  CountryPickerWidget(
-                    onChanged: (CountryCode? code) {
-                      _countryName = code?.name;
-                      print(_countryName);
-                      // Handle the selected country code or name
-                      if (code != null) {
-                        print('Selected country: ${code.name}');
-                        print('Country code: ${code.dialCode}');
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextWidget(
-                      heading: "State",
-                      hint: "Enter State",
-                      keyboardType: TextInputType.text,
-                      controller: _stateController),
-                  TextWidget(
-                      heading: "City",
-                      hint: "Enter City",
-                      keyboardType: TextInputType.text,
-                      controller: _cityController),
-                  TextWidget(
-                      heading: "Landmark of your Area",
-                      hint: "Enter Area",
-                      keyboardType: TextInputType.text,
-                      controller: _areaController),
-                  TextWidget(
-                      heading: "Pincode",
-                      hint: "Enter Pincode",
-                      maxLength: 6,
-                      keyboardType: TextInputType.number,
-                      controller: _pincodeController),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Preferred Gender",
-                        style: TextStyle(
-                            color: AppColors.orange,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isExpanded1 = !_isExpanded1;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                child: DropdownButtonHideUnderline(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          selectedGender.isEmpty
+                                          selectedParticipantGender.isEmpty
                                               ? "Select Preferred Gender"
-                                              : "Select ${selectedGender.length} Preferred Gender",
+                                              : "Select ${selectedParticipantGender.length} Preferred Gender",
                                         ),
                                       ),
                                       Container(
@@ -474,7 +536,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                           ],
                         ),
                       ),
-                      if (_isExpanded1)
+                      if (isParticipantGender)
                         AnimatedContainer(
                           //width: 300,
                           height: 150,
@@ -484,30 +546,129 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: ScrollPhysics(),
-                            itemCount: GenderList.length,
+                            itemCount: participantGenderList.length,
                             itemBuilder: (context, index) {
                               return CheckboxListTile(
                                 autofocus: true,
                                 checkColor: Colors.white,
-                                title: Text(GenderList[index]),
-                                value: isGenderList[index],
-                                selected: isGenderList[index],
+                                title: Text(participantGenderList[index]),
+                                value: isParticipantGenderList[index],
+                                selected: isParticipantGenderList[index],
                                 dense: true,
                                 onChanged: (value) {
                                   setState(() {
                                     if (value!) {
-                                      if (!selectedGender
-                                          .contains(GenderList[index])) {
-                                        selectedGender.add(GenderList[index]);
+                                      if (!selectedParticipantGender.contains(
+                                          participantGenderList[index])) {
+                                        selectedParticipantGender
+                                            .add(participantGenderList[index]);
                                       }
                                     } else {
-                                      if (selectedGender
-                                          .contains(GenderList[index])) {
-                                        selectedGender
-                                            .remove(GenderList[index]);
+                                      if (selectedParticipantGender.contains(
+                                          participantGenderList[index])) {
+                                        selectedParticipantGender.remove(
+                                            participantGenderList[index]);
                                       }
                                     }
-                                    isGenderList[index] = value;
+                                    isParticipantGenderList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Award/Reward",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isAward = !isAward;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedAward.isEmpty
+                                              ? "select Award/Reward"
+                                              : "You are Selected ${selectedAward.length} Sports Facilities",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isAward)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: AwardList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(AwardList[index]),
+                                value: isAwardList[index],
+                                selected: isAwardList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedAward
+                                          .contains(AwardList[index])) {
+                                        selectedAward.add(AwardList[index]);
+                                      }
+                                    } else {
+                                      if (selectedAward
+                                          .contains(AwardList[index])) {
+                                        selectedAward.remove(AwardList[index]);
+                                      }
+                                    }
+                                    isAwardList[index] = value;
                                   });
                                 },
                               );
@@ -519,17 +680,282 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  CustomSlider(
-                    minValue: 0,
-                    maxValue: 100,
-                    divisions: 10,
-                    label: 'Experince Level',
-                    onChanged: (double value) {
-                      _currentSliderValue = value;
-                      // Do something with the value when it changes
-                      print('Selected level: ${_currentSliderValue.round()}');
+
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // CustomSlider(
+                  //   minValue: 0,
+                  //   maxValue: 100,
+                  //   divisions: 10,
+                  //   label: 'Experince Level',
+                  //   onChanged: (double value) {
+                  //     _currentSliderValue = value;
+                  //     // Do something with the value when it changes
+                  //     print('Selected level: ${_currentSliderValue.round()}');
+                  //   },
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     const Text(
+                  //       'Preferred Age Group to participant',
+                  //       style: TextStyle(
+                  //           color: AppColors.orange,
+                  //           fontSize: 16,
+                  //           fontWeight: FontWeight.bold),
+                  //     ),
+                  //     const SizedBox(height: 10),
+                  //     Row(
+                  //       children: [
+                  //         Switch(
+                  //           activeColor: Colors.orange,
+                  //           value: ageGroup,
+                  //           onChanged: (newValue) {
+                  //             setState(() {
+                  //               ageGroup = newValue;
+                  //             });
+                  //           },
+                  //         ),
+                  //         Text(ageGroup
+                  //             ? 'Select Preferred Age Group to participant'
+                  //             : 'Slide to Set Preferred Age Group to participant'),
+                  //       ],
+                  //     ),
+                  //     ageGroup
+                  //         ? Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: _ageGroups.keys.map((String ageGroup) {
+                  //               return CheckboxListTile(
+                  //                 title: Text(ageGroup),
+                  //                 value: _ageGroups[ageGroup],
+                  //                 onChanged: (bool? value) {
+                  //                   setState(() {
+                  //                     _ageGroups[ageGroup] = value ?? false;
+
+                  //                     if (value == true) {
+                  //                       selectedAgeGroup.add(ageGroup);
+                  //                       log(selectedAgeGroup
+                  //                           .toString()); // Add selected age group to the list
+                  //                     } else {
+                  //                       selectedAgeGroup.remove(ageGroup);
+                  //                       log(selectedAgeGroup
+                  //                           .toString()); // Remove unselected age group from the list
+                  //                     }
+                  //                   });
+                  //                 },
+                  //                 // onChanged: (bool? value) {
+                  //                 //   setState(() {
+                  //                 //     _ageGroups[ageGroup] = value ?? false;
+                  //                 //   });
+                  //                 // },
+                  //               );
+                  //             }).toList(),
+                  //           )
+                  //         : const SizedBox(),
+                  //     SizedBox(
+                  //       height: 20,
+                  //     )
+                  //   ],
+                  // ),
+                  CustomDropdown(
+                    heading: 'Purpose of Event',
+                    subHeading: "Select Participant level",
+                    options: _purposeEventList,
+                    selectedValue: _selectedpurposeEvent,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedpurposeEvent = value;
+                      });
                     },
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomDropdown(
+                    heading: 'Who can attend',
+                    subHeading: "Select Attendee",
+                    options: _attendList,
+                    selectedValue: _selectedAttend,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedAttend = value;
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextWidget(
+                      heading: "Dress code for participant",
+                      hint:
+                          "Exp.: Tee Shits and Shorts, Jacket and Lower, Kurta Pajama, Formals, Casuals etc.",
+                      keyboardType: TextInputType.name,
+                      controller: _extraController),
+                  TextWidget(
+                      heading: "Dress code for attendees",
+                      hint:
+                          "Exp.: Tee Shits and Shorts, Jacket and Lower, Kurta Pajama, Formals, Casuals etc.",
+                      keyboardType: TextInputType.number,
+                      controller: _skillController),
+                  // TextWidget(
+                  //     heading: "Trophies/Awards",
+                  //     hint: "Enter Trophies/Awards",
+                  //     keyboardType: TextInputType.number,
+                  //     controller: _skillController),
+                  // TextWidget(
+                  //     heading: "Sponsors",
+                  //     hint: "Enter Sponsorsed By",
+                  //     keyboardType: TextInputType.number,
+                  //     controller: _skillController),
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     const Text(
+                  //       'Do you Have Medical Facilities?',
+                  //       style: TextStyle(
+                  //           color: AppColors.orange,
+                  //           fontSize: 16,
+                  //           fontWeight: FontWeight.bold),
+                  //     ),
+                  //     const SizedBox(height: 10),
+                  //     Row(
+                  //       children: [
+                  //         Switch(
+                  //           activeColor: Colors.orange,
+                  //           value: providePickAndDrop,
+                  //           onChanged: (newValue) {
+                  //             setState(() {
+                  //               providePickAndDrop = newValue;
+
+                  //               // Clear the list before adding the latest value
+                  //               providePickAndDropList.clear();
+
+                  //               // Update the list based on the switch value
+                  //               if (newValue) {
+                  //                 providePickAndDropList.add('Yes');
+                  //                 print(providePickAndDrop
+                  //                     .toString()); // Print 'true' when true
+                  //               } else {
+                  //                 providePickAndDropList.add('No');
+                  //                 print(providePickAndDrop
+                  //                     .toString()); // Print 'false' when false
+                  //               }
+                  //             });
+                  //           },
+                  //         ),
+                  //         Text(
+                  //           providePickAndDrop
+                  //               ? 'Providing Medical Facilities'
+                  //               : 'Not Providing Medical Facilities',
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Refreshment for the participant",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isParticipantRefresh = !isParticipantRefresh;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedParticipantRefresh.isEmpty
+                                              ? "Select Refreshment for participants"
+                                              : "Select ${selectedParticipantRefresh.length} Preferred Refreshments",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isParticipantRefresh)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: participantRefreshList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(participantRefreshList[index]),
+                                value: isParticipantRefreshList[index],
+                                selected: isParticipantRefreshList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedParticipantRefresh.contains(
+                                          participantRefreshList[index])) {
+                                        selectedParticipantRefresh
+                                            .add(participantRefreshList[index]);
+                                      }
+                                    } else {
+                                      if (selectedParticipantRefresh.contains(
+                                          participantRefreshList[index])) {
+                                        selectedParticipantRefresh.remove(
+                                            participantRefreshList[index]);
+                                      }
+                                    }
+                                    isParticipantRefreshList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+
                   const SizedBox(
                     height: 15,
                   ),
@@ -537,128 +963,298 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Preferred Age Group to participant',
+                        "Refreshment for the Attendees",
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Switch(
-                            activeColor: Colors.orange,
-                            value: ageGroup,
-                            onChanged: (newValue) {
-                              setState(() {
-                                ageGroup = newValue;
-                              });
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isAttendeeRefresh = !isAttendeeRefresh;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedAttendeeRefresh.isEmpty
+                                              ? "Select Refreshment for Attendees"
+                                              : "Select ${selectedAttendeeRefresh.length} Preferred Refreshments",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isAttendeeRefresh)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: AttendeeRefreshList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(AttendeeRefreshList[index]),
+                                value: isAttendeeRefreshList[index],
+                                selected: isAttendeeRefreshList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedAttendeeRefresh.contains(
+                                          AttendeeRefreshList[index])) {
+                                        selectedAttendeeRefresh
+                                            .add(AttendeeRefreshList[index]);
+                                      }
+                                    } else {
+                                      if (selectedAttendeeRefresh.contains(
+                                          AttendeeRefreshList[index])) {
+                                        selectedAttendeeRefresh
+                                            .remove(AttendeeRefreshList[index]);
+                                      }
+                                    }
+                                    isAttendeeRefreshList[index] = value;
+                                  });
+                                },
+                              );
                             },
                           ),
-                          Text(ageGroup
-                              ? 'Select Preferred Age Group to participant'
-                              : 'Slide to Set Preferred Age Group to participant'),
-                        ],
-                      ),
-                      ageGroup
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: _ageGroups.keys.map((String ageGroup) {
-                                return CheckboxListTile(
-                                  title: Text(ageGroup),
-                                  value: _ageGroups[ageGroup],
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _ageGroups[ageGroup] = value ?? false;
-
-                                      if (value == true) {
-                                        selectedAgeGroup.add(ageGroup);
-                                        log(selectedAgeGroup
-                                            .toString()); // Add selected age group to the list
-                                      } else {
-                                        selectedAgeGroup.remove(ageGroup);
-                                        log(selectedAgeGroup
-                                            .toString()); // Remove unselected age group from the list
-                                      }
-                                    });
-                                  },
-                                  // onChanged: (bool? value) {
-                                  //   setState(() {
-                                  //     _ageGroups[ageGroup] = value ?? false;
-                                  //   });
-                                  // },
-                                );
-                              }).toList(),
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: 20,
-                      )
+                        ),
                     ],
                   ),
-                  TextWidget(
-                      heading: "Rules and Regulations",
-                      hint: "Enter Rules and Regulations",
-                      keyboardType: TextInputType.name,
-                      controller: _extraController),
-                  TextWidget(
-                      heading: "Participant Limits",
-                      hint: "Enter Participant Limits",
-                      keyboardType: TextInputType.number,
-                      controller: _skillController),
-                  TextWidget(
-                      heading: "Trophies/Awards",
-                      hint: "Enter Trophies/Awards",
-                      keyboardType: TextInputType.number,
-                      controller: _skillController),
-                  TextWidget(
-                      heading: "Sponsors",
-                      hint: "Enter Sponsorsed By",
-                      keyboardType: TextInputType.number,
-                      controller: _skillController),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Do you Have Medical Facilities?',
+                        "Facilities for the Participant",
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Switch(
-                            activeColor: Colors.orange,
-                            value: providePickAndDrop,
-                            onChanged: (newValue) {
-                              setState(() {
-                                providePickAndDrop = newValue;
-
-                                // Clear the list before adding the latest value
-                                providePickAndDropList.clear();
-
-                                // Update the list based on the switch value
-                                if (newValue) {
-                                  providePickAndDropList.add('Yes');
-                                  print(providePickAndDrop
-                                      .toString()); // Print 'true' when true
-                                } else {
-                                  providePickAndDropList.add('No');
-                                  print(providePickAndDrop
-                                      .toString()); // Print 'false' when false
-                                }
-                              });
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isParticipantFacilities = !isParticipantFacilities;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedParticipantFacilities.isEmpty
+                                              ? "Select Facilities for Participants"
+                                              : "Select ${selectedParticipantFacilities.length} Preferred Refreshments",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isParticipantFacilities)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: ParticipantFacilitiesList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(ParticipantFacilitiesList[index]),
+                                value: isParticipantFacilitiesList[index],
+                                selected: isParticipantFacilitiesList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedParticipantFacilities
+                                          .contains(ParticipantFacilitiesList[
+                                              index])) {
+                                        selectedParticipantFacilities.add(
+                                            ParticipantFacilitiesList[index]);
+                                      }
+                                    } else {
+                                      if (selectedParticipantFacilities
+                                          .contains(ParticipantFacilitiesList[
+                                              index])) {
+                                        selectedParticipantFacilities.remove(
+                                            ParticipantFacilitiesList[index]);
+                                      }
+                                    }
+                                    isParticipantFacilitiesList[index] = value;
+                                  });
+                                },
+                              );
                             },
                           ),
-                          Text(
-                            providePickAndDrop
-                                ? 'Providing Medical Facilities'
-                                : 'Not Providing Medical Facilities',
-                          ),
-                        ],
+                        ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Facilities for the Attendees",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isAttendeeFacilities = !isAttendeeFacilities;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedAttendeeFacilities.isEmpty
+                                              ? "Select Facilities for Attendees"
+                                              : "Select ${selectedAttendeeFacilities.length} Preferred Refreshments",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isAttendeeFacilities)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: AttendeeFacilitiesList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(AttendeeFacilitiesList[index]),
+                                value: isAttendeeFacilitiesList[index],
+                                selected: isAttendeeFacilitiesList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedAttendeeFacilities.contains(
+                                          AttendeeFacilitiesList[index])) {
+                                        selectedAttendeeFacilities
+                                            .add(AttendeeFacilitiesList[index]);
+                                      }
+                                    } else {
+                                      if (selectedAttendeeFacilities.contains(
+                                          AttendeeFacilitiesList[index])) {
+                                        selectedAttendeeFacilities.remove(
+                                            AttendeeFacilitiesList[index]);
+                                      }
+                                    }
+                                    isAttendeeFacilitiesList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
                     ],
                   ),
 
@@ -666,12 +1262,144 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     height: 20,
                   ),
 
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Security measures",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isSecurity = !isSecurity;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedSecurity.isEmpty
+                                              ? "Select Security measures"
+                                              : "Select ${selectedSecurity.length} Security measures",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isSecurity)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: SecurityList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(SecurityList[index]),
+                                value: isSecurityList[index],
+                                selected: isSecurityList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedSecurity
+                                          .contains(SecurityList[index])) {
+                                        selectedSecurity
+                                            .add(SecurityList[index]);
+                                      }
+                                    } else {
+                                      if (selectedSecurity
+                                          .contains(SecurityList[index])) {
+                                        selectedSecurity
+                                            .remove(SecurityList[index]);
+                                      }
+                                    }
+                                    isSecurityList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Add social media handling link",
+                        style: TextStyle(
+                          color: AppColors.orange,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Column(children: textFields),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              addTextField();
+                            },
+                            child: Icon(
+                              Icons.add,
+                              color: AppColors.orange,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          GestureDetector(
+                            onTap: () {
+                              removeTextField();
+                            },
+                            child: Icon(
+                              Icons.remove,
+                              color: AppColors.orange,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   TextWidget(
-                      maxLength: 6,
-                      heading: "Entry Fees",
-                      hint: "Enter Enter Fees",
+                      heading: "Book your Ticket/Pass From",
+                      hint:
+                          "Exp.: BookMyShow.com , AtTheVenue, Name if the places etc.",
                       keyboardType: TextInputType.number,
-                      controller: _chargesController),
+                      controller: _skillController),
                   const SizedBox(height: 20),
                   Center(
                     child: SizedBox(
@@ -679,7 +1407,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           print("Press");
-                          sendCoachRegDataToServer(context);
+                          Get.to(() => EventDetailScreen());
+                          //sendCoachRegDataToServer(context);
                         },
                         style: ButtonStyle(
                           backgroundColor:
@@ -730,41 +1459,41 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     );
   }
 
-  void sendCoachRegDataToServer(BuildContext context) {
-    ApiService().RegisterCoach(
-      _nameController.text,
-      "sahil@gmail.og",
-      "888888",
-      _passwordController.text,
-      _addressController.text,
-      _currentSliderValue.toString(),
-      _dobController.text,
-      selectedSpecialization,
-      _countryName.toString(),
-      _selectedGender.toString(),
-      selectedGender,
-      selectedDays,
-      _selectedStartTime.toString(),
-      _selectedEndTime.toString(),
-      selectedAgeGroup,
-      _extraController.text,
-      _skillController.text,
-      _stateController.text,
-      _cityController.text,
-      _areaController.text,
-      providePickAndDropList,
-      _chargesController.text,
-      // DateTime.now(),
-      _pincodeController.text,
-      "coach",
-      //  _imageFile!
-    );
-    // For demonstration purposes, print the data
-    // print('Name: $name, Number: $number, Email: $email ');
+  // void sendCoachRegDataToServer(BuildContext context) {
+  //   ApiService().RegisterCoach(
+  //     _nameController.text,
+  //     "sahil@gmail.og",
+  //     "888888",
+  //     _passwordController.text,
+  //     _addressController.text,
+  //     _currentSliderValue.toString(),
+  //     _dobController.text,
+  //     selectedSpecialization,
+  //     _countryName.toString(),
+  //     _selectedGender.toString(),
+  //     selectedGender,
+  //     selectedDays,
+  //     _selectedStartTime.toString(),
+  //     _selectedEndTime.toString(),
+  //     selectedAgeGroup,
+  //     _extraController.text,
+  //     _skillController.text,
+  //     _stateController.text,
+  //     _cityController.text,
+  //     _areaController.text,
+  //     providePickAndDropList,
+  //     _chargesController.text,
+  //     // DateTime.now(),
+  //     _pincodeController.text,
+  //     "coach",
+  //     //  _imageFile!
+  //   );
+  //   // For demonstration purposes, print the data
+  //   // print('Name: $name, Number: $number, Email: $email ');
 
-    // Show a message or navigate after sending data to the server
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(content: Text('Data sent successfully')),
-    // );
-  }
+  //   // Show a message or navigate after sending data to the server
+  //   // ScaffoldMessenger.of(context).showSnackBar(
+  //   //   SnackBar(content: Text('Data sent successfully')),
+  //   // );
+  // }
 }

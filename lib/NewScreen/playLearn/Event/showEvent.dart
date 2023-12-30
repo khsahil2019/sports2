@@ -1,400 +1,462 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sports2/NewScreen/playLearn/Coaches/coachBooking.dart';
-import 'package:sports2/Screens/Coach/bookingScreen.dart';
-
-import 'package:sports2/Widgets/customIconText.dart';
+import 'package:social_share/social_share.dart';
+import 'package:sports2/NewScreen/playLearn/Event/test.dart';
 import 'package:sports2/helper/theme.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:async';
+import 'package:screenshot/screenshot.dart';
 
-class ShowEventDetailScreen extends StatefulWidget {
-  const ShowEventDetailScreen({super.key});
-
+class EventDetailScreen extends StatefulWidget {
   @override
-  State<ShowEventDetailScreen> createState() => _ShowEventDetailScreenState();
+  _EventDetailScreenState createState() => _EventDetailScreenState();
 }
 
-class _ShowEventDetailScreenState extends State<ShowEventDetailScreen> {
-  // var data = Get.arguments;
+class _EventDetailScreenState extends State<EventDetailScreen> {
+  String facebookId = "xxxxxxxx";
+
+  var imageBackground = "image-background.jpg";
+  var videoBackground = "video-background.mp4";
+  String imageBackgroundPath = "";
+  String videoBackgroundPath = "";
+
+  @override
+  void initState() {
+    super.initState();
+    copyBundleAssets();
+  }
+
+  File? _imageFile;
+  String? _selectedImagePath; // Variable to store the selected image path
+
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+        _selectedImagePath = pickedFile.path; // Set the selected image path
+      });
+    }
+  }
+
+  Future<void> copyBundleAssets() async {
+    imageBackgroundPath = await copyImage(imageBackground);
+    videoBackgroundPath = await copyImage(videoBackground);
+  }
+
+  Future<String> copyImage(String filename) async {
+    final tempDir = await getTemporaryDirectory();
+    ByteData bytes = await rootBundle.load("assets/$filename");
+    final assetPath = '${tempDir.path}/$filename';
+    File file = await File(assetPath).create();
+    await file.writeAsBytes(bytes.buffer.asUint8List());
+    return file.path;
+  }
+
+  Future<String?> pickImage() async {
+    final file = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+    var path = file?.path;
+    if (path == null) {
+      return null;
+    }
+    return file?.path;
+  }
+
+  Future<String?> screenshot() async {
+    var data = await screenshotController.capture();
+    if (data == null) {
+      return null;
+    }
+    final tempDir = await getTemporaryDirectory();
+    final assetPath = '${tempDir.path}/temp.png';
+    File file = await File(assetPath).create();
+    await file.writeAsBytes(data);
+    return file.path;
+  }
+
+  ScreenshotController screenshotController = ScreenshotController();
+
+  /*************************************************************************/
+  // Example event details
+  String eventName = 'Event Name';
+  String eventStartDate = '01/01/2023';
+  String eventEndDate = '04/01/2023';
+  String eventTime = '10:00 AM';
+  String eventLocation = 'Your Event Location';
+  String eventDescription =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
   @override
   Widget build(BuildContext context) {
-    String phoneNumber = "9978664546";
-
-// Masking the phone number with 'X' characters
-
-    String maskPhoneNumber(String phoneNumber) {
-      // Define the number of visible digits at the end (e.g., last 4 digits)
-      int visibleDigits = 4;
-
-      // Check if the phone number is long enough to be masked
-      if (phoneNumber.length > visibleDigits) {
-        // Get the portion of the phone number to be masked
-        String maskedPortion =
-            phoneNumber.substring(0, phoneNumber.length - visibleDigits);
-
-        // Replace each digit in the masked portion with 'X'
-        String maskedDigits = maskedPortion.replaceAll(RegExp(r'\d'), 'X');
-
-        // Get the visible part of the phone number
-        String visiblePart =
-            phoneNumber.substring(phoneNumber.length - visibleDigits);
-
-        // Combine masked and visible parts
-        return maskedDigits + visiblePart;
-      } else {
-        // If the phone number is too short, return the original number
-        return phoneNumber;
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Icon(Icons.arrow_back)),
-        backgroundColor: AppColors.orange,
-        foregroundColor: Colors.white,
-        title: Text("Event Name"),
+        title: Text(
+          'Event Details',
+          style:
+              TextStyle(color: AppColors.orange, fontWeight: FontWeight.bold),
+        ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // Shadow color
-                            spreadRadius: 5, // Spread radius
-                            blurRadius: 7, // Blur radius
-                            offset: Offset(0, 3), // Changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          height: 200.0,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          viewportFraction: 1,
-                        ),
-                        items: [
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmXbY1CmIplTlTiNCFhh3DierKS9-huINC5N5bYCe8Jg&s',
-                          'https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1703203200&semt=ais'
-                          //'https://i0.wp.com/www.thesportscol.com/wp-content/uploads/2017/11/youth-sports-coach.jpg'
-                          // 'https://kabiatravels.com/admin/packageimage/' +
-                          //     authController.exoticplaceList[data]
-                          //         ["PackageImage"],
-                        ]
-                            .map((item) => Container(
-                                  child: Center(
-                                    child: Image.network(
-                                      item,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                    ),
-                                    //     Image.asset(
-                                    //   item,
-                                    //   fit: BoxFit.cover,
-                                    //   height: 200.0,
-                                    //   width: double.infinity,
-                                    // ),
-                                  ),
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Cricket Tournament",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.location_on,
-                      AppColors.orange,
-                      30,
-                      "Lucknow", // Address text
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(Icons.location_city, AppColors.orange,
-                        30, "Patel Nagar purvi"),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(Icons.currency_rupee_rounded,
-                        AppColors.orange, 30, "Rs-200/player"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          "Details",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.date_range,
-                      AppColors.orange,
-                      30,
-                      "29/12/2023 - 01/01/2023", // Address text
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.event_available_outlined,
-                      AppColors.orange,
-                      30,
-                      "Cricket Tournament", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.volunteer_activism,
-                      AppColors.orange,
-                      30,
-                      "Male/Female", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.youtube_searched_for,
-                      AppColors.orange,
-                      30,
-                      "Age Group 16-22", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.ac_unit,
-                      AppColors.orange,
-                      30,
-                      "Team Size 12", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.live_tv,
-                      AppColors.orange,
-                      30,
-                      "Beginner", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    heading("Facilities"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.medical_information,
-                      AppColors.orange,
-                      30,
-                      "Medical Facilities Available", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.agriculture,
-                      AppColors.orange,
-                      30,
-                      "20 -30", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.wheelchair_pickup,
-                      AppColors.orange,
-                      30,
-                      "yes", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.explore_outlined,
-                      AppColors.orange,
-                      30,
-                      "Experienece ", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.person,
-                      AppColors.orange,
-                      30,
-                      "Male/Female", // Address text
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    heading("Skills"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.folder_special,
-                      AppColors.orange,
-                      30,
-                      "Hockey", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.folder_special,
-                      AppColors.orange,
-                      30,
-                      "Extra comedy", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Availibilty",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "See Availibilty",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.orange),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.calendar_month,
-                      AppColors.orange,
-                      30,
-                      "Schedule", // Address text
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.lock_clock,
-                      AppColors.orange,
-                      30,
-                      "12:30 PM - 01:45 PM", // Address text
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(Icons.app_registration,
-                        AppColors.orange, 30, "12/12/2023"
-                        // Address text
-                        ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // Text(data.toString()),
-                    /**First Column End */
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: GestureDetector(
-          onTap: () {
-            String startTime = "12:00"; // Replace with actual start time
-            String endTime = "23:45";
-            Map<String, String> scheduleData = {
-              'time_schedule': startTime,
-              'endtime_schedule': endTime,
-            };
-            print(scheduleData);
-            Get.to(() => CoachBookingScreen(), arguments: scheduleData);
-          },
-          child: Container(
-            height: 40,
-            // padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(38.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black54,
-                  offset: Offset(0, 4),
-                  blurRadius: 10.0,
-                ),
-              ],
-              color: AppColors.orange,
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: Center(
-                child: Text(
-                  'Participate in Event',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: NetworkImage(
+                      'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXZlbnR8ZW58MHx8MHx8fDA%3D'),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      eventName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Start Date: ',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        '$eventStartDate',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'End Date: ',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        '$eventEndDate',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.location_pin,
+                        color: AppColors.orange,
+                      ),
+                      Text(
+                        ' $eventLocation',
+                        style: const TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Participants Age Group',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        '18 - 40 years',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Participants Weight Group',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        '60 -70 KG',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Participants Height Group',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        '146 -147 CM',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Participants Gender',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        'Male / Female',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Participants Level',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        'Begginer',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.orange,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // Icon(
+                      //   Icons.,
+                      //   color: AppColors.orange,
+                      // ),
+                      Text(
+                        'Facilities',
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+
+                  // Card(
+                  //   elevation: 4,
+                  //   margin: EdgeInsets.all(8),
+                  //   child: ListTile(
+                  //     leading: Icon(Icons.confirmation_num_sharp, size: 40),
+                  //     title: Text("facility"),
+                  //   ),
+                  // ),
+                  // Card(
+                  //   elevation: 4,
+                  //   margin: EdgeInsets.all(8),
+                  //   child: ListTile(
+                  //     leading: Icon(Icons.confirmation_num_sharp, size: 40),
+                  //     title: Text("facility"),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 200,
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () {
+                        _getImage();
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 233, 205, 163),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: _imageFile != null
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Image.file(
+                                      _imageFile!,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 200,
+                                    ),
+                                  )
+                                : const Center(
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 60,
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 60,
+                                        color: Colors.orange,
+                                      ),
+                                    ),
+                                  ),
+                          ),
+                          Positioned(
+                            bottom: 16,
+                            right: 16,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 200, 243, 239),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Twitter",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      SizedBox(width: 40),
+                      ElevatedButton(
+                        child: Icon(Icons.text_fields),
+                        onPressed: () async {
+                          if (_selectedImagePath != null) {
+                            SocialShare.shareTwitter(
+                              "Your tweet content here", // Tweet text
+                              // imagePath:
+                              //     _selectedImagePath!, // Use the selected image path
+                              hashtags: [
+                                "Crux",
+                                "InvestingStartup",
+                                "Startup",
+                                "University"
+                              ],
+                              url: "https://crux.center/Team.html",
+                              trailingText: "Cool way to get in touch",
+                            ).then((data) {
+                              print(data);
+                            });
+                          } else {
+                            // Handle the case when no image is selected
+                            print("No image selected");
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 24.0),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => MyApp());
+                      },
+                      child: Text('Register'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget heading(String text) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-      ],
     );
   }
 }

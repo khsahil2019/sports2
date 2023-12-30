@@ -50,6 +50,22 @@ class _DatePickerFieldState extends State<DatePickerField> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(8.0),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white, // Top color
+                Colors.grey.shade200, // Bottom color
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 3), // Shadow position
+              ),
+            ],
           ),
           child: TextFormField(
             controller: widget.controller,

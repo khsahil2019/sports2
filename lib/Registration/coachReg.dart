@@ -220,6 +220,7 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                   const SizedBox(
                     height: 15,
                   ),
+                  // buildCustomPicker(),
                   CSCPicker(
                     title: Text(
                       'Select Country, State and city',
@@ -301,18 +302,41 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: Colors.grey),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.white, // Top color
+                                      Colors.grey.shade200, // Bottom color
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 3), // Shadow position
+                                    ),
+                                  ],
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          selectedSpecialization.isEmpty
-                                              ? "Sports Specialization"
-                                              : "You are Selected ${selectedSpecialization.length} Sports Specialization",
+                                      Flexible(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            selectedSpecialization.isEmpty
+                                                ? "Select one or more Sports Specialization"
+                                                : "Selected " +
+                                                    selectedSpecialization
+                                                        .join(', '),
+                                            maxLines:
+                                                2, // Limit to a single line
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ),
                                       Container(
@@ -400,18 +424,40 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: Colors.grey),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.white, // Top color
+                                      Colors.grey.shade200, // Bottom color
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 3), // Shadow position
+                                    ),
+                                  ],
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          selectedGender.isEmpty
-                                              ? "Select Preferred Gender"
-                                              : "Select ${selectedGender.length} Preferred Gender",
+                                      Flexible(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            selectedGender.isEmpty
+                                                ? "Select Preferred Gender"
+                                                : "Selected " +
+                                                    selectedGender.join(', '),
+                                            maxLines:
+                                                2, // Limit to a single line
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ),
                                       Container(

@@ -310,6 +310,33 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Courses",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "See Availibilty",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.orange),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [courseSet(), courseSet(), courseSet()],
+                        )),
+
                     // Text(data.toString()),
                     /**First Column End */
                   ],
@@ -360,6 +387,155 @@ class _CoachDetailScreenState extends State<CoachDetailScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget courseSet() {
+    return SizedBox(
+      height: 350,
+      child: Row(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            height: 400,
+            width: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0.0, 4.0),
+                  blurRadius: 10.0,
+                )
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 140.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.blue,
+                        Colors.green,
+                        Colors.orange,
+                        Colors.red,
+                      ],
+                      stops: [
+                        0.0,
+                        0.3,
+                        0.7,
+                        1.0
+                      ], // Adjust the color stops as needed
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                    ),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxnkwslNktO5dTDmwa-d7He5moxbAJx-5eo2EMk0VLvw&s"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 10),
+                  child: Center(
+                    child: Text(
+                      "Course Name",
+                      style: const TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    "This is sport xiaching ehere we start from basic",
+                    style: const TextStyle(fontSize: 13.0, color: Colors.black),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Duration : 12 Days",
+                        style: const TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Price :  120",
+                        style: const TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Start Date : 12/11/2023",
+                        style: const TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //       primary: Colors
+                //           .white, // Change the background color here
+                //       // Other properties you might want to adjust:
+                //       onPrimary:
+                //           Colors.purple, // Foreground color
+                //       // padding: EdgeInsets.all(16.0), // Padding around the button
+                //       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), // Border shape
+                //     ),
+                //     //  style: ButtonStyle(iconColor: white),
+                //     onPressed: () {
+                //       // print(coach);
+                //       // Get.to(() => CoachDetailScreen(),
+                //       //     arguments: coach);
+                //     },
+                //     child: Text(
+                //       'View Details',
+                //       style: TextStyle(color: Colors.blue),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

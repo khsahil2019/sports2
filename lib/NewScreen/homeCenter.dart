@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/NewScreen/playGroundScreen.dart';
+import 'package:sports2/NewScreen/playLearn/Event/createEvent.dart';
 import 'package:sports2/NewScreen/playLearn/coachesPlay.dart';
 import 'package:sports2/NewScreen/profileScreen.dart';
 import 'package:sports2/NewScreen/typeGames.dart';
@@ -152,7 +153,7 @@ class HomeContent extends StatelessWidget {
             // Container 2
             GestureDetector(
               onTap: () {
-                // Get.to(() => PlayGroundScreen());
+                Get.to(() => CreateEventScreen());
               },
               child: ContainerWithArrow(
                 imageUrl: 'assets/img/create.png',

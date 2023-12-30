@@ -37,6 +37,25 @@ class CustomDropPlayGround extends StatelessWidget {
                 maxHeight: 60,
                 // maxWidth: 200 // Set the maximum height for the dropdown list
               ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white, // Top color
+                    Colors.grey.shade200, // Bottom color
+                  ],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: Offset(0, 3), // Shadow position
+                  ),
+                ],
+              ),
               child: DropdownButtonFormField<String>(
                 icon: Icon(
                   Icons.arrow_drop_down,

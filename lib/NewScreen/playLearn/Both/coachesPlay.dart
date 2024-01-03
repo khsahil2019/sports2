@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:sports2/NewScreen/playLearn/Coaches/coachDetail.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/detailCoach.dart';
 import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
-import 'package:sports2/NewScreen/playLearn/PlayGround/playgroundDetail.dart';
+import 'package:sports2/NewScreen/playLearn/PlayGround/detailPlay.dart';
 import 'package:sports2/Registration/coachReg.dart';
 import 'package:sports2/helper/theme.dart';
 

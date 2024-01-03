@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sports2/NewScreen/Course/createCourse.dart';
-import 'package:sports2/NewScreen/playGroundScreen.dart';
-import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
+import 'package:sports2/NewScreen/playLearn/Both/coachesPlay.dart';
 import 'package:sports2/OnBoarding/Onboarding.dart';
-import 'package:sports2/Registration/coachReg.dart';
+// import 'package:sports2/Registration/image.dart';
 
-import 'package:sports2/Screens/home.dart';
+import 'package:sports2/Testing/home.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

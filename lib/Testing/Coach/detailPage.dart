@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sports2/Screens/Coach/bookingScreen.dart';
+import 'package:sports2/Testing/Coach/bookingScreen.dart';
 
 import 'package:sports2/Widgets/customIconText.dart';
 

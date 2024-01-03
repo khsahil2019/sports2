@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/NewScreen/playGroundScreen.dart';
-import 'package:sports2/NewScreen/playLearn/Event/createEvent.dart';
-import 'package:sports2/NewScreen/playLearn/coachesPlay.dart';
+import 'package:sports2/NewScreen/Event/createEvent.dart';
+import 'package:sports2/NewScreen/playLearn/Both/coachesPlay.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
+import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
 import 'package:sports2/NewScreen/profileScreen.dart';
 import 'package:sports2/NewScreen/typeGames.dart';
-import 'package:sports2/Registration/image.dart';
+// import 'package:sports2/Registration/image.dart';
 import 'package:sports2/helper/theme.dart';
 
 class Homescreen extends StatefulWidget {
@@ -18,7 +20,7 @@ class _HomescreenState extends State<Homescreen> {
 
   final List<Widget> _screens = [
     HomeContent(),
-    GamesScreen(),
+    AllCoachScreen(),
     PlayGroundScreen(),
     CoachProfileScreen(),
   ];
@@ -47,12 +49,12 @@ class _HomescreenState extends State<Homescreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
+            icon: Icon(Icons.event),
+            label: 'Events',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.card_giftcard),
-            label: 'PlayGround',
+            label: 'Play Learn',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -138,7 +140,7 @@ class HomeContent extends StatelessWidget {
             // Container 2
             GestureDetector(
               onTap: () {
-                Get.to(() => GamesScreen());
+                Get.to(() => AllPlayGroundScreen());
               },
               child: ContainerWithArrow(
                 imageUrl: 'assets/img/create.png',

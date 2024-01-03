@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports2/Controller/authCotroller.dart';
-import 'package:sports2/Screens/Coach/detailPage.dart';
-import 'package:sports2/Screens/notification.dart';
-import 'package:sports2/Screens/searchScreen.dart';
+import 'package:sports2/Testing/Coach/detailPage.dart';
+import 'package:sports2/Testing/notification.dart';
+import 'package:sports2/Testing/searchScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

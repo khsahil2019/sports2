@@ -1,20 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sports2/NewScreen/playLearn/Coaches/coachBooking.dart';
-import 'package:sports2/NewScreen/playLearn/PlayGround/playgroundBooking.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/bookingCoach.dart';
+import 'package:sports2/Testing/Coach/bookingScreen.dart';
 
 import 'package:sports2/Widgets/customIconText.dart';
 import 'package:sports2/helper/theme.dart';
 
-class PlayGroundDetailScreen extends StatefulWidget {
-  const PlayGroundDetailScreen({super.key});
+class CoachDetailScreen extends StatefulWidget {
+  const CoachDetailScreen({super.key});
 
   @override
-  State<PlayGroundDetailScreen> createState() => _PlayGroundDetailScreenState();
+  State<CoachDetailScreen> createState() => _CoachDetailScreenState();
 }
 
-class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
+class _CoachDetailScreenState extends State<CoachDetailScreen> {
   // var data = Get.arguments;
 
   @override
@@ -52,7 +52,7 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.orange,
         foregroundColor: Colors.white,
-        title: Text("Playgound Detail"),
+        title: Text("Coach Profile"),
       ),
       body: Stack(
         children: [
@@ -86,8 +86,9 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
                           viewportFraction: 1,
                         ),
                         items: [
-                          'https://media.istockphoto.com/id/843102872/photo/colorful-playground-on-yard-in-the-park.jpg?s=612x612&w=0&k=20&c=JdH1hwKh5TXtDDJNSU91xAJvgm0N9rAkpyI6M5DXODg=',
-                          'https://www.shutterstock.com/image-photo/colorful-children-playground-activities-public-260nw-480258076.jpg'
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVaywK6zU53kNX8sIgMRXw77fc9BGa5tGKrQ&usqp=CAU',
+                          'https://i0.wp.com/www.thesportscol.com/wp-content/uploads/2017/11/youth-sports-coach.jpg'
+                          //'https://i0.wp.com/www.thesportscol.com/wp-content/uploads/2017/11/youth-sports-coach.jpg'
                           // 'https://kabiatravels.com/admin/packageimage/' +
                           //     authController.exoticplaceList[data]
                           //         ["PackageImage"],
@@ -96,8 +97,8 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
                                   child: Center(
                                     child: Image.network(
                                       item,
-                                      width: double.infinity,
                                       fit: BoxFit.cover,
+                                      width: double.infinity,
                                     ),
                                     //     Image.asset(
                                     //   item,
@@ -117,7 +118,7 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Yark park Moga",
+                          "Manmohan singh",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )
@@ -141,7 +142,7 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
                       height: 10,
                     ),
                     CustomIconTextWidget(Icons.currency_rupee_rounded,
-                        AppColors.orange, 30, "450/ per hours"),
+                        AppColors.orange, 30, "charges_per_hour"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -309,6 +310,33 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Courses",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "See Availibilty",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.orange),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [courseSet(), courseSet(), courseSet()],
+                        )),
+
                     // Text(data.toString()),
                     /**First Column End */
                   ],
@@ -329,7 +357,7 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
               'endtime_schedule': endTime,
             };
             print(scheduleData);
-            Get.to(() => PlayGroundBookingScreen(), arguments: scheduleData);
+            Get.to(() => CoachBookingScreen(), arguments: scheduleData);
           },
           child: Container(
             height: 40,
@@ -359,6 +387,155 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget courseSet() {
+    return SizedBox(
+      height: 350,
+      child: Row(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            height: 400,
+            width: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0.0, 4.0),
+                  blurRadius: 10.0,
+                )
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 140.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.blue,
+                        Colors.green,
+                        Colors.orange,
+                        Colors.red,
+                      ],
+                      stops: [
+                        0.0,
+                        0.3,
+                        0.7,
+                        1.0
+                      ], // Adjust the color stops as needed
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                    ),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxnkwslNktO5dTDmwa-d7He5moxbAJx-5eo2EMk0VLvw&s"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 10),
+                  child: Center(
+                    child: Text(
+                      "Course Name",
+                      style: const TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    "This is sport xiaching ehere we start from basic",
+                    style: const TextStyle(fontSize: 13.0, color: Colors.black),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Duration : 12 Days",
+                        style: const TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Price :  120",
+                        style: const TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Start Date : 12/11/2023",
+                        style: const TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //       primary: Colors
+                //           .white, // Change the background color here
+                //       // Other properties you might want to adjust:
+                //       onPrimary:
+                //           Colors.purple, // Foreground color
+                //       // padding: EdgeInsets.all(16.0), // Padding around the button
+                //       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), // Border shape
+                //     ),
+                //     //  style: ButtonStyle(iconColor: white),
+                //     onPressed: () {
+                //       // print(coach);
+                //       // Get.to(() => CoachDetailScreen(),
+                //       //     arguments: coach);
+                //     },
+                //     child: Text(
+                //       'View Details',
+                //       style: TextStyle(color: Colors.blue),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

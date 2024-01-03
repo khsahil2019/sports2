@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_share/social_share.dart';
-import 'package:sports2/NewScreen/playLearn/Event/test.dart';
+import 'package:sports2/NewScreen/Event/test.dart';
 import 'package:sports2/helper/theme.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';

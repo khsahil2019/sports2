@@ -15,8 +15,7 @@ class _CoachBookingScreenState extends State<CoachBookingScreen> {
   DateTime? toDate;
   List<String> availableTimeSlots = [];
   List<String> selectedTimeSlots = [];
-  double chargesPerHour = 10.0; // Sample charge rate per hour
-
+  double chargesPerHour = 10.0;
   void generateTimeSlots({
     required String startTime,
     required String endTime,

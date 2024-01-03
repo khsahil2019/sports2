@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sports2/Screens/home.dart';
-import 'package:sports2/Screens/homeScreen.dart';
+import 'package:sports2/Testing/home.dart';
+import 'package:sports2/Testing/homeScreen.dart';
 
 class SearchSportsScreen extends StatefulWidget {
   @override

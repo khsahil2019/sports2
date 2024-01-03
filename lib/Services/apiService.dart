@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports2/AuthScreen/signIn.dart';
-import 'package:sports2/Screens/home.dart';
-import 'package:sports2/Screens/homeScreen.dart';
+import 'package:sports2/Testing/home.dart';
+import 'package:sports2/Testing/homeScreen.dart';
 import 'package:path/path.dart' as path;
 
 import 'dart:io';

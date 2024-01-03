@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sports2/Services/apiService.dart';
+import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/textField.dart';
 import 'package:sports2/helper/theme.dart';
 
@@ -16,33 +17,13 @@ class PlaceHolderRegistration extends StatefulWidget {
 //var data = Get.arguments;
 
 class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _mobileController = TextEditingController();
-  final TextEditingController _propertyDescriptionController =
-      TextEditingController();
-  final TextEditingController _sizeOfPropertyController =
-      TextEditingController();
-  bool _isTypeOfProperty = false;
-  final List<bool> _isTypeOfPropertyList = List.filled(29, false);
-  List TypeOfPropertyList = [
-    'Field,',
-    'Court,',
-    'Gym)',
-    'Swimming',
-  ];
-  List selectedTypeOfProperty = [];
-  // bool _isFacilities = false;
-  // final List<bool> _isFacilitiesList = List.filled(29, false);
-  // List FacilitiesList = [
-  //   'lighting,',
-  //   'equipment,',
-  //   'seating)',
-  // ];
-  // List selectedFacilities = [];
+  final TextEditingController _nameFacilityController = TextEditingController();
+  final TextEditingController _spaceController = TextEditingController();
+  final TextEditingController _address1Controller = TextEditingController();
+  final TextEditingController _address2Controller = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _pincodeController = TextEditingController();
   bool availibilty = false;
-  List<String> selectedDays = [];
   final Map<String, bool> _daysAvailability = {
     'Monday': false,
     'Tuesday': false,
@@ -52,32 +33,114 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
     'Saturday': false,
     'Sunday': false,
   };
-
-  final TextEditingController _activityController = TextEditingController();
-  bool _isAmenities = false;
-  final List<bool> _isAmenitiesList = List.filled(29, false);
-  List AmenitiesList = [
-    'washroom for male',
-    'washroom for female',
-    'changing room',
+  List<String> selectedDays = [];
+  TimeOfDay _selectedStartTime = const TimeOfDay(hour: 8, minute: 0);
+  TimeOfDay _selectedEndTime = const TimeOfDay(hour: 18, minute: 0);
+  final TextEditingController _disRailwayController = TextEditingController();
+  final TextEditingController _disCityController = TextEditingController();
+  final TextEditingController _disAirportController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _mobile1Controller = TextEditingController();
+  final TextEditingController _mobile2Controller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _email1Controller = TextEditingController();
+  final TextEditingController _email2Controller = TextEditingController();
+  final TextEditingController _whatsappController = TextEditingController();
+  final TextEditingController _whatsapp1Controller = TextEditingController();
+  final TextEditingController _whatsapp2Controller = TextEditingController();
+  final TextEditingController _contact1Controller = TextEditingController();
+  final TextEditingController _contact2Controller = TextEditingController();
+  final TextEditingController _designation1Controller = TextEditingController();
+  final TextEditingController _designation2Controller = TextEditingController();
+  final TextEditingController _areaController = TextEditingController();
+  bool _isTypeOfProperty = false;
+  final List<bool> _isTypeOfPropertyList = List.filled(29, false);
+  List typeOfPropertyList = [
+    'Indoor',
+    'Outdoor',
+    'Only day facility',
+    'Only night facility',
+    'Both indoor and outdoor',
+    'Both night and day',
   ];
-  List selectedAmenities = [];
-  bool _isSafety = false;
-  final List<bool> _isSafetyList = List.filled(29, false);
-  List SafetyList = [
-    'gated',
-    'CCTV',
-    'Guard',
-    'entry and exit register',
-    'secured locker'
+  List selectedTypeOfProperty = [];
+  bool indoorCapacity = false;
+  bool outdoorCapacity = false;
+  final TextEditingController _indoorController = TextEditingController();
+  final TextEditingController _outdoorController = TextEditingController();
+  bool _isActivities = false;
+  final List<bool> _isActivitiesList = List.filled(29, false);
+  List activitiesList = [
+    'Annual function',
+    'Wedding',
+    'Social engagement',
+    'Social function',
+    'Community activities',
   ];
-  List selectedSafety = [];
-  bool providePickAndDrop = false;
-  List<String> providePickAndDropList = [];
+  List selectedActivities = [];
+  bool _isSecurityMeasure = false;
+  final List<bool> _isSecurityMeasureList = List.filled(29, false);
+  List securityMeasureList = [
+    'Security guards',
+    'CCTV Surveillance',
+    'Metal Detector',
+    'Assisted Entry',
+    'Assisted Exit',
+    'Fire Extinguishers',
+    'Smoke Alrams',
+    'Emergency response system',
+    'Crowd Management',
+    'Ambulance',
+    'Nurse',
+    'Doctor',
+    'First Aid',
+    'CPR',
+    'Sick room',
+    'Police assistance',
+  ];
+  List selectSecurityMeasure = [];
+  bool isAttendeeFacilities = false;
+  List<bool> isAttendeeFacilitiesList = List.filled(29, false);
+  List selectedAttendeeFacilities = [];
+  List attendeeFacilitiesList = [
+    'Clean washroom',
+    'Soap in the washrooms',
+    'Parking',
+    'Locker',
+    'Charging Points',
+    'RO water',
+  ];
+  bool isParticipantFacilities = false;
+  List<bool> isParticipantFacilitiesList = List.filled(29, false);
+  List selectedParticipantFacilities = [];
+  List participantFacilitiesList = [
+    'Change room',
+    'Locker',
+    'Clean washrooms',
+    'Towel',
+    'Kit',
+    'Soap',
+    'Shampoo',
+    'ShampooBed with mattress',
+    'AC',
+    'Cooler',
+    'Fan',
+    'Charging point',
+    'Proper lighting',
+    'Parking',
+    'Gym',
+    'Ro water',
+  ];
+  final List<String> _chargesList = [
+    'Charges per hours (in Rupees)',
+    'Charges per game/event (in Rupees)',
+    'Charges per day (in Rupees)',
+    'Charges per person (in Rupees)'
+  ];
+  String? _selectedCharges;
   final TextEditingController _chargesController = TextEditingController();
+  /***************************************************************/
 
-  TimeOfDay _selectedStartTime = TimeOfDay(hour: 8, minute: 0);
-  TimeOfDay _selectedEndTime = TimeOfDay(hour: 18, minute: 0);
   File? _imageFile;
 
   Future<void> _getImage() async {
@@ -104,7 +167,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
             Navigator.of(context).pop();
           },
         ),
-        title: Text("Lender"),
+        title: const Text("Lender"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -121,7 +184,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                             radius: 60,
                             backgroundImage: FileImage(_imageFile!),
                           )
-                        : CircleAvatar(
+                        : const CircleAvatar(
                             backgroundColor: Colors.orange,
                             radius: 60,
                             child: Icon(
@@ -165,36 +228,260 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     height: 15,
                   ),
                   TextWidget(
-                      heading: "Full Name",
-                      hint: "Enter the Name",
+                      heading: "Name of the facility/ground/gaming",
+                      hint: "Enter the Facility",
                       keyboardType: TextInputType.name,
-                      controller: _fullNameController),
+                      controller: _nameFacilityController),
                   TextWidget(
-                      heading: "Email",
+                      heading: "Space",
                       hint: "Enter email",
                       keyboardType: TextInputType.emailAddress,
-                      controller: _emailController),
+                      controller: _spaceController),
                   TextWidget(
-                      heading: "Address",
-                      hint: "Enter Address",
+                      heading: "Address 1",
+                      hint: "Enter Address 1",
                       keyboardType: TextInputType.text,
-                      controller: _addressController),
+                      controller: _address1Controller),
                   TextWidget(
-                      heading: "Contact Number",
-                      hint: "Enter contact No",
+                      heading: "Address 2",
+                      hint: "Enter Address 2",
                       maxLength: 10,
                       keyboardType: TextInputType.number,
-                      controller: _mobileController),
+                      controller: _address2Controller),
                   TextWidget(
-                      heading: "Property Description",
+                      heading: "City",
                       hint: "Enter Property Description",
                       keyboardType: TextInputType.text,
-                      controller: _propertyDescriptionController),
+                      controller: _cityController),
                   TextWidget(
-                      heading: "Size of the Property (in square meters/feet)",
+                      heading: "Pincode",
                       hint: "Enter Property Address",
                       keyboardType: TextInputType.text,
-                      controller: _sizeOfPropertyController),
+                      controller: _pincodeController),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Set your Availability Schedule',
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Switch(
+                            activeColor: AppColors.orange,
+                            value: availibilty,
+                            onChanged: (newValue) {
+                              setState(() {
+                                availibilty = newValue;
+                              });
+                            },
+                          ),
+                          Text(availibilty
+                              ? 'Now Set your Availability Schedule'
+                              : 'Slide to Set your Availability Schedule'),
+                        ],
+                      ),
+                      availibilty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 8),
+                                // Display checkboxes for days
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children:
+                                      _daysAvailability.keys.map((String day) {
+                                    return CheckboxListTile(
+                                      title: Text(day),
+                                      value: _daysAvailability[day],
+                                      onChanged: (bool? value) {
+                                        bool isChecked = value ?? false;
+                                        setState(() {
+                                          _daysAvailability[day] = isChecked;
+                                        });
+
+                                        if (isChecked) {
+                                          setState(() {
+                                            selectedDays.add(day);
+                                            log(selectedDays.toString());
+                                          });
+                                        } else {
+                                          setState(() {
+                                            selectedDays.remove(day);
+                                            log(selectedDays.toString());
+                                          });
+                                        }
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                                const SizedBox(height: 12),
+                                // Select start and end timings
+                                Row(
+                                  children: [
+                                    const Text('Start Time: '),
+                                    TextButton(
+                                      onPressed: () async {
+                                        TimeOfDay? selectedTime =
+                                            await showTimePicker(
+                                          context: context,
+                                          initialTime: _selectedStartTime,
+                                        );
+                                        if (selectedTime != null) {
+                                          setState(() {
+                                            _selectedStartTime = selectedTime;
+                                          });
+                                        }
+                                      },
+                                      child: Text(
+                                          _selectedStartTime.format(context)),
+                                    ),
+                                    const SizedBox(width: 20),
+                                    const Text('End Time: '),
+                                    TextButton(
+                                      onPressed: () async {
+                                        TimeOfDay? selectedTime =
+                                            await showTimePicker(
+                                          context: context,
+                                          initialTime: _selectedEndTime,
+                                        );
+                                        if (selectedTime != null) {
+                                          setState(() {
+                                            _selectedEndTime = selectedTime;
+                                          });
+                                        }
+                                      },
+                                      child: Text(
+                                          _selectedEndTime.format(context)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      const SizedBox(
+                        height: 15,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextWidget(
+                      heading: "Distance from Main railway station (KM)",
+                      hint: "Ex - 12",
+                      keyboardType: TextInputType.text,
+                      controller: _disRailwayController),
+                  TextWidget(
+                      heading: "Distance from city center (KM)",
+                      hint: "Ex - 23",
+                      keyboardType: TextInputType.text,
+                      controller: _disCityController),
+                  TextWidget(
+                      heading: "Distance from Airport (KM)",
+                      hint: "Ex - 20",
+                      keyboardType: TextInputType.text,
+                      controller: _disAirportController),
+                  TextWidget(
+                      heading: "Mobile Number",
+                      hint: "Enter Mobile Number",
+                      keyboardType: TextInputType.text,
+                      controller: _mobileController),
+                  TextWidget(
+                      heading: "Email ID",
+                      hint: "Enter Email ID",
+                      keyboardType: TextInputType.text,
+                      controller: _emailController),
+                  TextWidget(
+                      heading: "Whatsapp Number",
+                      hint: "Enter Whatsapp Number",
+                      keyboardType: TextInputType.text,
+                      controller: _whatsappController),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Text(
+                    "Contact Person 1 Details",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextWidget(
+                      heading: "Contact person 1",
+                      hint: "Enter Contact person 1",
+                      keyboardType: TextInputType.text,
+                      controller: _contact1Controller),
+                  TextWidget(
+                      heading: "Designation",
+                      hint: "Enter Designation",
+                      keyboardType: TextInputType.text,
+                      controller: _designation1Controller),
+                  TextWidget(
+                      heading: "Mobile Number",
+                      hint: "Enter Mobile Number",
+                      keyboardType: TextInputType.text,
+                      controller: _mobile1Controller),
+                  TextWidget(
+                      heading: "Whatsapp Number",
+                      hint: "Enter Whatsapp Number",
+                      keyboardType: TextInputType.text,
+                      controller: _whatsapp1Controller),
+                  TextWidget(
+                      heading: "Email ID",
+                      hint: "Enter Email ID",
+                      keyboardType: TextInputType.text,
+                      controller: _email1Controller),
+                  const Text(
+                    "Contact Person 2 Details",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextWidget(
+                      heading: "Contact person 2",
+                      hint: "Enter Contact Person 2",
+                      keyboardType: TextInputType.text,
+                      controller: _contact2Controller),
+                  TextWidget(
+                      heading: "Designation",
+                      hint: "Enter Designation",
+                      keyboardType: TextInputType.text,
+                      controller: _designation2Controller),
+                  TextWidget(
+                      heading: "Mobile Number",
+                      hint: "Enter Mobile Number",
+                      keyboardType: TextInputType.text,
+                      controller: _mobile2Controller),
+                  TextWidget(
+                      heading: "Whatsapp Number",
+                      hint: "Enter Whatsapp Number",
+                      keyboardType: TextInputType.text,
+                      controller: _whatsapp2Controller),
+                  TextWidget(
+                      heading: "Email ID",
+                      hint: "Enter Email ID",
+                      keyboardType: TextInputType.text,
+                      controller: _email2Controller),
+                  TextWidget(
+                      heading: "Enter Area (Approximate in sq feet)",
+                      hint: "Enter Area",
+                      keyboardType: TextInputType.text,
+                      controller: _areaController),
                   const SizedBox(
                     height: 15,
                   ),
@@ -262,12 +549,12 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
-                            itemCount: TypeOfPropertyList.length,
+                            itemCount: typeOfPropertyList.length,
                             itemBuilder: (context, index) {
                               return CheckboxListTile(
                                 autofocus: true,
                                 checkColor: Colors.white,
-                                title: Text(TypeOfPropertyList[index]),
+                                title: Text(typeOfPropertyList[index]),
                                 value: _isTypeOfPropertyList[index],
                                 selected: _isTypeOfPropertyList[index],
                                 dense: true,
@@ -275,16 +562,16 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                                   setState(() {
                                     if (value!) {
                                       if (!selectedTypeOfProperty.contains(
-                                          TypeOfPropertyList[index])) {
+                                          typeOfPropertyList[index])) {
                                         selectedTypeOfProperty
-                                            .add(TypeOfPropertyList[index]);
+                                            .add(typeOfPropertyList[index]);
                                         log(selectedTypeOfProperty.toString());
                                       }
                                     } else {
                                       if (selectedTypeOfProperty.contains(
-                                          TypeOfPropertyList[index])) {
+                                          typeOfPropertyList[index])) {
                                         selectedTypeOfProperty
-                                            .remove(TypeOfPropertyList[index]);
+                                            .remove(typeOfPropertyList[index]);
                                         log(selectedTypeOfProperty.toString());
                                       }
                                     }
@@ -300,124 +587,133 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
                       const Text(
-                        'Set your Availability Schedule',
+                        'Indoor Capacity',
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Switch(
-                            activeColor: AppColors.orange,
-                            value: availibilty,
-                            onChanged: (newValue) {
-                              setState(() {
-                                availibilty = newValue;
-                              });
-                            },
-                          ),
-                          Text(availibilty
-                              ? 'Now Set your Availability Schedule'
-                              : 'Slide to Set your Availability Schedule'),
-                        ],
+                      const SizedBox(width: 8.0),
+                      Checkbox(
+                        value: indoorCapacity,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            indoorCapacity = value!;
+                          });
+                        },
                       ),
-                      availibilty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 8),
-                                // Display checkboxes for days
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:
-                                      _daysAvailability.keys.map((String day) {
-                                    return CheckboxListTile(
-                                      title: Text(day),
-                                      value: _daysAvailability[day],
-                                      onChanged: (bool? value) {
-                                        bool isChecked = value ?? false;
-                                        setState(() {
-                                          _daysAvailability[day] = isChecked;
-                                        });
-
-                                        if (isChecked) {
-                                          setState(() {
-                                            selectedDays.add(day);
-                                            log(selectedDays.toString());
-                                          });
-                                        } else {
-                                          setState(() {
-                                            selectedDays.remove(day);
-                                            log(selectedDays.toString());
-                                          });
-                                        }
-                                      },
-                                    );
-                                  }).toList(),
-                                ),
-                                SizedBox(height: 12),
-                                // Select start and end timings
-                                Row(
-                                  children: [
-                                    Text('Start Time: '),
-                                    TextButton(
-                                      onPressed: () async {
-                                        TimeOfDay? selectedTime =
-                                            await showTimePicker(
-                                          context: context,
-                                          initialTime: _selectedStartTime,
-                                        );
-                                        if (selectedTime != null) {
-                                          setState(() {
-                                            _selectedStartTime = selectedTime;
-                                          });
-                                        }
-                                      },
-                                      child: Text(
-                                          _selectedStartTime.format(context)),
-                                    ),
-                                    SizedBox(width: 20),
-                                    Text('End Time: '),
-                                    TextButton(
-                                      onPressed: () async {
-                                        TimeOfDay? selectedTime =
-                                            await showTimePicker(
-                                          context: context,
-                                          initialTime: _selectedEndTime,
-                                        );
-                                        if (selectedTime != null) {
-                                          setState(() {
-                                            _selectedEndTime = selectedTime;
-                                          });
-                                        }
-                                      },
-                                      child: Text(
-                                          _selectedEndTime.format(context)),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          : const SizedBox(),
-                      const SizedBox(
-                        height: 15,
-                      )
                     ],
                   ),
+                  if (indoorCapacity)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: Colors.grey),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.white, // Top color
+                            Colors.grey.shade200, // Bottom color
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 4,
+                            offset: const Offset(0, 3), // Shadow position
+                          ),
+                        ], // Outer border color
+                      ),
+                      child: TextFormField(
+                        controller: _indoorController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 6,
+                        decoration: const InputDecoration(
+                          counterText: '',
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          hintText: "Enter the Indoor Capacity",
+                          border: InputBorder.none, // Remove the default border
+                        ),
+                        style: const TextStyle(
+                            fontSize: 16), // Adjust text style if needed
+                      ),
+                    ),
                   const SizedBox(
                     height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      const Text(
+                        'Outdoor Capacity',
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Checkbox(
+                        value: outdoorCapacity,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            outdoorCapacity = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  if (outdoorCapacity)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: Colors.grey),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.white, // Top color
+                            Colors.grey.shade200, // Bottom color
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 4,
+                            offset: const Offset(0, 3), // Shadow position
+                          ),
+                        ], // Outer border color
+                      ),
+                      child: TextFormField(
+                        controller: _outdoorController,
+                        keyboardType: TextInputType.number,
+                        maxLength: 6,
+                        decoration: const InputDecoration(
+                          counterText: '',
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          hintText: "Enter the Outdoor Capacity",
+                          border: InputBorder.none, // Remove the default border
+                        ),
+                        style: const TextStyle(
+                            fontSize: 16), // Adjust text style if needed
+                      ),
+                    ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Amenities or Facilities Available",
+                        "Activities/Games",
                         style: TextStyle(
                             color: AppColors.orange,
                             fontSize: 16,
@@ -429,7 +725,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            _isAmenities = !_isAmenities;
+                            _isActivities = !_isActivities;
                           });
                         },
                         child: Row(
@@ -449,13 +745,14 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
-                                          selectedAmenities.isEmpty
-                                              ? "Select Amenities or Facilities Available"
-                                              : "Selected ${selectedAmenities.length} Amenities or Facilities Available",
+                                          selectedActivities.isEmpty
+                                              ? "Select Activities/Games"
+                                              : "Selected ${selectedActivities.length} Activities/Games",
                                         ),
                                       ),
                                       Container(
-                                          margin: EdgeInsets.only(top: 20),
+                                          margin:
+                                              const EdgeInsets.only(top: 20),
                                           child: const Icon(
                                               Icons.arrow_drop_down)),
                                     ],
@@ -466,43 +763,43 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                           ],
                         ),
                       ),
-                      if (_isAmenities)
+                      if (_isActivities)
                         AnimatedContainer(
                           //width: 300,
                           height: 150,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey)),
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: AmenitiesList.length,
+                            physics: const ScrollPhysics(),
+                            itemCount: activitiesList.length,
                             itemBuilder: (context, index) {
                               return CheckboxListTile(
                                 autofocus: true,
                                 checkColor: Colors.white,
-                                title: Text(AmenitiesList[index]),
-                                value: _isAmenitiesList[index],
-                                selected: _isAmenitiesList[index],
+                                title: Text(activitiesList[index]),
+                                value: _isActivitiesList[index],
+                                selected: _isActivitiesList[index],
                                 dense: true,
                                 onChanged: (value) {
                                   setState(() {
                                     if (value!) {
-                                      if (!selectedAmenities
-                                          .contains(AmenitiesList[index])) {
-                                        selectedAmenities
-                                            .add(AmenitiesList[index]);
-                                        log(selectedAmenities.toString());
+                                      if (!selectedActivities
+                                          .contains(activitiesList[index])) {
+                                        selectedActivities
+                                            .add(activitiesList[index]);
+                                        log(selectedActivities.toString());
                                       }
                                     } else {
-                                      if (selectedAmenities
-                                          .contains(AmenitiesList[index])) {
-                                        selectedAmenities
-                                            .remove(AmenitiesList[index]);
-                                        log(selectedAmenities.toString());
+                                      if (selectedActivities
+                                          .contains(activitiesList[index])) {
+                                        selectedActivities
+                                            .remove(activitiesList[index]);
+                                        log(selectedActivities.toString());
                                       }
                                     }
-                                    _isAmenitiesList[index] = value;
+                                    _isActivitiesList[index] = value;
                                   });
                                 },
                               );
@@ -512,7 +809,209 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                     ],
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Facilities for the Participant",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isParticipantFacilities = !isParticipantFacilities;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedParticipantFacilities.isEmpty
+                                              ? "Select Facilities for Participants"
+                                              : "Select ${selectedParticipantFacilities.length} Preferred Refreshments",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isParticipantFacilities)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: participantFacilitiesList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(participantFacilitiesList[index]),
+                                value: isParticipantFacilitiesList[index],
+                                selected: isParticipantFacilitiesList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedParticipantFacilities
+                                          .contains(participantFacilitiesList[
+                                              index])) {
+                                        selectedParticipantFacilities.add(
+                                            participantFacilitiesList[index]);
+                                      }
+                                    } else {
+                                      if (selectedParticipantFacilities
+                                          .contains(participantFacilitiesList[
+                                              index])) {
+                                        selectedParticipantFacilities.remove(
+                                            participantFacilitiesList[index]);
+                                      }
+                                    }
+                                    isParticipantFacilitiesList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Facilities for the Attendees",
+                        style: TextStyle(
+                            color: AppColors.orange,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isAttendeeFacilities = !isAttendeeFacilities;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          selectedAttendeeFacilities.isEmpty
+                                              ? "Select Facilities for Attendees"
+                                              : "Select ${selectedAttendeeFacilities.length} Preferred Refreshments",
+                                        ),
+                                      ),
+                                      Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 20),
+                                          child: const Icon(
+                                              Icons.arrow_drop_down)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (isAttendeeFacilities)
+                        AnimatedContainer(
+                          //width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          duration: const Duration(milliseconds: 300),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: attendeeFacilitiesList.length,
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                autofocus: true,
+                                checkColor: Colors.white,
+                                title: Text(attendeeFacilitiesList[index]),
+                                value: isAttendeeFacilitiesList[index],
+                                selected: isAttendeeFacilitiesList[index],
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    if (value!) {
+                                      if (!selectedAttendeeFacilities.contains(
+                                          attendeeFacilitiesList[index])) {
+                                        selectedAttendeeFacilities
+                                            .add(attendeeFacilitiesList[index]);
+                                      }
+                                    } else {
+                                      if (selectedAttendeeFacilities.contains(
+                                          attendeeFacilitiesList[index])) {
+                                        selectedAttendeeFacilities.remove(
+                                            attendeeFacilitiesList[index]);
+                                      }
+                                    }
+                                    isAttendeeFacilitiesList[index] = value;
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,7 +1029,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            _isSafety = !_isSafety;
+                            _isSecurityMeasure = !_isSecurityMeasure;
                           });
                         },
                         child: Row(
@@ -550,13 +1049,14 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
-                                          selectedSafety.isEmpty
+                                          selectSecurityMeasure.isEmpty
                                               ? "Select Safety and security features"
-                                              : "Selected ${selectedSafety.length} Safety and security features",
+                                              : "Selected ${selectSecurityMeasure.length} Safety and security features",
                                         ),
                                       ),
                                       Container(
-                                          margin: EdgeInsets.only(top: 20),
+                                          margin:
+                                              const EdgeInsets.only(top: 20),
                                           child: const Icon(
                                               Icons.arrow_drop_down)),
                                     ],
@@ -567,42 +1067,43 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                           ],
                         ),
                       ),
-                      if (_isSafety)
+                      if (_isSecurityMeasure)
                         AnimatedContainer(
                           //width: 300,
                           height: 200,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey)),
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: SafetyList.length,
+                            physics: const ScrollPhysics(),
+                            itemCount: securityMeasureList.length,
                             itemBuilder: (context, index) {
                               return CheckboxListTile(
                                 autofocus: true,
                                 checkColor: Colors.white,
-                                title: Text(SafetyList[index]),
-                                value: _isSafetyList[index],
-                                selected: _isSafetyList[index],
+                                title: Text(securityMeasureList[index]),
+                                value: _isSecurityMeasureList[index],
+                                selected: _isSecurityMeasureList[index],
                                 dense: true,
                                 onChanged: (value) {
                                   setState(() {
                                     if (value!) {
-                                      if (!selectedSafety
-                                          .contains(SafetyList[index])) {
-                                        selectedSafety.add(SafetyList[index]);
-                                        log(selectedSafety.toString());
+                                      if (!selectSecurityMeasure.contains(
+                                          securityMeasureList[index])) {
+                                        selectSecurityMeasure
+                                            .add(securityMeasureList[index]);
+                                        log(selectSecurityMeasure.toString());
                                       }
                                     } else {
-                                      if (selectedSafety
-                                          .contains(SafetyList[index])) {
-                                        selectedSafety
-                                            .remove(SafetyList[index]);
-                                        log(selectedSafety.toString());
+                                      if (selectSecurityMeasure.contains(
+                                          securityMeasureList[index])) {
+                                        selectSecurityMeasure
+                                            .remove(securityMeasureList[index]);
+                                        log(selectSecurityMeasure.toString());
                                       }
                                     }
-                                    _isSafetyList[index] = value;
+                                    _isSecurityMeasureList[index] = value;
                                   });
                                 },
                               );
@@ -614,60 +1115,67 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                   const SizedBox(
                     height: 15,
                   ),
-                  TextWidget(
-                      heading: "Preferred Sports or Activities Allowed",
-                      hint: "Enter Preferred Sports",
-                      keyboardType: TextInputType.text,
-                      controller: _activityController),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Do you provide pick and drop facility?',
-                        style: TextStyle(
-                            color: AppColors.orange,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Switch(
-                            activeColor: AppColors.orange,
-                            value: providePickAndDrop,
-                            onChanged: (newValue) {
-                              setState(() {
-                                providePickAndDrop = newValue;
-
-                                // Clear the list before adding the latest value
-                                providePickAndDropList.clear();
-
-                                // Update the list based on the switch value
-                                if (newValue) {
-                                  providePickAndDropList.add('Yes');
-                                  print(providePickAndDrop
-                                      .toString()); // Print 'true' when true
-                                } else {
-                                  providePickAndDropList.add('No');
-                                  print(providePickAndDrop
-                                      .toString()); // Print 'false' when false
-                                }
-                              });
-                            },
-                          ),
-                          Text(providePickAndDrop
-                              ? 'Providing Pick and Drop'
-                              : 'Not Providing Pick and Drop'),
-                        ],
-                      ),
-                    ],
+                  CustomDropdown(
+                    heading: 'Charges',
+                    subHeading: "Charges",
+                    options: _chargesList,
+                    selectedValue:
+                        _selectedCharges, // Set your initial selected value
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedCharges = value;
+                      });
+                    },
                   ),
-                  TextWidget(
-                      heading: "Charges per Hours",
-                      hint: "Enter Charges",
-                      maxLength: 6,
-                      keyboardType: TextInputType.number,
-                      controller: _chargesController),
+                  if (_selectedCharges == "Charges per hours (in Rupees)" ||
+                      _selectedCharges ==
+                          "Charges per game/event (in Rupees)" ||
+                      _selectedCharges == "Charges per day (in Rupees)" ||
+                      _selectedCharges == "Charges per person (in Rupees)")
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(color: Colors.grey),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white, // Top color
+                                Colors.grey.shade200, // Bottom color
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset: const Offset(0, 3), // Shadow position
+                              ),
+                            ], // Outer border color
+                          ),
+                          child: TextFormField(
+                            controller: _chargesController,
+                            keyboardType: TextInputType.number,
+                            maxLength: 6,
+                            decoration: const InputDecoration(
+                              counterText: '',
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 16),
+                              hintText: "Enter the Rupees",
+                              border:
+                                  InputBorder.none, // Remove the default border
+                            ),
+                            style: const TextStyle(
+                                fontSize: 16), // Adjust text style if needed
+                          ),
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 15),
                   Center(
                     child: SizedBox(
@@ -702,7 +1210,7 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
                             ),
                           ),
                         ),
-                        child: Padding(
+                        child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
                             'Register',
@@ -728,18 +1236,18 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
 
   void sendPlaceHolderRegDataToServer(BuildContext context) {
     // ApiService().RegisterPlaceHolder(
-    //     _fullNameController.text,
-    //     _emailController.text,
-    //     _addressController.text,
-    //     _mobileController.text,
-    //     _propertyDescriptionController.text,
-    //     _sizeOfPropertyController.text,
+    //     _nameFacilityController.text,
+    //     _spaceController.text,
+    //     _address1Controller.text,
+    //     _address2Controller.text,
+    //     _cityController.text,
+    //     _pincodeController.text,
     //     selectedTypeOfProperty,
     //     selectedDays,
     //     _selectedStartTime.toString(),
     //     _selectedEndTime.toString(),
-    //     selectedAmenities,
-    //     selectedSafety,
+    //     selectedActivities,
+    //     selectSecurityMeasure,
     //     providePickAndDropList,
     //     _chargesController.text);
     // // For demonstration purposes, print the data

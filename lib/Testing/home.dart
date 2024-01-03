@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/Controller/authCotroller.dart';
-import 'package:sports2/NewScreen/playLearn/Event/createEvent.dart';
-import 'package:sports2/Screens/Event/createEvent.dart';
-import 'package:sports2/Screens/Profile/coachProfile.dart';
-import 'package:sports2/Screens/Profile/stuProfile.dart';
-import 'package:sports2/Screens/bookmark.dart';
-import 'package:sports2/Screens/homeScreen.dart';
-import 'package:sports2/Screens/searchScreen.dart';
+import 'package:sports2/NewScreen/Event/createEvent.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
+import 'package:sports2/Testing/Event/createEvent.dart';
+import 'package:sports2/Testing/Profile/coachProfile.dart';
+import 'package:sports2/Testing/Profile/stuProfile.dart';
+import 'package:sports2/Testing/bookmark.dart';
+import 'package:sports2/Testing/homeScreen.dart';
+import 'package:sports2/Testing/searchScreen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,10 +20,8 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    SearchSportsScreen(),
+    AllCoachScreen(),
     CreateEventScreen(),
-    BookmarkScreen(),
-    // ProfileEightPage(),
     StudentProfile(),
   ];
 

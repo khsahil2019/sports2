@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:sports2/NewScreen/playLearn/Coaches/coachDetail.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/detailCoach.dart';
 import 'package:sports2/helper/theme.dart';
 
 class AllCoachScreen extends StatefulWidget {

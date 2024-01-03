@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sports2/Controller/allbindings.dart';
 import 'package:sports2/Splash/splashScreen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Permission.storage.request();
   runApp(const MyApp());
 }
 

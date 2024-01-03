@@ -55,6 +55,11 @@ dependencies:
     path: ./packages/csc_picker
   social_share: ^2.3.1
   screenshot: ^2.1.0
+  permission_handler: ^11.1.0
+  share_plus: ^7.2.1
+  file_selector: ^1.0.1
+  flutter_launcher_icons: ^0.13.1
+  file_picker: ^6.1.1
   
 
   

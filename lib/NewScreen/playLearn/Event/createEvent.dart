@@ -46,28 +46,28 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _areaController = TextEditingController();
-  final TextEditingController _stateController = TextEditingController();
-  final TextEditingController _pincodeController = TextEditingController();
-  final TextEditingController _chargesController = TextEditingController();
+  // final TextEditingController _dobController = TextEditingController();
+  // final TextEditingController _cityController = TextEditingController();
+  // final TextEditingController _areaController = TextEditingController();
+  // final TextEditingController _stateController = TextEditingController();
+  // final TextEditingController _pincodeController = TextEditingController();
+  // final TextEditingController _chargesController = TextEditingController();
   final TextEditingController _skillController = TextEditingController();
   final TextEditingController _extraController = TextEditingController();
 
-  String? _selectedGender;
+  // String? _selectedGender;
   String? _selectedSport;
 
-  String? _countryName;
+  // String? _countryName;
 
   // String? _selectedTargetGender;
 
-  double _currentSliderValue = 0;
+  // double _currentSliderValue = 0;
   bool providePickAndDrop = false;
   bool availibilty = false;
   bool ageGroup = false;
 
-  final List<String> _gendersList = ['Male', 'Female', 'Other'];
+  // final List<String> _gendersList = ['Male', 'Female', 'Other'];
   final List<String> _participantLevelList = [
     'Beginner',
     'Intermediate',
@@ -231,8 +231,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   List selectedSpecialization = [];
   List selectedAward = [];
   List selectedGender = [];
-  TimeOfDay _selectedStartTime = TimeOfDay(hour: 8, minute: 0);
-  TimeOfDay _selectedEndTime = TimeOfDay(hour: 18, minute: 0);
+  // TimeOfDay _selectedStartTime = TimeOfDay(hour: 8, minute: 0);
+  // TimeOfDay _selectedEndTime = TimeOfDay(hour: 18, minute: 0);
   List<String> providePickAndDropList = [];
   File? _imageFile;
 

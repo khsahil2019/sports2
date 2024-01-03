@@ -6,6 +6,7 @@ import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/detailPlay.dart';
 import 'package:sports2/Registration/coachReg.dart';
+import 'package:sports2/Registration/placeReg.dart';
 import 'package:sports2/helper/theme.dart';
 
 class CoachPlayScreen extends StatefulWidget {
@@ -57,8 +58,45 @@ class _CoachPlayScreenState extends State<CoachPlayScreen> {
               height: 10,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Container(
+                  height: 45,
+                  // width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0, 4),
+                        blurRadius: 10.0,
+                      ),
+                    ],
+                    color: AppColors.orange,
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(28.0),
+                      onTap: () {
+                        Get.to(() => PlaceHolderRegistration());
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Register as a Ground",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
                 Container(
                   height: 45,
                   // width: 120,

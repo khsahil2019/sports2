@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/textField.dart';
 import 'package:sports2/helper/theme.dart';
@@ -161,13 +160,16 @@ class _PlaceHolderRegistrationState extends State<PlaceHolderRegistration> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.white, // Set back button color to white
+            color: AppColors.orange, // Set back button color to white
           ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        title: const Text("Lender"),
+        title: const Text(
+          "Playground Registration",
+          style: TextStyle(color: AppColors.orange),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

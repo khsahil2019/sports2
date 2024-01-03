@@ -6,7 +6,6 @@ import 'package:sports2/NewScreen/playLearn/Both/coachesPlay.dart';
 import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
 import 'package:sports2/NewScreen/profileScreen.dart';
-import 'package:sports2/NewScreen/typeGames.dart';
 // import 'package:sports2/Registration/image.dart';
 import 'package:sports2/helper/theme.dart';
 

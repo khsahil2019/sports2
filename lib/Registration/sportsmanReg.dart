@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sports2/Testing/homeScreen.dart';
 import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/dobPicker.dart';
 import 'package:sports2/Widgets/dropDown.dart';

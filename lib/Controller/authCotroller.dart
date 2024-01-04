@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:sports2/Services/apiService.dart';
 
+import '../Services/app_deeplink.dart';
+
 AuthController authController = AuthController.instance;
 
 class AuthController extends GetxController {
@@ -16,7 +18,8 @@ class AuthController extends GetxController {
   //Map? reviewList;
 
   @override
-  void onInit() {
+  void onInit() async {
+    await AppDeepLinkService.init();
     getCoach();
     getLender();
     getUser();

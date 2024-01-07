@@ -6,7 +6,7 @@ import 'package:sports2/NewScreen/playLearn/Both/coachesPlay.dart';
 import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
 import 'package:sports2/NewScreen/profileScreen.dart';
-// import 'package:sports2/Registration/image.dart';
+import 'package:sports2/Registration/studentReg.dart';
 import 'package:sports2/helper/theme.dart';
 
 class Homescreen extends StatefulWidget {
@@ -73,14 +73,14 @@ class HomeContent extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 20,
               backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
                   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AvpQOT8GJ_W1LjoMHfv1GSsFMnSVLJ4hWncZH1vSbQ&s'),
             ),
-            SizedBox(width: 10),
-            Column(
+            const SizedBox(width: 10),
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -110,9 +110,9 @@ class HomeContent extends StatelessWidget {
                 ),
               ],
             ),
-            Spacer(), // Spaces out the widgets
+            const Spacer(), // Spaces out the widgets
             IconButton(
-              icon: Icon(Icons.notifications_active),
+              icon: const Icon(Icons.notifications_active),
               onPressed: () {
                 // Handle notifications
               },
@@ -123,17 +123,22 @@ class HomeContent extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            ElevatedButton(
+                onPressed: () {
+                  Get.to(() => StudentRegScreen());
+                },
+                child: const Text("test")),
             GestureDetector(
               onTap: () {
                 Get.to(() => CoachPlayScreen());
               },
-              child: ContainerWithArrow(
+              child: const ContainerWithArrow(
                 imageUrl: 'assets/img/play.png', // Replace with your image path
                 text: 'Container 1',
                 index: 1, type: "play & Learn",
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Container 2
@@ -141,14 +146,14 @@ class HomeContent extends StatelessWidget {
               onTap: () {
                 Get.to(() => AllPlayGroundScreen());
               },
-              child: ContainerWithArrow(
+              child: const ContainerWithArrow(
                 imageUrl: 'assets/img/create.png',
                 text: 'Container 2',
                 index: 2,
                 type: "PlayGround / Game Facilities",
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Container 2
@@ -156,14 +161,14 @@ class HomeContent extends StatelessWidget {
               onTap: () {
                 Get.to(() => CreateEventScreen());
               },
-              child: ContainerWithArrow(
+              child: const ContainerWithArrow(
                 imageUrl: 'assets/img/create.png',
                 text: 'Container 2',
                 index: 3,
                 type: "Create Event",
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],
@@ -190,11 +195,11 @@ class ContainerWithArrow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Container(
             height: 190,
             width: double.infinity,
@@ -205,7 +210,7 @@ class ContainerWithArrow extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 3,
                   blurRadius: 7,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -215,9 +220,10 @@ class ContainerWithArrow extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(16),
-                          bottom: Radius.circular(14)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(16),
+                        bottom: Radius.circular(14),
+                      ),
                       image: DecorationImage(
                         image:
                             AssetImage(imageUrl), // Replace with your image URL
@@ -227,36 +233,27 @@ class ContainerWithArrow extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(8)),
                     color: Colors.white,
                   ),
                   child: Row(
                     children: [
-                      Text(
-                        type,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: AppColors.orange,
+                      FittedBox(
+                        // Wrap the Text widget with FittedBox
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          type,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: AppColors.orange,
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      // Expanded(
-                      //   child: Text(
-                      //     'Discover amazing playground nearby your location and join memeber',
-                      //     textAlign: TextAlign.start,
-                      //     style: TextStyle(
-                      //       fontSize: 12,
-                      //       color: Colors.grey,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

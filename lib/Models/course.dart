@@ -3,22 +3,34 @@ class Course {
   final String courseName;
   final String about;
   final String typeOfSport;
-  final String duration;
-  final String timings;
-  final String price;
-  final String level;
-  final String rating;
+  final List<String> preGender;
+  final String startDate;
+  final String endDate;
+  final String hours;
+  final String days;
+  final String months;
+  final List<String> ageGroup;
+  final List<String> courseOffer;
+  final List<String> courseOutcome;
+  final List<String> courseContent;
+  final String courseFees;
 
   Course({
     required this.image,
     required this.courseName,
     required this.about,
     required this.typeOfSport,
-    required this.duration,
-    required this.timings,
-    required this.price,
-    required this.level,
-    required this.rating,
+    required this.preGender,
+    required this.startDate,
+    required this.endDate,
+    required this.hours,
+    required this.days,
+    required this.months,
+    required this.ageGroup,
+    required this.courseOffer,
+    required this.courseOutcome,
+    required this.courseContent,
+    required this.courseFees,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -27,11 +39,17 @@ class Course {
       courseName: json['courseName'] ?? '',
       about: json['about'] ?? '',
       typeOfSport: json['typeOfSport'] ?? '',
-      duration: json['duration'] ?? '',
-      timings: json['timings'] ?? '',
-      price: json['price'] ?? '',
-      level: json['level'] ?? '',
-      rating: json['rating'] ?? '',
+      preGender: List<String>.from(json['preGender'] ?? []),
+      startDate: json['startDate'] ?? '',
+      endDate: json['endDate'] ?? '',
+      hours: json['hours'] ?? '',
+      days: json['days'] ?? '',
+      months: json['months'] ?? '',
+      ageGroup: List<String>.from(json['ageGroup'] ?? []),
+      courseOffer: List<String>.from(json['courseOffer'] ?? []),
+      courseOutcome: List<String>.from(json['courseOutcome'] ?? []),
+      courseContent: List<String>.from(json['courseContent'] ?? []),
+      courseFees: json['courseFees'] ?? '',
     );
   }
 
@@ -41,11 +59,17 @@ class Course {
       'courseName': courseName,
       'about': about,
       'typeOfSport': typeOfSport,
-      'duration': duration,
-      'timings': timings,
-      'price': price,
-      'level': level,
-      'rating': rating,
+      'preGender': preGender,
+      'startDate': startDate,
+      'endDate': endDate,
+      'hours': hours,
+      'days': days,
+      'months': months,
+      'ageGroup': ageGroup,
+      'courseOffer': courseOffer,
+      'courseOutcome': courseOutcome,
+      'courseContent': courseContent,
+      'courseFees': courseFees,
     };
   }
 }

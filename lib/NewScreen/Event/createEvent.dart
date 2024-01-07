@@ -46,12 +46,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  // final TextEditingController _dobController = TextEditingController();
-  // final TextEditingController _cityController = TextEditingController();
-  // final TextEditingController _areaController = TextEditingController();
-  // final TextEditingController _stateController = TextEditingController();
-  // final TextEditingController _pincodeController = TextEditingController();
-  // final TextEditingController _chargesController = TextEditingController();
+
   final TextEditingController _skillController = TextEditingController();
   final TextEditingController _extraController = TextEditingController();
 
@@ -269,14 +264,6 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Text(
-          //   "heading",
-          //   style: TextStyle(
-          //     color: AppColors.orange,
-          //     fontSize: 16,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          // ),
           SizedBox(height: 8),
           Container(
             decoration: BoxDecoration(

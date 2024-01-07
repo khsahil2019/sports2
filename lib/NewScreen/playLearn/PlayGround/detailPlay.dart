@@ -116,195 +116,281 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Yark park Moga",
+                          "Sports Facility",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(
+                    SizedBox(height: 20),
+                    buildMoreDetail(
                       Icons.location_on,
-                      AppColors.orange,
-                      30,
-                      "Lucknow", // Address text
+                      'Address 1',
+                      'Lucknow',
+                    ),
+                    SizedBox(height: 20),
+                    buildMoreDetail(
+                      Icons.location_on,
+                      'Address 2',
+                      'Hazratganj',
+                    ),
+                    SizedBox(height: 20),
+                    buildMoreDetail(
+                      Icons.location_city,
+                      'City',
+                      'Lucknow',
+                    ),
+                    SizedBox(height: 20),
+                    buildMoreDetail(
+                      Icons.pin,
+                      'Pincode',
+                      '231425',
+                    ),
+                    SizedBox(height: 20),
+                    buildMoreDetail(
+                      Icons.currency_rupee_rounded,
+                      'Charges (Rs)',
+                      '₹ 500/hr',
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 35,
                     ),
-                    CustomIconTextWidget(Icons.location_city, AppColors.orange,
-                        30, "Patel Nagar purvi"),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(Icons.currency_rupee_rounded,
-                        AppColors.orange, 30, "450/ per hours"),
-                    const SizedBox(
-                      height: 15,
-                    ),
+
                     const Row(
                       children: [
                         Text(
-                          "Contact",
+                          "Contact Detail 1",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 35,
                     ),
-                    CustomIconTextWidget(
-                      Icons.phone,
-                      AppColors.orange,
-                      30,
-                      maskPhoneNumber(phoneNumber), // Address text
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.person_3,
-                      AppColors.orange,
-                      30,
-                      "sahil khan", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.person_3_outlined,
-                      AppColors.orange,
-                      30,
-                      "Male", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.email,
-                      AppColors.orange,
-                      30,
-                      "sahl@gmail.com", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    heading("Facilities"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.folder_special,
-                      AppColors.orange,
-                      30,
-                      "facilitise", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.agriculture,
-                      AppColors.orange,
-                      30,
-                      "20 -30", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.wheelchair_pickup,
-                      AppColors.orange,
-                      30,
-                      "yes", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.explore_outlined,
-                      AppColors.orange,
-                      30,
-                      "Experienece ", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
+
+                    buildMoreDetail(
                       Icons.person,
-                      AppColors.orange,
-                      30,
-                      "Male/Female", // Address text
+                      'Contact person Name',
+                      "Robert singh",
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    buildMoreDetail(
+                      Icons.design_services_sharp,
+                      'Designation',
+                      "Cricket coach",
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.phone,
+                      'Phone Number',
+                      maskPhoneNumber(phoneNumber),
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.whatshot,
+                      'Whatsapp Number',
+                      maskPhoneNumber(phoneNumber),
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.email,
+                      'Email Id',
+                      "sahilkh@gmail.com",
+                    ),
+
+                    const SizedBox(
+                      height: 10,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 35,
                     ),
-                    heading("Skills"),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.folder_special,
-                      AppColors.orange,
-                      30,
-                      "Hockey", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomIconTextWidget(
-                      Icons.folder_special,
-                      AppColors.orange,
-                      30,
-                      "Extra comedy", // Address text
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+
                     const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Availibilty",
+                          "Contact Detail 2",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "See Availibilty",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.orange),
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 35,
                     ),
-                    CustomIconTextWidget(
-                      Icons.calendar_month,
-                      AppColors.orange,
-                      30,
-                      "Schedule", // Address text
+
+                    buildMoreDetail(
+                      Icons.person,
+                      'Contact person Name',
+                      "Seroin singh",
                     ),
+
                     const SizedBox(
                       height: 10,
                     ),
-                    CustomIconTextWidget(
-                      Icons.lock_clock,
-                      AppColors.orange,
-                      30,
-                      "12:30 PM - 01:45 PM", // Address text
+
+                    buildMoreDetail(
+                      Icons.design_services_sharp,
+                      'Designation',
+                      "Badminton coach",
                     ),
+
                     const SizedBox(
                       height: 10,
                     ),
-                    CustomIconTextWidget(Icons.app_registration,
-                        AppColors.orange, 30, "12/12/2023"
-                        // Address text
+                    buildMoreDetail(
+                      Icons.phone,
+                      'Phone Number',
+                      maskPhoneNumber(phoneNumber),
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.whatshot,
+                      'Whatsapp Number',
+                      maskPhoneNumber(phoneNumber),
+                    ),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.email,
+                      'Email Id',
+                      "sahilkhan786@gmail.com",
+                    ),
+
+                    const SizedBox(
+                      height: 35,
+                    ),
+
+                    const Row(
+                      children: [
+                        Text(
+                          "Distance from various places",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+
+                    buildMoreDetail(
+                      Icons.train,
+                      'From Railway Station',
+                      "12.5 KM",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.location_city,
+                      'From City Center',
+                      "2.0 KM",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.local_airport,
+                      'From Airport',
+                      "15.7 KM",
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+
+                    const Row(
+                      children: [
+                        Text(
+                          "Various Facilities",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+                    buildMoreDetail(
+                      Icons.area_chart,
+                      'Area of Ground',
+                      "2000 sq feet",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.sports,
+                      'Type of Activities/Games',
+                      "Indoor and OutDoor",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.campaign,
+                      'Indoor Capacity',
+                      "2000 people",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.campaign,
+                      'Outdoor Capacity',
+                      "1500 people",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.safety_check,
+                      'Safety and Security features',
+                      "CCTV Camera\nFire Exit\nPolice Security\nMetal Detector",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.group,
+                      'Facilities for participant',
+                      "Snacks\nEnergy Drink\nBurgers\nSweets",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.face,
+                      'Facilities for Attendees',
+                      "Snacks\nEnergy Drink\nBurgers\nSweets",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    buildMoreDetail(
+                      Icons.schedule,
+                      'Avilability Schedule',
+                      "Mon - 2:00 PM - 5:00 PM\nTue - 2:00 PM - 5:00 PM\nWed - 2:00 PM - 5:00 PM",
+                    ),
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -368,6 +454,49 @@ class _PlayGroundDetailScreenState extends State<PlayGroundDetailScreen> {
         Text(
           text,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  Widget buildMoreDetail(IconData icon, String text1, String text2) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(
+              icon,
+              color: AppColors.orange,
+            ),
+            SizedBox(width: 10),
+            Text(
+              text1,
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Row(
+          children: [
+            SizedBox(width: 35),
+            Expanded(
+              child: Text(
+                text2,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sports2/Registration/coachReg.dart';
 import 'package:sports2/Registration/placeReg.dart';
-import 'package:sports2/Registration/sportsmanReg.dart';
+import 'package:sports2/Registration/studentReg.dart';
 import 'package:sports2/Widgets/button.dart';
 import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/helper/snackbar.dart';
@@ -67,8 +67,7 @@ class _UserChoiceScreenState extends State<UserChoiceScreen> {
                       arguments: _selectedUser);
                 }
                 if (_selectedUser == "Trainee") {
-                  Get.to(() => SportsmanRegistrationScreen(),
-                      arguments: _selectedUser);
+                  Get.to(() => StudentRegScreen(), arguments: _selectedUser);
                 }
                 if (_selectedUser == "Property Manager") {
                   Get.to(() => PlaceHolderRegistration(),

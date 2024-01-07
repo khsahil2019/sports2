@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sports2/NewScreen/Event/test.dart';
+import 'package:sports2/Services/app_deeplink.dart';
 import 'package:sports2/helper/theme.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
@@ -472,7 +473,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   // ),
                   /************************************************************************************************************/
 
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -481,7 +482,12 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       ElevatedButton(
                         onPressed: () {
                           print("Press");
-                          Get.to(() => EventDetailScreen());
+                          Map<String, dynamic> url = {
+                            "key": "https://www.google.com"
+                          };
+
+                          AppDeepLinkService().generateDeepLink(url); //
+                          //Get.to(() => EventDetailScreen());
                           //sendCoachRegDataToServer(context);
                         },
                         style: ButtonStyle(

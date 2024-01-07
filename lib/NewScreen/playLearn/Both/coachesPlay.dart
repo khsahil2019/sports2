@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:sports2/NewScreen/Course/createCourse.dart';
 import 'package:sports2/NewScreen/playLearn/Coaches/detailCoach.dart';
 import 'package:sports2/NewScreen/playLearn/Coaches/coaches.dart';
 import 'package:sports2/NewScreen/playLearn/PlayGround/playground.dart';
@@ -96,7 +97,6 @@ class _CoachPlayScreenState extends State<CoachPlayScreen> {
                     ),
                   ),
                 ),
-
                 Container(
                   height: 45,
                   // width: 120,
@@ -133,21 +133,50 @@ class _CoachPlayScreenState extends State<CoachPlayScreen> {
                     ),
                   ),
                 ),
-
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: GestureDetector(
-                //     onTap: () {
-                //       Get.to(() => CoachRegistrationScreen());
-                //     },
-                //     child: Text(
-                //       'Register as a Coach',
-                //       style: TextStyle(
-                //           color: AppColors.orange, fontWeight: FontWeight.bold),
-                //       textAlign: TextAlign.center,
-                //     ),
-                //   ),
-                // ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 45,
+                  // width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(0, 4),
+                        blurRadius: 10.0,
+                      ),
+                    ],
+                    color: AppColors.orange,
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(28.0),
+                      onTap: () {
+                        Get.to(() => CreateCourseScreen());
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Create your course",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             Container(

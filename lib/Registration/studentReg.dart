@@ -8,14 +8,14 @@ import 'package:sports2/Widgets/dropDown.dart';
 import 'package:sports2/Widgets/textField.dart';
 import 'package:sports2/helper/theme.dart';
 
-class SportsmanRegistrationScreen extends StatefulWidget {
+class StudentRegScreen extends StatefulWidget {
+  const StudentRegScreen({super.key});
+
   @override
-  _SportsmanRegistrationScreenState createState() =>
-      _SportsmanRegistrationScreenState();
+  _StudentRegScreenState createState() => _StudentRegScreenState();
 }
 
-class _SportsmanRegistrationScreenState
-    extends State<SportsmanRegistrationScreen> {
+class _StudentRegScreenState extends State<StudentRegScreen> {
   void initState() {
     super.initState();
   }
@@ -69,7 +69,7 @@ class _SportsmanRegistrationScreenState
             Navigator.of(context).pop();
           },
         ),
-        title: Text("Student"),
+        title: const Text("Student"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -86,7 +86,7 @@ class _SportsmanRegistrationScreenState
                             radius: 60,
                             backgroundImage: FileImage(_imageFile!),
                           )
-                        : CircleAvatar(
+                        : const CircleAvatar(
                             backgroundColor: Colors.orange,
                             radius: 60,
                             child: Icon(
@@ -217,7 +217,8 @@ class _SportsmanRegistrationScreenState
                                         ),
                                       ),
                                       Container(
-                                          margin: EdgeInsets.only(top: 20),
+                                          margin:
+                                              const EdgeInsets.only(top: 20),
                                           child: const Icon(
                                               Icons.arrow_drop_down)),
                                     ],
@@ -234,10 +235,10 @@ class _SportsmanRegistrationScreenState
                           height: 200,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey)),
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            physics: ScrollPhysics(),
+                            physics: const ScrollPhysics(),
                             itemCount: PreferredSportList.length,
                             itemBuilder: (context, index) {
                               return CheckboxListTile(
@@ -285,7 +286,7 @@ class _SportsmanRegistrationScreenState
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextWidget(
@@ -327,7 +328,7 @@ class _SportsmanRegistrationScreenState
                             ),
                           ),
                         ),
-                        child: Padding(
+                        child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
                             'Register',

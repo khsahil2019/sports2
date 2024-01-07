@@ -11,6 +11,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sports2/NewScreen/playLearn/Coaches/detailCoach.dart';
 import 'package:sports2/Services/apiService.dart';
 import 'package:sports2/Widgets/countryList.dart';
 import 'package:sports2/Widgets/dobPicker.dart';
@@ -1238,8 +1239,9 @@ class _CoachRegistrationScreenState extends State<CoachRegistrationScreen> {
                       width: MediaQuery.of(context).size.width - 180,
                       child: ElevatedButton(
                         onPressed: () {
-                          print("Press");
-                          sendCoachRegDataToServer(context);
+                          // print("Press");
+                          // sendCoachRegDataToServer(context);
+                          Get.to(() => CoachDetailScreen());
                         },
                         style: ButtonStyle(
                           backgroundColor:
